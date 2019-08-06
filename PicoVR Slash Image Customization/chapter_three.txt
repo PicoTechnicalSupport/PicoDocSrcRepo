@@ -1,0 +1,44 @@
+.. _3 Instructions Of Updating Customized First Frame:
+
+3 Instructions Of Updating Customized First Frame
+==============================================================
+
+3.1 Static Effect Boot Animation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+i.	Provide a picture in the PNG format in 280 * 280 pixel (no black color in the picture is advisable; gridded picture, not a vector picture);
+
+ii.	Change the picture name to "01.png";
+
+iii. Decompress the compressed file “bootanimation.zip” (available on: https://drive.google.com/open?id=1d-zGmwl2Q186Jx6ZaFS-joPbbjUQIfii)
+
+iv.	Copy “01.png” to two folders “part0” and “part1”, replacing the original files in the folders; 
+
+v. Losslessly compress three files “part0”, “part1” and “desc.txt” to a ZIP file, and name it “bootanimation.zip”;
+
+After completion of compression, view the attribute of the compressed package to see whether the compression ratio is 100%  
+
+vi.	Under the system root directory, directly create a new folder and name it “bootanimation”; 
+
+vii. Copy the modified "Bootanimation.zip" to the "Bootanimation" folder;
+
+viii. Reboot the device. 
+
+3.2	Dynamic-Effect Boot Animation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+i. Provide the sequence pictures with the animation effect and in the PNG format and in 280*280 pixel; (it is suggested that the animation length be 3 to 5 seconds, that the animation effect background be blank, and that there be no black color in the picture)
+
+ii. Name the sequence pictures in the following order: "01.png, 02.png, 03.png, 04.png ..."
+
+iii. Decompress the compressed file “bootanimation.zip” (available on: https://drive.google.com/open?id=1d-zGmwl2Q186Jx6ZaFS-joPbbjUQIfii)
+
+iv. Copy the picture named “01.png” to the “part0” folder; and copy all the sequence pictures to the “part1” folder; 
+
+v. Directly lossless compress three files “part0”, “part1” and “desc.txt” to a ZIP file (refer 2.1.1 for the compression mode), and name it “bootanimation.zip”;
+
+vi.	Under the system root directory, create a new folder and name it “bootanimation”;
+
+vii. Copy the modified "Bootanimation.zip" to the "Bootanimation" folder;
+
+viii. Reboot the device.

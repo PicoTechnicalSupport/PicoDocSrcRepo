@@ -1,0 +1,16 @@
+﻿.. _1 	Introduction to SDK:
+
+1 	Introduction to SDK
+===============================
+
+This document describes the application of VR made and run on Pico all-in-one equipment by PicoVRAndroidSDK_UE4 (hereinafter referred to as SDK) under the Unreal game development engine environment. SDK can mainly provide: many functions such as Binocular stereo rendering, optical distortion correction, sensor fusion, asynchronous time warping, single buffer rendering, multi-interaction support (head and hand 3DOF/6DOF), multi-peripheral support, power supply and thermal dissipation management, account and payment management.
+
+The SDK is provided in the form of an engine plug-in that can carry out bridging of engine and Pico virtual reality hardware device by achieving the VR abstraction layer of UE4. The position/ orientation of the Camera component in the engine will be moved following Pico virtual reality helmet movement so that the engine's MotionController component will be moved following Pico motion controller.
+
+Of course, some functions of the VR abstraction layer of UE4 can be used to control the Pico virtual achievement hardware, for example, the orientation/position reset function of the head-mounted display can be achieved by calling Input/Head Mounted Display/Reset Orientation and Position. In addition, for some Pico VR-specific functions, we also provide the blueprint interface, and a demo is also attached for developers' reference in terms of the calling method. 
+
+The SDK architecture is shown in the following figure: 
+
+.. image:: _static/1.1.png
+
+Figure 1.1 SDK architecture diagram 

@@ -1,0 +1,57 @@
+﻿.. _4	Detailed Steps for Updating the Example Player:
+
+4	Detailed Steps for Updating the Example Player
+==========================================================================================
+
+Follow the steps below to replace the Oculus SDK in the example player with the Pico SDK:
+
+- 1. Delete the Oculus SDK prefab from the scene:
+
+.. image:: _static/4.1.png
+
+Figure 9 – Location of the Oculus SDK prefab.
+
+- 2.	Import the Pico SDK Unity package:
+
+.. image:: _static/4.2.png
+
+Figure 10 – Importing the Pico SDK Unity package.
+
+- 3.	Drag **PicoMobileSDK** > **Pvr_UnitySDK** > **Prefabs** > **Pvr_UnitySDK** into the scene and set the position:
+
+.. image:: _static/4.3.png
+
+Figure 11 – Adding the prefab to the scene.
+
+- 4.	Add **PvrController0** and **PvrController1** to **Pvr_UnitySDK** as child nodes of **Pvr_UnitySDK**, and add **ControllerManager** into scene:
+
+.. image:: _static/4.4.png
+
+Figure 12 – Adding the controllers and controller manager to the scene.
+
+- 5.	Update the controller settings:
+
+.. image:: _static/4.5.png
+
+Figure 13 – Updating the controller settings.
+
+- 6.	Set **Head Pose** and **Hand Pose** of **Pvr_UnitySDK Manager** to **Three Dof**:
+
+.. image:: _static/4.6.png
+
+Figure 14 – Setting the head and hand poses.
+
+- 7.	Set **Rendering** > **Graphics APIs** to **OpenGLES2** as the only graphics API, disable **Multithreaded Rendering**, and disable **Virtual Reality Supported** under **XR settings**:
+
+.. image:: _static/4.7.png 
+
+Figure 15 – Configuring rendering and XR settings.
+
+- 8.	Build and install the application. Figure 16 shows the application running:
+
+.. image:: _static/4.9.png
+
+Figure 16 - View of the application running on the headset.
+
+
+

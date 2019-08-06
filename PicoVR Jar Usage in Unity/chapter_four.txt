@@ -1,0 +1,85 @@
+﻿.. _Method 3. Unity methods be invoked passively by JAR file using UnitySendMessage:
+
+Method 3. Unity methods be invoked passively by JAR file using UnitySendMessage
+====================================================================================================
+
+1. Writing JAR file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+- 1)	import classes.jar to app -> libs, right click it and choose Add As Library
+
+path of classes.jar :
+
+[your unity intall path]\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\mono\\Release\\Classes
+
+ - 2)	inherit UnityPlayerActivity class
+ 
+ - 3)	call UnityPlayer.UnitySendMessage(String objectName, String methodName, String methodParameter) to invoke Unity methods.
+ 
+eg: send Bluetooth state change state once u receive the broadcast.
+
+
+.. code-block:: java
+
+    … …
+    switch (message) {
+      case BluetoothAdapter.STATE_OFF:
+        UnityPlayer.UnitySendMessage("SetState", "setBluetoothState", "bt_state_off");
+      break;
+    … …
+
+
+- 4)	Comment out the line setContentView(R.layout.activity_main);
+
+- 5)	Add the following code in the app-> build.gradle root node (which is the same level as android and dependencies).
+
+.. code-block:: java
+
+    task createJarDebug(type: Jar,dependsOn: ['build']) {
+      baseName "test"
+      from 'build/intermediates/javac/debug/compileDebugJavaWithJavac/classe        s'
+      include('**')
+      exclude('**/R.class')
+      exclude('**/R$*.class')
+      exclude('**/BuildConfig.class')
+    }
+    //add the following code if you want to obfuscate code
+    task proguard(type: proguard.gradle.ProGuardTask, dependsOn: buildJar) {
+      //  input path
+      injars "build/libs/test.jar"
+      //  output path
+      outjars "lib/testProguard.jar"
+      //  add config info
+      configuration 'proguard-rules.pro'
+    }
+
+
+- 6)	In Android Terminal, type gradlew createJarDebug
+
+You need to generate the conflation package by typing **gradlew createJarDebug proguard**
+
+If prompted build success, the package succeeds
+
+**Jar package path**: app/build/libs/test.jar
+
+Copy to Unity engineer and tell them package name. Class name, interface name
+
+2. Define the methods to be invoked in Unity project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+- 1)  Copy the JAR file to Assets/Plugins/Android/ path
+
+- 2)  To be invoked by UnitySendMessage(String objectName, String method same, String methodParameter) method in the JAR file, In Unity project please create a GameObject by name of objectName, and add a script that include the method by name of methodName, which has the same type of the input parameter as methodParameter. Please refer to the example codes below: 
+
+.. code-block:: c#
+
+    public class test : MonoBehaviour {
+      public Text wifiText;
+      public void setWifiState(string s)
+      {
+        wifiText.text = s;
+      }
+    }
+
+
+

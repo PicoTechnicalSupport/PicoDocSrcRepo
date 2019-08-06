@@ -1,0 +1,286 @@
+﻿.. _5 	Hardware product development guide :
+
+5 	Hardware product development guide 
+=========================================
+
+This chapter will introduce the use method of SDK on Pico hardware products, and the developers should only choose to view the corresponding contents according to demands. 
+
+5.1	Pico Goblin/G2/G2 4K
+-----------------------------
+
+5.1.1 	User manual 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When using the Pico Goblin controller, please follow the following steps: 
+
+1、Add the MotionController component to the default Pawn class in the game to make it have the same level as the Camera component: 
+
+.. image:: _static/5.1.png
+
+Figure 5.1 MotionController component addition 
+
+This component is not affected by the Hand property, for example, if the left and right hands are changed, please go to the system setup to modify it. In addition, please check Disable Low Latency Update to avoid model flashing caused by the second refreshing per frame: 
+
+.. image:: _static/5.2.png
+
+Figure 5.2 Disable Low Latency Update checking 
+
+Once packaged and installed, the component will be moved following the position/orientation of the Pico Goblin handle. 
+
+2、Add a model to MotionController: 
+
+For UE 4.18, please add StaticMesh component to MotionController component firstly: 
+
+.. image:: _static/5.3.png
+
+Figure 5.3  StaticMesh component addition 
+
+When adding a model, please go to the detail panel of StaticMesh component and find StaticMesh property. To add the Pico Goblin controller model, please check "Show Plugin Content" firstly and then select MotionControllerG1Mesh/MotionControllerG2Mesh:
+
+.. image:: _static/5.4.png
+
+Figure 5.4 Pico Goblin controller model addition onto UE4.18 
+
+For UE 4.19 and higher versions, please add the model under the Visualization sub-item of MotionController detail panel (the display can also be achieved after checking "Show Plugin Content"):
+
+.. image:: _static/5.5.png
+
+Figure 5.5 Pico Goblin controller model addition onto UE4.19+ 
+
+It should be noted that in our plug-in directory, we will package the handle with key animation into an Actor, and if you want to reuse it, please attach it to the Pawn or Character in your level. 
+
+5.1.2 	Input instructions 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Key instructions
+"""""""""""""""""""""""""""
+
+The keys used by the Goblin series controller are not predefined by the engine, and when developing, please set the input binding according to the following table or drive the event through the corresponding blueprint node:
+
+==============================================    ==============================================    ==============================================
+Goblin controller key                              Input binding                                    Blueprint node
+==============================================    ==============================================    ==============================================
+.. image:: _static/5.1.1.png                      .. image:: _static/5.2.1.png                      .. image:: _static/5.3.1.png 
+.. image:: _static/5.1.2.png                      .. image:: _static/5.2.2.png                      .. image:: _static/5.3.2.png 
+.. image:: _static/5.1.3.png                      .. image:: _static/5.2.3.png                      .. image:: _static/5.3.3.png 
+.. image:: _static/5.1.4.png                      .. image:: _static/5.2.4.png                      .. image:: _static/5.3.4.png 
+.. image:: _static/5.1.5.png                      .. image:: _static/5.2.5.png                      .. image:: _static/5.3.5.png                 
+==============================================    ==============================================    ==============================================
+
+Pico G2 Except for the following two points, the other same correspondences with Pico Goblin controller key are as follows:
+
+==============================================    ==============================================    ==============================================
+G2 controller key                                 Input binding                                      Blueprint node
+==============================================    ==============================================    ==============================================
+.. image:: _static/5.4.1.png                      .. image:: _static/5.4.2.png                      .. image:: _static/5.4.3.png 
+.. image:: _static/5.4.4.png                      .. image:: _static/5.4.5.png                      .. image:: _static/5.4.6.png                
+==============================================    ==============================================    ==============================================
+
+2. 	Axle
+"""""""""""""""""""""""""""
+
+The axis input of the Goblin series controller only contains the touchpad, and the schematic diagram of the touchpad is as follows:
+
+.. image:: _static/5.6.png
+
+Figure 5.6 Schematic diagram of the Goblin controller
+
+Attention should be paid that unlike Steam, Oculus, Google, etc., our touch range is 0-1, and if your project has logic involving input axes, you need to map 0-1 to -1-1.
+
+The corresponding input values can be obtained through the following nodes:
+
+.. image:: _static/5.7.png
+
+Figure 5.7 How to get the touchpad axis value
+
+5.1.3 	Related blueprint nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For the Goblin controller, we also provide the following blueprint interfaces:
+
+.. image:: _static/5.7.1.png
+
+.. image:: _static/5.7.2.png
+
+.. image:: _static/5.7.3.png
+
+.. image:: _static/5.7.4.png
+
+.. image:: _static/5.7.5.png
+
+.. image:: _static/5.7.6.png
+
+5.2 	Pico Neo controller
+-----------------------------
+
+5.2.1 	User manual
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Pico Neo controller is as shown below:
+
+.. image:: _static/5.8.png
+
+Figure 5.8 Pico Neo controller
+
+For the Pico Neo controller, there is a very important logical concept: Main handle and auxiliary handle. The main handle is the handle in the system that has rays which can interact with the UI, while the auxiliary handle is another handle. When only one handle is connected, the currently connected handle will be the main handle.
+
+It is also recommended that the developer should attach the WidgetInteraction component to the main handle so that the handle in the application that interacts with the UI through the ray will be consistent with the handle in the system that interacts with the UI through the ray.
+
+
+When using the Pico Goblin controller, please follow the following steps:
+
+1、Add two MotionController components to the default Pawn class in the game (named as MotionController_Main, MotionController_Sub), and make them the same level as the Camera component:
+
+.. image:: _static/5.9.png
+
+Figure 5.9  MotionController component addition 
+
+2、Select MotionController_Main, find the Hand property in its detail panel, and modify it to Special 1, so that the component will be moved following the main handle (in the case of just one handle, please set its Hand property as Special 1):
+
+.. image:: _static/5.10.png
+
+Figure 5.10 Hand property setting 
+
+3、Similarly, for MotionController_Sub, its Hand property should be set as Special 2.
+
+4、Add a model to MotionController:
+
+For UE 4.18, please add StaticMesh component to MotionController component firstly:
+
+.. image:: _static/5.11.png
+
+Figure 5.11  StaticMesh component addition 
+
+Go to the detail panel of StaticMesh component and find StaticMesh property. To add the Pico Neo controller model, please check "Show Plugin Content" firstly and then select MotionControllerNeoMesh:
+
+.. image:: _static/5.12.png
+
+Figure 5.12 Pico Goblin Controller model addition
+
+For UE 4.19 and higher versions, please add the model under the Visualization sub-item of MotionController detail panel (the display can also be achieved after checking "Show Plugin Content"):
+
+.. image:: _static/5.13.png
+
+Figure 5.13 Controller model addition onto UE4.19+ 
+
+It should be noted that in our plug-in directory, we will package the handle with key animation into an Actor, and if you want to reuse it, please attach it to the Pawn or Character in your level.
+
+5.2.2 	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. 	Keys
+"""""""""""""""""""""""""""
+
+The keys used by the Neo controller are not predefined by the engine, and when developing, please set the input binding according to the following table or drive the event through the corresponding blueprint node:
+
+.. image:: _static/5.13.1.png
+
+.. image:: _static/5.13.2.png
+
+.. image:: _static/5.13.3.png
+
+.. image:: _static/5.13.4.png
+
+.. image:: _static/5.13.5.png
+
+
+2. 	Axle
+"""""""""""""""""""""""""""
+
+The axis input of the Pico Neo controller is divided into a touchpad and a trigger, and the schematic diagram of the touchpad is as follows:
+
+.. image:: _static/5.14.png
+
+Figure 5.14 Schematic diagram of Pico Neo controller touchpad
+
+The values of the main and auxiliary handle touchpads can be Get through the following blueprint nodes:
+
+.. image:: _static/5.15.png
+
+Figure 5.15 Touchpad-related blueprint nodes
+
+The input range of the trigger is 0-1, and the trigger input values of the main and auxiliary handles can be Get through the following blueprint nodes:
+
+.. image:: _static/5.16.png
+
+Figure 5.16 Trigger-related blueprint nodes
+
+5.2.3 	Related blueprint nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For the Pico Neo controller, we provide several APIs in the form of blueprint nodes, and in case of right click on the event graph and expanding Pico Neo->Controller, these APIs can be seen:
+
+.. image:: _static/5.17.png
+
+5.17 API of Pico Neo controller
+
+The detailed use methods of these APIs are as follows:
+
+.. image:: _static/5.17.1.png
+
+.. image:: _static/5.17.2.png
+
+.. image:: _static/5.17.3.png
+
+.. image:: _static/5.17.4.png
+
+.. image:: _static/5.17.5.png
+
+.. image:: _static/5.17.6.png
+
+.. image:: _static/5.17.7.png
+
+.. image:: _static/5.17.8.png
+
+5.2.4 	Security zone of Pico Neo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Pico Neo security zone is similar to the Oculus Rift Guardian System and the SteamVR Chaperone System, which can you a prompt when the player is out of a certain range to avoid risks due to collisions with room walls. Although the all-in-one VR headset is limited by internal and external tracking and there are no coordinates of security zone transmitted by externally set sensor to the reality, we still recommend that the developer should set a hypothetical security range to ensure the user's security.
+
+To this end, we provide an Actor Blueprint class as a security zone, which is essentially a normal-inward cylinder that remind the user of the pre-defined security range:
+
+.. image:: _static/5.18.png
+
+Figure 5.18 Security zone 
+
+It is recommended that the following nodes should be added additionally in order to add the security zone after the BeginPlay event of the DefaultPawn for the game level:
+
+.. image:: _static/5.19.png
+
+Figure 5.19 Security zone addition 
+
+Then, the display and hiding of the security zone will be changed dynamically according to the relative position of the Camera or MotionController and the parent component.
+
+In addition, the Actor_SafeArea blueprint class also provides two methods for getting and setting the radius of the security zone:
+
+.. image:: _static/5.20.png
+
+Figure 5.20 Correlation functions of security zone
+
+It is recommended that the developer should develop the function of the security zone setting to the user, and make the user set the radius of the security zone in the game according to the actual size of the open area under the environment where the user is located.
+
+5.2.5 	Activate the Pico Neo 6Dof function
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The default project type of the SDK is head 3Dof tracking and hand 3Dof tracking. For devices with 6Dof, such as Pico Neo, if 6Dof needs to be enabled, please execute the following operations:
+
+Open the menu Edit->Project Settings..., find the Plugins sub-item, and check the options under Pico Neo as needed:
+
+.. image:: _static/5.21.png
+
+Figure 5.21 Pico Neo 6 Dof options 
+
+5.3 	Pico all-in-one key
+----------------------------
+
+The following table refers to the correspondence between the keys on the all-in-one machine and the key values in UE.
+
+==========================    ====================================================
+HMD Key                       UE input key
+==========================    ====================================================
+OK Key                         .. image:: _static/5.21.1.png
+Home Key                       Android standard HOME (occupied by the system)
+Volume Up Key                  Android standard VOLUME_UP
+Volume Down Key                Android standard VOLUME_DOWN
+Return key                     Android standard BACK(Note: Pico GoblinHMD does not have this button)
+==========================    ====================================================

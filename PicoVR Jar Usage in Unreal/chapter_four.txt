@@ -1,0 +1,42 @@
+.. _4 Use your own C++ class to call function defined in the xml file:
+
+
+4 Use your own C++ class to call function defined in the xml file
+==================================================================================================
+
+Please follow these steps to call functions defined in xml file.
+
+- a)	Ensure “AndroidJNI.h” and “AndroidApplication.h”to be included in the cpp file.
+
+- b)	Get Java runtime environment by using FAndroidApplication::GetJavaEnv().
+
+- c)	Use JavaWrapper::FindMethod() to obtain ID of the java function defined in xml file.
+
+- d)	For example, use FJavaWrapper::CallBooleanMethod() to invoke Android API which returns boolean value. For other different definitions, you need use corresponding FJavaWrapper methods.
+
+Please refer to the following code:
+
+.. code-block:: c++
+
+    // Fill out your copyright notice in the Description page of Project Settings.  
+      
+    #include "MyBlueprintJarTest.h"  
+    #if PLATFORM_ANDROID  
+    #include "Android/AndroidApplication.h"  
+    #include "Android/AndroidJNI.h"  
+    #include <android/log.h>  
+    #endif  
+    void UMyBlueprintJarTest::TestLED(int led, int color, int blink, int ontime, int offtime)  
+    {
+    #if PLATFORM_ANDROID  
+    if (JNIEnv* Env = FAndroidApplication::GetJavaEnv())  
+    {  
+	static jmethodID Method = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_UEPvr_SetLED", "(IIIII)Z", false);
+	FJavaWrapper::CallBooleanMethod(Env, FJavaWrapper::GameActivityThis, Method, led, color, blink, ontime, offtime);
+    }  
+    #endif  
+    }
+
+
+
+

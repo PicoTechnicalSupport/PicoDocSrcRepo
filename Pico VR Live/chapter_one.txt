@@ -1,0 +1,22 @@
+﻿.. _1 Applicability:
+
+1 Applicability
+===============================
+
+This video player is applicable for playing on-demand, live, local and online video files. The specific features are as follows:
+
+- Playing video files saved on the Internet (HTTP) server.
+
+- Playing local saved video files.
+
+- Playing online and live video streaming that follows the RTMP protocol.
+
+- Playing online and live video streaming that follows the RTSP protocol.
+
+Playing online and live This video player is applicable for playing on-demand, live, local and online video files. The specific features are as follows:
+
+- video streaming that follows the RTMP protocol.
+
+- This player supports custom video posters, logo, and application background.
+
+

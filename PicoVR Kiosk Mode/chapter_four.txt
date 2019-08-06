@@ -1,0 +1,58 @@
+.. _4	Achieve Pico System Level Signature:
+
+4	Achieve Pico System Level Signature
+==============================================
+
+Some developers may want to implement features such as reboot/power off device, change system configuration, which need system level permission. To satisfy this kind of requirement, Pico specially made an Online Signature Tool, which allows developers to sign their apps to achieve system level permission. 
+
+Here are the steps to sign the apps with Pico Online Tool,
+
+- Step1: Apply for an account 
+
+    Please contact Pico technician for account and password.
+
+- Step2: Login Signature System
+
+    Open Pico online signature system ( http://signature.picovr.com:9999/login ), enter account and password to login. You will see "Signature List" after successful login.
+
+.. image:: _static/2.3.png
+
+- Step3: Upload Signature Application
+
+    Click on "Upload File", enter the upload file interface; Click "Select File" to select the application to be signed;
+
+.. image:: _static/2.4.png
+
+- Step4: Select Device Type
+
+    Select “Other”  then click “Create” button; 
+
+.. image:: _static/2.5.png
+
+- Step5: View Signature Results
+
+    Click "Back to list page"
+
+.. image:: _static/2.6.png
+
+On the list page you can see the uploaded APK, and the status here is unsigned.
+
+.. image:: _static/2.7.png
+
+- Step6: Get Signed APK
+
+    Normally in 5-10 minute system will complete signature automatically. Refresh list page, you can see the application signature status is "signed". Clicks"signed" to download signed APK.
+
+.. image:: _static/2.8.png
+
+Note: The launcher with package name “com.picovrtob.vrlauncher”, is the system default launcher. To switch launcher, users can change home screen to Pico default launcher or other custom launcher via 2D settings:
+
+     In Goblin: 
+	 
+	 Select system default launcher in “2D settings → home page” (To enter 2D settings, hold “Confirm” and “Volume -” as a combination key);
+
+     In PicoNeo and G2: 
+	 
+	 Method1: 2D settings - Application - PVRLauncher - Is it a home screen - Choose home screen; (To enter 2D settings, hold “Confirm” and “Volume -” at the same time as a combination key);
+	 
+	 Method2: 2D Settings - Application - Apps & notifications - Advanced - Default apps - Home app. Then choose PVRLauncher as Home app.

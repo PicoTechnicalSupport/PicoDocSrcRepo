@@ -1,0 +1,24 @@
+.. Customize Device Boot-up First Frame
+
+Customize Device Boot-up First Frame
+==================================================
+.. toctree::
+   :hidden:
+
+   chapter_one
+   chapter_two
+   chapter_three
+
+
+Contents
+^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+   :widths: 10 130
+
+   * - 1
+     - :ref:`Applicable Products <1 Applicable Products>` 
+   * - 2
+     - :ref:`Instructions Of Removing Existing First Frame <2 Instructions Of Removing Existing First Frame>`   
+   * - 3
+     - :ref:`Instructions Of Updating Customized First Frame <3 Instructions Of Updating Customized First Frame>` 

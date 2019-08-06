@@ -1,0 +1,106 @@
+﻿.. _2	Video Player Launch:
+
+2	Video Player Launch
+=================================================
+
+
+2.1	Action Name
+-------------------------------------
+
+  In Android level, you need to initiate an Intent and set the action “picovr.intent.action.player” to start the built-in video player.
+
+2.2	Parameter Introduction
+-------------------------------------
+
+  Here are the parameters to input in the Intent. For local video, the uir(path) and title are required. For live stream resource, you should at least input uri.
+
+======================	==============   	=========================================================================================
+Parameter               Type   				Remark
+======================  ==============		=========================================================================================
+Start player Action     String 				picovr.intent.action.player
+uri                     String				Play address (required)
+title                   String				The name of the video
+videotype               String				Video type
+Videowidth              String				Width of the video
+Videoheight             String				Video height
+playTime                String				Play the starting point
+autoPlay                Int 				Whether to automatically play, int data, 1, automatically play;0, load the first frame,
+videoSource             String				Video source type
+======================  ==============		=========================================================================================
+
+2.3	Permission
+---------------------------------
+
+  In AndroidManifest.xml file, the following permission need to be added.
+
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+2.4	Supported Video Format
+---------------------------------
+
+  The video types supported are listed below, 
+
+- VideoType_2D=0;
+	
+- VideoType_3D_LR=1;
+   
+- VideoType_360_2D=2;
+   
+- VideoType_360_3D_TB=3;
+   
+- VideoType_360_3D_LR=5;
+   
+- VideoType_3D_TB=7;
+   
+- VideoType_180_2D=10;
+   
+- VoideoType_180_3D_TB=11;
+
+- VoideoType_180_3D_LR=13; 
+
+  Please note if you don't specify any video type, it will be 0 (2D) by default.
+
+2.5 Sample Code
+-------------------
+
+To launch built-in player, please refer to the Android sample code including jar file located in /outputs/launch-pico-player.jar.
+
+Sample code address: https://github.com/picoxr/launch-pico-player
+
+Within a Unity project, there are two methods to call functions compiled in the jar file:
+
+a.	Non-inheriting the main Activity
+
+This method directly call functions in Android jar file.
+
+Please refer to following C# code for Unity script:
+
+		
+.. code-block:: c#
+
+	AndroidJavaObject ajo = new AndroidJavaObject("com.picovr.picoplaymanager.PicovrLaunchPlayer");
+	AndroidJavaObject ActivityContext = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+	ajo.Call("launchVideoPlayer", ActivityContext, "/storage/emulated/0/Download/", "test.mp4", "2");
+
+b.	Inheriting the main Activity
+
+Step1: Modify main activity of AndroidManifest.xml to com.picovr.picoplaymanager.PicovrPlayManagerActivity;    
+
+Step2: Copy the JAR file to the Assets/Plugins/Android/ folder;    
+
+Step3: Copy the PicoUnityActivity.cs to the Assets folder;     
+
+Step4: In the script file, Use “CallObjectMethod” interface to call the methods defined in JAR files as below:
+
+Please refer to following C# code for Unity script:
+
+.. code-block:: c#
+
+	PicoUnityActivity.CallObjectMethod("launchVideoPlayer", "/storage/emulated/0/Download/", "test.mp4", "2");
+
+
+
+
+

@@ -1,0 +1,48 @@
+.. _3 Register XML file to integrate to the project:
+
+3 Register XML file to integrate to the project
+==============================================================
+
+Then you need to insert build code into ProjectName.build.cs to compile this project.
+
+a)	Copy the following code.
+
+.. code-block:: c++
+
+    if（Target.Platform == UnrealTargetPlatform.Android） 
+    {
+      PrivateDependencyModuleNames.AddRange(new string[] { "Launch" });
+	  
+      String LocalPath = Utils.MakePathRelativeTo(ModuleDirectory, BuildConfiguration.RelativeEnginePath);
+	  
+      AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", (LocalPath + "/ filename.xml")));
+    }
+
+b)	Paste this segment into ProjectName.build.cs, (Highlighted in red.). Be aware that “filename.xml” should be
+
+.. code-block:: C++
+
+    using UnrealBuildTool;
+    using System.IO;
+    public class MYJar : ModuleRules  
+    {  
+      public MYJar(ReadOnlyTargetRules Target) : base(Target)  
+      {  
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });  
+        PrivateDependencyModuleNames.AddRange(new string[] {  });  
+        
+        // Uncomment if you are using Slate UI  
+        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });  
+        
+        // Uncomment if you are using online features  
+        // PrivateDependencyModuleNames.Add("OnlineSubsystem");  
+        
+        // To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true  
+        if (Target.Platform == UnrealTargetPlatform.Android)  
+        {  
+            PrivateDependencyModuleNames.AddRange(new string[] { "Launch" });  
+            AdditionalPropertiesForReceipt.Add(new ReceiptProperty("AndroidPlugin", ModuleDirectory + "/CPPJAVAS.xml"));  
+        }  
+      }  
+    }

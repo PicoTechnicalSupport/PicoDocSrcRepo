@@ -1,0 +1,8 @@
+﻿.. _1  Introduction:
+
+1  Introduction
+============================================
+
+This document describes how to launch Pico system built-in video player to play a specific video or URL with Android method.
+
+

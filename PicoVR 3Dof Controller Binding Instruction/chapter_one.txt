@@ -1,0 +1,8 @@
+.. _1 Device Supported:
+
+1 Device Supported
+====================
+
+-  Goblin
+
+-  Pico G2

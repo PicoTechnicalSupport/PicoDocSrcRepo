@@ -1,0 +1,16 @@
+﻿.. _1 Introduction:
+
+1 Introduction
+===============================
+
+1.1 Overview
+------------
+
+This document provides some commonly used instructions
+
+1.2 Hardware Devices
+------------------------
+
+FAQ contents are applied on the following devices:
+
+    - Pico devices: Pico Goblin, Pico Neo, Pico G2, Pico G2 4k

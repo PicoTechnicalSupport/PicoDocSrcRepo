@@ -1,0 +1,28 @@
+﻿.. _2 Interfaces:
+
+2.	Interfaces
+=================================================
+
+The jar file provides the following interfaces:
+
+=======   =======================   ===================================        ============================================================================================================================================================================================================================================================================================   
+No.       Interface                 Description                                Remarks
+=======   =======================   ===================================        ============================================================================================================================================================================================================================================================================================
+1         androidShutDown           Shutdown Interface                         Need the system signature (Scheme set out 4.1-2) PicoUnityActivity.CallObjectMethod("androidShutDown")
+2         androidReBoot             Reboot the machine                         Needing the system signature (Scheme set out in 4.1-2)  PicoUnityActivity.CallObjectMethod ("androidReBoot")       
+3         androidLockScreen         Lock screen                                PicoUnityActivity.CallObjectMethod("androidLockScreen ")
+4         androidUnlockScreen       Open screen                                PicoUnityActivity.CallObjectMethod("androidUnlockScreen ")
+5         acquireWakeLock           Request WakeLock                           Must appear in pairs with "Releasewakelock" Picounityactivity.callobjectmethod ("acquirewakelock ")     
+6         releaseWakeLock           Release Wakelock                           Must appear in pairs with "acquireWakeLock”   PicoUnityActivity.CallObjectMethod ( "  releaseWakeLock  ")     
+7         goToApp                   Go to App                                  For example: PicoUnityActivity.CallObjectMethod ( "goToApp", "package name of the App jumped to");
+8         setpropSleep              Set the system sleep timeout               Parameter: "1" means never sleeping, for example: Picounityactivity.callobjectmethod ("Setpropsleep", "1");                 
+9         setPropLockScreen         Set screen off timeout                     Parameters: "65535" means “always on display”    PicoUnityActivity.CallObjectMethod("setPropLockScreen ", "65535");           
+10        Silentinstall             Silent installation                        Need the system signature, need to add parameters: apk storage path and name, and package name of current application.   PicoUnityActivity.CallObjectMethod("silentInstall",new object[] { "/storage/emulated/0/Download/PicoVRtest.apk", "com.example.picovrpowermanager" });
+11        silentUninstall           Silent uninstallation                      Need to add parameters: apk's package name  PicoUnityActivity.CallObjectMethod ( "  silentUninstall  ")         
+=======   =======================   ===================================        ============================================================================================================================================================================================================================================================================================
+
+Note: The second parameter in silent installation must be the package name of the current application, not the package name of the application being installed.
+
+For example:
+
+PicoUnityActivity.CallObjectMethod("silentInstall",new object[] { "/storage/emulated/0/Download/PicoVRtest.apk", "com.example.picovrpowermanager"});

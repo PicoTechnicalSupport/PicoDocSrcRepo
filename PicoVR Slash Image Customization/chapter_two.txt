@@ -1,0 +1,29 @@
+﻿.. _2 Instructions Of Removing Existing First Frame:
+
+2 Instructions Of Removing Existing First Frame
+==================================================================================================
+
+System version requirements: 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+Goblin-b175, pico neo-b133; (Implemented in PUI version 2.3.0)
+
+Modification Scheme: 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+Execute four ADB commands by following the procedure
+
+ⅰ. adb reboot bootloader 
+
+After executing the first line of command, wait for half a minute and device will enter Root Mode;
+ 
+ⅱ. fastboot oem splash unlock 
+ 
+ⅲ. fastboot flash splash XXX.img 
+ 
+Get splash.img file path: https://github.com/picoxr/support/blob/master/Assets/splash.img 
+ 
+ⅳ. fastboot reboot 
+ 
+ⅴ. Reboot device. Check if the first frame Logo has been removed. 
+

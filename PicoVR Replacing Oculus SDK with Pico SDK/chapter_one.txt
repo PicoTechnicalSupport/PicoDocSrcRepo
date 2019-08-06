@@ -1,0 +1,24 @@
+﻿.. _1 Overview:
+
+1 Overview
+===============================
+
+This document describes how to replace the Oculus SDK with the Pico SDK. 
+
+The components involved in this procedure are:
+
+- Unity 2017.2.0f3
+
+- Oculus SDK V1.23.0
+
+- Pico SDK V2.7.6
+
+This procedure has been tested on the following hardware:
+
+- Oculus Go
+- Pico Goblin, Pico Neo, and Pico G2
+
+
+
+
+

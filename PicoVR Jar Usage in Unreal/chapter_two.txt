@@ -1,0 +1,77 @@
+﻿.. _2 Write an xml script to call functions compiled in Android SDK APIs or in a JAR file:
+
+2 Write an xml script to call functions compiled in Android SDK APIs or in a JAR file
+==================================================================================================
+
+
+- a)	Create an xml file under \ProjectName\Source\ProjectName\, under the same folder as ProjectName.build.cs
+
+- b)	Write the code referring to the demo code below. You need to insert your Android code accordingly.
+
+- c)	If you are using JAR file, you need to write this tag **<resourceCopies></resourceCopies>** And indicate path of your JAR file here.
+
+- d)	Save this xml file to \Source\ProjectName\filename.xml
+
+**Please refer to the following code:**
+
+
+.. code-block:: xml
+
+    <root xmlns:android="http://schemas.android.com/apk/res/android">
+	  <init>
+	    <!—Write your initialization contents.-->
+	    <!—Eample-->
+	    <log text="Pico Test for Yeti"/>
+	  </init>
+	  <resourceCopies>
+	    <!—Indicate path of 3rd-party library you need to include(.so file/.jar file) -->
+	    <!—Example-->
+	    <copyFile src="$S(PluginDir)/lib/javalib.jar" dst="$S(BuildDir)/libs/javalib.jar" />
+	  </resourceCopies>
+	  <gameActivityImportAdditions>
+	  	<insert>
+	  	  <!—Indicate the packages you need to include.-->
+	  	  <!—Example-->
+	  	  import android.widget.Toast;
+	  	  import android.hardware.Camera;
+	  	  import android.hardware.Camera.CameraInfo;
+	  	  import android.hardware.Camera.Parameters;
+	  	  import android.hardware.Camera.PreviewCallback;
+	  	  import android.graphics.SurfaceTexture;
+	  	  import android.graphics.ImageFormat;
+	  	  import android.graphics.PixelFormat;
+	  	  import java.util.List;
+	  	  import java.io.IOException;
+	  	  import android.util.Log;
+	  	  import com.pvr.PvrManager;
+	  	</insert>
+	  </gameActivityImportAdditions>
+	  <gameActivityClassAdditions>
+	  	<insert>
+	  	  <!—Register the API fuction you need to call-->
+	  	  <!—Example-->
+	  	  private static PvrManager mPvrManager = null;
+	  	  public boolean AndroidThunkJava_UEPvr_SetLED(int led, int color, int blink, int ontime, int offtime)
+	  	  {
+	  	  boolean ret = false;
+	  	    if(null != mPvrManager)
+	  	    {
+	  	    	mPvrManager.setLedStatus(led, color, blink, ontime, offtime);
+	  	    	ret = true;
+	  	    	Log.debug("LED brightness: " + (ret == true?"succeed":"failed"));
+	  	    }
+	  	    return ret;
+	  	  }
+	  	</insert>
+	  </gameActivityClassAdditions>
+	  <gameActivityOnCreateAdditions>
+	  	<insert>
+	  		<!—Write your optional additions to GameActivity oncreate in GameActivity.java-->
+	  	</insert>
+	  </gameActivityOnCreateAdditions>
+    </root>
+
+
+
+
+

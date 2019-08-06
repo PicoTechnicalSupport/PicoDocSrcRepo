@@ -1,0 +1,80 @@
+﻿.. _8 	Frequently asked questions:
+
+8 	Frequently asked questions
+====================================
+
+
+**1.Q:** Why do the virtual buttons of the Android system occur after the project is packaged?
+
+**A:** Check: Project setup → Platform → Android → APKPackaging →Enable FullScreent Immersive on KitKat and above devices:
+
+.. image:: _static/8.1.png
+
+Figure 8.1 Enable FullScreent Immersive on KitKat and above devices checking
+
+**2.Q:** How to improve the frame rate of the game?
+
+**A:** To improve the game frame rate, you can start from the following two aspects:
+
+1 ) 	Turn off the ambient light obscuration. At this phase, the requirements of VR project for global illumination are not too high, the ambient light obscuration can be turned off by opening the project setup, entering the Engine/Rendering/Default Setting, and unchecking Ambient Occlusion and Ambient Occlusion Static Fraction:
+
+.. image:: _static/8.2.png
+
+Figure 8.2 Ambient light obscuration use cancellation
+
+2 ) Turn off Mobile HDR. The practice is as follows: open the project setup, go to Engine/Rendering/Mobile, and uncheck Mobile HDR:
+
+.. image:: _static/8.3.png
+
+Figure 8.3 Mobile HDR unchecking
+
+**3.Q:** How to reduce the size of the game pack?
+
+**A:** The size of the game pack can be decreased from three aspects:
+
+a ) Check Create compressed cooked packages in the project setup / project / package and compress the baked contents;
+
+b ) Uncheck the unused Plugins;
+
+c ) Delete resources that are not used in the Content Browser.
+
+.. image:: _static/8.4.png
+
+Figure 8.4 Compression of baked contents
+
+**4.Q:** How to optimize the display results?
+
+**A:** The saw tooth can be effectively reduced and the display effects can be improved after opening the project setup, entering the engine/Rendering/Mobile and adjusting the Mobile MSAA. The higher the multiple, the better the optimization, but it may increase the performance consumption and affect the frame rate.
+
+.. image:: _static/8.5.png
+
+Figure 8.5 Mobile MSAA modification
+
+**5.Q:** The system displays virtual buttons, how to avoid it?
+
+**A:** Set the full screen mode through the UE, as shown bin the following figure.
+
+.. image:: _static/8.6.png
+
+Figure 8.6 Full screen mode setting 
+
+**6.Q:**  Project naming or path: in Chinese, why does package failure occur with the PicoVRSDK plugin?
+
+**A:** UE4 does not support Chinese, please don't use Chinese and Chinese directories.
+
+
+**7.Q:** The project is named as test, why does package failure occur with the PicoVRSDK plugin?
+
+**A:** test is the command keyword in the UE, as shown in the following figure. It is recommended that the project name should avoid the UE command keyword.
+
+.. image:: _static/8.7.png
+
+Figure 8.7 UE command keyword
+
+**8.Q:** Why does the Goblin handle flash in game from time to time?
+
+**A:** Because the UE4 game logic is not in the same thread as the rendering, Epic is the motion of the smooth motion controller, it will be defaulted that the position and orientation of the motion controller will be updated before rendering, but this practice will also create a bug in which the model flashes from time to time. To circumvent this flashing, it is only necessary to select the Motion Controller component and check Disable Low Latency Update in its details panel:
+
+.. image:: _static/8.8.png
+
+Figure 8.8 Disable Low Latency Update

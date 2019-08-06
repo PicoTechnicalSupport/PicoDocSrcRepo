@@ -1,0 +1,96 @@
+﻿.. _4 	Quick Start of SDK Access:
+
+4 	Quick Start of SDK Access
+======================================
+
+Step1: New Project
+------------------------
+
+Open Unity and Create New Project are as follows:
+
+.. image:: _static/4.1.PNG
+
+Figure 4.1 New Project
+
+Create cube1, cube2 and cube3, and set their Transform information as follows:
+
+.. image:: _static/4.2.png
+
+Figure 4.2 cube1 Transform
+
+.. image:: _static/4.3.png
+
+Figure 4.3 cube2 Transform
+
+.. image:: _static/4.4.png
+
+Figure 4.4 cube3 Transform
+
+Step2： Import SDK
+-----------------------
+
+Select the menu Assets>Import Package>Custom Package…
+
+.. image:: _static/4.5.png
+
+Figure 4.5 Import of Custom Package
+
+At this time, a dialog box will pop up, select “PicoVR_Unity_SDK- version number. Unity package” and click to open:
+
+.. image:: _static/4.6.png
+
+Figure 4.6 Unity Package
+
+After opening, a dialog box will pop up again. Please import the corresponding parts as required:
+
+.. image:: _static/4.7.png
+
+Figure 4.7 Import options
+
+After importing package, SDK will automatically set chapter 3.3 Default Orientation to be Landscape Left and V Sync Count to be Don’t Sync.
+
+Step3: Use SDK
+-----------------------
+
+Enter the Project tab, expand the Assets> PicoMobileSDK >Pvr_UnitySDK>Prefabs in turn, drag the Prefabs under Pvr_UnitySDK into the scenes, and set the Position and Rotation under the Transform component to (0,0,0):
+
+.. image:: _static/4.8.png
+
+Figure 4.8 Directory of Prefabs under Pvr_UnitySDK
+
+After putting it in, the Hierarchy of the scenes should be as shown in the following Figure:
+
+.. image:: _static/4.9.png
+
+Figure 4.9 Hierarchy of Scenes
+
+In order to prevent other Cameras in the scenes from interfering with the SDK's stereo rendering, the Main Camera in the above Figure needs to be deleted in the last step.
+
+Step4: Simulation run
+-----------------------
+
+Click the Run button to see the following in the Game window:
+
+.. image:: _static/4.10.png
+
+Figure 4.10 Simulation run
+
+Press Alt, move the mouse, and the picture will rotate up and down or left and right; Press Alt+, and click the left mouse button to select VR mode or Mono mode (Unity Editor only).
+
+Step5: Packaging
+-----------------------
+
+Before packaging, you should also set the tracking types of head and hand according to the type of application: Enter the Inspector panel of Pvr_UnitySDK. If the head is 6dof, you need to set Head Pose to Six Dof. If the hand is 6dof, you need to set Hand Pose to Six Dof.
+
+.. image:: _static/4.11.png
+
+Figure 4.11 Adapting target platform
+
+When packaging, save the current scenes firstly, then enter File>Build Settings..., and click “Add Current” to add the current scene to the building list. Also, select Android at the Platform, then click “Switch Platform” and finally click “Build” to complete the packaging.
+
+.. image:: _static/4.12.png
+
+Figure 4.12 Packaging
+
+Since then, a complete process of using SDK has ended. Specific SDK adaptation methods for various hardware products of Pico VR will be given in detail in the following chapters.
+

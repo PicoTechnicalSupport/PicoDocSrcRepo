@@ -1,0 +1,12 @@
+﻿.. _Introduction:
+
+Introduction
+========================================
+
+This document mainly introduces three approaches that how to write and call methods defined in a JAR file,which allows developer to call Android methods in Unity project on Pico device.
+
+- Using Method 1, the name of the main activity of Unity application need to be changed, which is capable to do some initialization and customization work in activity lifecycle.
+
+- Using Method 2, Unity application can remain its original main activity and simply import multiple JAR files. 
+
+- Using Method 3, Unity methods will be invoked automatically by JAR files. In this way, Unity application doesn’t need to call the methods in JAR file by itself consecutively.

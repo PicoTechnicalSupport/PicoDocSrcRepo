@@ -1,0 +1,63 @@
+.. _5 Scheme of Dynamic Modification of Codes: 
+
+
+5 Scheme of Dynamic Modification of Codes 
+================================================
+
+According to the manual modification scheme mentioned in 3.3, you need to reboot the device to implement the new definition after you modify the configuration each time. The scheme of dynamic modification of codes can achieve the shielding of system keys and restoration of the default system keys. 
+
+The main principle is to place two configuration files in different names (Defaultkeyconfig.prop and Userkeyconfig.prop): one is for the effective configuration of the system key (Userkeyconfig.prop), and the other (Defaultkeyconfig.prop) shields all the contents inside. The program calls different configuration files according to different situations, and implement dynamic modification of the system keys. The specific steps are provided as below.
+
+- Step1: Get related configuration files
+
+    (available on: https://drive.google.com/file/d/1ZQElFCjY4yqa02QOQPe2zp-N4jr__Uer/view) 
+
+- Step2: Modify the key configurations according to the needs:
+
+    Open the “configuration file/UserKeyConfig.prop”, and modify by reference to Step 3 in chapter4; 
+
+- Step3: Use jar file to load configuration file
+
+    Create the “Unity” project, and copy the “PicoKeyConfig_xxx.jar” package in Plugins->Android in Demo to the directory corresponding to the “Unity” project. Place the modified configuration files in any directory of the system, and transmit the file names and paths as parameters to the interface.
+
+    Examples:
+    
+    PicoUnityActivity.CallObjectMethod("androidSetUserKey", "/storage/emulated/0/download/UserKeyConfig.prop");
+    
+    Note: Place the file “UserKeyConfig.prop” in the “Download” directory of the system
+		  
+- Step4: 	Modify the  file“AndroidMinifest.xml”.
+
+    Add [android: sharedUserId = "android.uid.system"] to the “Manifest” tag
+
+.. image:: _static/4.1.png
+
+Add permissions (if none):
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+.. image:: _static/4.2.png
+
+Modify the main activity: android:name=" com.example.picokeyconfig.PicoKeyConfigManager"
+
+.. image:: _static/4.3.png
+
+- Step5:Copy the “PicoUnityActivity.cs”
+
+    Copy the “PicoUnityActivity.cs” script in “Demo” to any directory of the “Unity” project. 
+
+- Step6:Call the Android interface,
+
+    For example: 
+
+    PicoUnityActivity.CallObjectMethod("androidSetUserKey", "/storage/emulated/0/Download/UserKeyConfig.prop") 
+
+                                      Interface Description
+
+==========   ==================       ==============================                ==========================					  
+No.          Interface                Description                                   Remarks
+==========   ==================       ==============================                ==========================
+1            androidSetUserKey        Modify the system key values                  Need the system signatures
+==========   ==================       ==============================                ==========================

@@ -1,0 +1,276 @@
+﻿.. _7 	Advanced features:
+
+7 	Advanced features
+===============================
+
+This section describes several advanced features for some of the developer's specific needs and optimizations.
+
+7.1 	Display frame rate
+--------------------------------------
+
+To show the frame rate in real time, go to the Inspector panel of Pvr_UnitySDK and check the “Show FPS” under the Pvr_UnitySDK Manager component:
+
+.. image:: _static/7.1.png
+
+Figure 7.1 Opening of FPS
+
+7.2 	Open Screen Fade of the Scenes
+-----------------------------------------------
+
+The SDK provides Open Screen Fade of the Scenes to be turned on through options as follows
+
+.. image:: _static/7.2.png
+
+Figure 7.2 Opening of Screen Fade
+
+Figure 7.3 can be used to set the Fade Time and Fade Color of the Scenes (time unit is S)
+
+.. image:: _static/7.3.png
+
+Figure 7.3 Fade Time and Fade Color after Opening the Scenes
+
+7.3 	Limited frame rate
+-------------------------------------
+
+The SDK provides the function of limiting frame rate, which is opened by unchecking the Use Default FPS option as follows
+
+.. image:: _static/7.4.png
+
+Figure 7.4 Opening of limited frame rate
+
+Then enter the desired frame rate value in the FPS text box.
+
+7.4 	Configure the size of EyeBuffer
+---------------------------------------------
+
+The SDK provides the function of configuring the size of the Eyebuffer, which is opened by unchecking the Use Default RenderTexture option as follows
+
+.. image:: _static/7.5.png
+
+Figure 7.5 Configuration size of Eyebuffer
+
+7.5 	Custom Application Launch Animation
+---------------------------------------------
+
+The SDK provides the function of customizing the application to launch animation. Click the menu bar Pvr_UnitySDK/ Splash Screen to open the Splash Screen editing interface, as shown in the figure:
+
+.. image:: _static/7.6.png
+
+Figure 7.6 Splash Screen option
+
+SplashScreenType contains three types of values: UseUnitySplashScreen, UsePicoSplashScreen, UseDynamicSplashScreen. Each type corresponds to a different application startup animation, and the following describes   the configuration methods of the three startup animations. 
+
+7.5.1 Launch animation with the Unity app
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SplashScreenType selects UseUnitySplashScreen, then click ok, the log message prompts Congratulations when the configuration is complete. At this point, the application startup animation uses the startup animation set in Unity PlayerSetting->Splash Image. 
+
+7.5.2 Launch animation with the default app provided by the Pico SDK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SplashScreenType selects UsePicoSplashScreen, then click ok, the log message prompts Congratulations when the configuration is complete. The application startup animation is now using the default startup animation provided by the Pico SDK.
+
+7.5.3 Starting an animation with a custom app
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SplashScreenType selects UseDynamicSplashScreen, the Splash Screen interface is as follows:
+
+.. image:: _static/7.7.png
+
+Figure 7.7 Splash Screen interface
+
+SplashImage: An array of frame animation files when the application starts. The order of the frame animation files in the array should correspond to the order of playback. Image pixel size should be less than 1080x720.
+
+Inside_background: The background image of the application launch animation. Image pixel size should be less than 1080x720.
+
+Use Splash Text: Startup copy when the app starts, check to enable it. After checking, the sub-items appear as shown below:
+
+.. image:: _static/7.8.png
+
+Figure 7.8  Use Splash Text option
+
+Default Text: The default startup copy, if the system language of the device does not belong to any of the LanguageLocalization, the default startup copy is displayed.
+
+LanguageLocalization: Fill in the corresponding startup copy content for different languages. When the application starts, it will select which startup copy to display according to the system language of the device. If the current system language is not included in LanguageLocalization, the Default Text default startup copy content will be displayed.
+
+FontSize: Starts the copy text size.
+
+FontColor: Starts the copy text color.
+
+TextHeight: The distance from the start of the copy text to the bottom of the screen, in pixels.
+
+Use Carousel: After the marquee, check the marquee function, if the text of the startup copy is too long, it will scroll.
+
+Alignment: Starts the alignment of the copy text.
+
+After all configuration items are configured, click the OK button to save the configuration. The Log message prompts Congratulations to be saved later.
+
+7.6 	Foveated Rendering
+---------------------------------------------
+
+Foveated rendering optimizes the ability to render scenes, providing high resolution for the center of the field of view, while peripheral views greatly reduce the details of the scene. The relevant properties are set in the Pvr_UnitySDK under LeftEye and RightEye:
+
+Foveation Gain: Vector2 type, the reduction rate of peripheral pixels in the X/Y axis direction. The larger the value, the more the reduction is made.
+
+Foveation Area: The type of float, centered on the gaze point, without reducing the resolution within the radius of the Foveation Area value.
+
+Foveation Minimum: The float type, the texture coordinate parameter of the texture filter function.
+
+Foveation Level: Available in Low, Med, and High levels. Each level corresponds to a different Foveation parameter.
+
+.. image:: _static/7.9.png
+
+Figure 7.9 Foveated rendering
+
+7.7 	VR Compositor Layers
+---------------------------------------------
+
+Normally, our scene content will be directly rendered to the "Eye Buffer", and then the "Eye Buffer" will be sampled by the ATW thread and finally rendered onto the VR screen.
+
+The Compositor Layers (also known as "transmission layer") provides a rendering method that is different from "rendering scene content directly into the eye buffer": this method does not need to render the content to the "Eye Buffer", but directly “transparently” the content to ATW thread for sampling and synthesis processing, thus avoiding a texture sampling process (rendering the content onto the “eye buffer”), which significantly improves the sharpness of the texture and video.
+
+Compositor Layers supports up to 15 layers (more than 15 layers will not be displayed).
+
+Compositor Layers currently supports two texture types: 
+
+- Standard Texture : standard 2D texture 
+
+- Equirectangular Texture: panorama texture (360°)
+
+Compositor Layers function is provided by the Pvr_UnitySDKEyeOverlay.cs script. The related properties are set as follows: 
+
+.. image:: _static/7.10.png
+
+Figure 7.10  OverLay usage
+
+Related property settings:
+
+Layer Index: Set rendering priority (Smaller value means higher priority for rendering);
+
+Image Type: set the texture type;
+
+- Standard 2D texture (Standard Texture)
+
+- 360 panoramic texture (Equirectangular Texture)
+
+Textures: Specify texture resources for the left and right eyes;
+
+- Left Texture
+
+- Right Texture
+
+7.7.1 	Standard 2D Texture
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to facilitate developers to quickly experience the 2D texture pass-through function, the SDK provides a 2DOverlay example, developers can directly package and install on the device to experience the effect (Note:Editor can not experience this function).
+
+If the developer applies the feature to their project, follow these steps: 
+
+- Step 1: Open Unity to create an empty scene, find Pvr_UnitySDK.prefab in the
+
+PicoMobileSDK/Pvr_UnitySDK/Prefabs/ folder and drag it into the empty scene, and delete the Main Camera object.
+
+.. image:: _static/7.11.png
+
+Figure 7.11 Drag into prefab
+
+- Step 2: Create a Quad in the scene, name it OverlayTransform, then adjust the position of the Quad so that it is in the visible position of the Camera. After determining the display position, uncheck the Mesh Render and Mesh Collider components on the Inspector view panel.
+
+.. image:: _static/7.12.png
+
+Figure 7.12 Create a Quad
+
+.. image:: _static/7.13.png
+
+Figure 7.13 Cancel Mesh components
+
+Tips：The Transmit Layer will use the Quad's Transform information: position, rotation, scale.
+	
+- Step 3: Bind the Pvr_UnitySDKEyeOverlay.cs script to the Quad created in the previous step and adjust its property parameters on the inspector.
+
+.. image:: _static/7.14.png
+
+Figure 7.14 Bind script
+
+Layer Index: Set the rendering priority (Smaller value means higher priority for rendering);
+
+Image Type: Select the StandardTexture type;
+
+Textures: Specify the 2D texture to be transparently transmitted (Tips: the left and right eyes specify the same texture, otherwise it will cause the left and right eye content to be different, causing dizziness);
+
+Tips:Developers who need to dynamically modify passthrough 2D textures can call the SetTexture (Texture Texture) interface in the Pvr_UnitySDKEyeOverlay. cs script.
+	
+- Step 4: The last step, package and install to the device to experience the effect. 
+
+.. image:: _static/7.15.png
+
+Figure 7.15 running result
+
+7.7.2 	360 panorama texture
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Usually we need three steps to achieve "360 panoramic view": 
+
+1. Create a sphere model in the scene;
+
+2. Create a "360 Panorama Texture" material and assign it to the sphere model, then modify the shader to remove the front rendering (Cull Front);
+
+3. Place the Camera in the center of the sphere;
+
+The "transmission layer" function requires only two step:
+
+1. Create an empty object in the scene and bind the Pvr_UnitySDKEyeOverlay.cs script;
+
+2. Set the ImageType to the EquirectangularTexture type and specify a "360 Panorama Texture"
+
+In order to facilitate the developer to quickly familiarize the 360 panoramic texture transparent transmission function, the SDK provides a 360Overlay example, developers can directly package and install on the device to experience the effect (Note:Editor can not experience this function).
+
+If the developer applies the feature to their project, follow these steps:
+
+- Step 1: The steps are the same as the standard 2D texture;
+
+- Step 2: Create an empty object in the scene, name it 360OverlayTransform, and bind Pvr_UnitySDKEyeOverlay.cs script;
+
+.. image:: _static/7.16.png
+
+Figure 7.16 Create an empty object
+
+- Step 3: Set property parameters on the script inspector;
+
+.. image:: _static/7.17.png
+
+Figure 7.17 Set property parameters
+
+Image Type: Select the EquirectangularTexture type;
+
+Textures: Specify the same 360 panorama texture for the left and right eyes;
+
+Tips：The EquirectangularTexture type does not need to set the LayerIndex to specify the rendering priority, and the default is to render first.
+
+- Step 4: The last step, package and install on the device to experience the effect
+
+.. image:: _static/7.18.png
+
+Figure 7.18 running result
+
+7.7.3 	Head-Locked & Word-Locked Mode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, the "transmission layer" is Word-Locked mode. If you want to implement Head-Locked mode, you only need to create an empty Transform under the Head node and bind the Pvr_UnitySDKEyeOverlay.cs script.
+
+.. image:: _static/7.19.png
+
+Figure 7.19 Head-Locked Mode
+
+7.8 	Monocular camera
+-------------------------------------
+
+Binocular camera: Provides a separate image for each eye from different angles, and the object will be closer to real life.
+
+Monocular camera: Use a single image to render to both eyes, which effectively reduces rendering.
+
+The way to enable a monocular camera is as follows: Check Use Monoscopic to enable the monocular camera, otherwise use a binocular camera.
+
+.. image:: _static/7.20.png
+
+Figure 7.20 monocular camera

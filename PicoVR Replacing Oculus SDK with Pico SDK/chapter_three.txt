@@ -1,0 +1,56 @@
+﻿.. _3	Overview of a Player Based on the Oculus SDK:
+
+3	Overview of a Player Based on the Oculus SDK
+==================================================
+
+This section provides an overview of an example player built with the Oculus SDK, that will be updated to use the Pico SDK. Detailed steps are provided below in Section 4.
+
+3.1 Resources for the Example
+---------------------------------------------
+
+The example consists of the following files and directories:
+
+.. image:: _static/3.1.png
+
+Figure 4 - Structure of the example.
+
+- **PicoPlayer.rar**: Contains the completed project where the Oculus SDK has been replaced with the Pico SDK.
+
+- **OculusPlayer.rar**: The project that will be migrated to the Pico SDK.
+
+- **Guideline for Replacing Oculus SDK with Pico SDK-en.docx**: contains the content of this section.
+
+- **PicoPlayer.apk**: A runnable application using the Pico SDK.
+
+- **OculusPlayer.apk**: A runnable application using the Oculus SDK.
+
+
+3.2 Overview of the Video Player Project
+--------------------------------------------------
+
+The Oculus SDK project sample (OculusPlayer.rar) is based on the Oculus **GearVrControllerTest** scene where the sphere is a prefab of 360° video player.
+
+.. image:: _static/3.2.png
+
+Set the video source under the Media Player Ctrl (Script)：
+
+.. image:: _static/3.3.png
+
+Figure 5 – GearVrControllerTest scene
+
+The video source is set via **Str File Name** under **Media Player Ctrl (Script)**:
+
+.. image:: _static/3.4.png
+
+Figure 6 – Setting the video source. 
+
+The player only supports OpenGLES2 so **OpenGLES2** is selected under **Rendering**:
+
+Figure 7 – Setting the graphics API to OpenGLES2
+
+**:Figure 8 shows the application running**:
+
+.. image:: _static/3.5.png
+
+Figure 8 – View of the application running on the headset.
+

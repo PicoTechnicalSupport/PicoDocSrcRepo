@@ -1,0 +1,191 @@
+﻿.. _Method 1. Inheriting from Class MainActivity:
+
+Method 1. Inheriting from Class MainActivity
+=================================================
+
+1. Writing JAR file in Android Studio 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+- 1)	Import vractivity.jar in SDK assets/plugin/android path in app->libs, and right click vractivity.jar to select “add as library”
+
+- 2)	Inherit from UnityPlayerNativeActivityPico class, add public static Activity unityActivity = null; add unityActivity = this; in method onCreate() 
+
+- 3)	Comment out the line setContentView(); 
+
+.. image:: _static/2.1.png
+
+- 4)	 Add the following code on the app-> build.gradle root node, 
+
+.. code-block:: java
+    
+    task createJarDebug(type: Jar,dependsOn: ['build']) {
+       "test"
+        from 'build/intermediates/javac/debug/compileDebugJavaWithJavac/classes'
+        include('**')
+        exclude('**/R.class')
+        exclude('**/R$*.class')
+    exclude('**/BuildConfig.class')
+    }
+    //add the following code if you want to obfuscate code
+    task proguard(type: proguard.gradle.ProGuardTask, dependsOn: buildJar) {
+    //  input path
+        injars "build/libs/test.jar"
+    //  output path
+        outjars "lib/testProguard.jar"
+    //  add config info
+        configuration 'proguard-rules.pro'
+    }
+
+- 5)	Enter gradlew createJarDebug in Android Studio Terminal
+
+You need to generate the conflation package by typing
+
+.. code-block:: java
+
+    gradlew createJarDebug proguard
+	
+If prompted build success, the package succeeds
+
+**JAR file path**: app/build/libs/test.jar
+
+Provide the JAR file info (Package name, Class name and Interface name) to Unity engineer.
+
+2. Use the JAR file in Unity project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- 1)  Modify main activity of AndroidManifest.xml as follows:
+
+The default main activity of Pico SDK is 
+
+	**com.unity3d.player.UnityPlayerNativeActivityPirco**
+	
+.. image:: _static/2.2.png
+
+Please modify this activity name to package name + activity name as shown:
+
+.. image:: _static/2.3.png
+
+- 2)  Copy the JAR file to the **Assets/Plugins/Android/** folder
+
+.. image:: _static/2.4.png
+
+- 3) Copy the PicoUnityActivity.cs to the Assets folder.
+
+.. code-block:: C#
+
+    using UnityEngine;
+    using System.Collections;
+    
+    /// <summary>
+    /// Pico unity activity.
+    /// </summary>
+    public class PicoUnityActivity
+    {
+      private static AndroidJavaObject picoUnityAcvity = null;
+      private static AndroidJavaObject CurrentActivity ()
+      {
+      	if (Application.platform == RuntimePlatform.Android) {
+                string className= "com.picovr.openrecenter.MainActivity";
+      
+              if (picoUnityAcvity == null) {
+                  picoUnityAcvity = new AndroidJavaClass (className).GetStatic<AndroidJavaObject> ("unityActivity");
+              }
+      	}
+      
+      	return picoUnityAcvity;
+      }
+      
+      public static bool CallObjectMethod (string name, params object[] args)
+      {
+          if (Application.platform != RuntimePlatform.Android)
+          {
+              return false;
+          }
+      	if (CurrentActivity () == null) {
+      		Debug.LogWarning ("Object is null when calling method " + name);
+      		return false;
+      	}
+      	try {
+      		CurrentActivity ().Call (name, args);
+      		return true;
+      	} catch (AndroidJavaException e) {
+      		Debug.LogError ("Exception calling method " + name + ": " + e);
+      		return false;
+      	}
+      }
+      
+      public static bool CallObjectMethod<T> (ref T result, string name)
+      {
+          if (Application.platform != RuntimePlatform.Android)
+          {
+              return false;
+          }
+      	if (CurrentActivity () == null) {
+      		Debug.LogWarning ("Object is null when calling method " + name);
+      		return false;
+      	}
+      	try {
+      		result = CurrentActivity ().Call<T> (name);
+      		return true;
+      	} catch (AndroidJavaException e) {
+      		Debug.LogError ("Exception calling method " + name + ": " + e);
+      		return false;
+      	}
+      }
+      
+      public static bool CallObjectMethod<T> (ref T result, string name,params object[] args)
+      {
+      	if (CurrentActivity () == null) {
+      		Debug.LogError ("Object is null when calling method " + name);
+      		return false;
+      	}
+      	try {
+      		result = CurrentActivity ().Call<T> (name, args);
+      		return true;
+      	} catch (AndroidJavaException e) {
+      		Debug.LogError ("Exception calling method " + name + ": " + e);
+      		return false;
+      	}
+      }
+      
+      public static AndroidJavaObject GetActivity (string package_name, string activity_name)
+      {
+      	return new AndroidJavaClass (package_name).GetStatic<AndroidJavaObject> (activity_name);
+      }
+      
+    }
+
+.. image:: _static/2.5.png
+
+- 4)	Modify the className property of the CurrentActivity() method in PicoUnityActivity.cs to the Class name of the JAR
+
+.. code-block:: C#
+
+    public class PicoUnityActivity  
+    {  
+      private static AndroidJavaObject picoUnityAcvity = null;  
+      private static AndroidJavaObject CurrentActivity ()  
+      {  
+          if (Application.platform == RuntimePlatform.Android) {  
+                string className= "com.picovr.openrecenter.MainActivity";  
+      
+              if (picoUnityAcvity == null) {  
+                  picoUnityAcvity = new AndroidJavaClass (className).GetStatic<AndroidJavaObject> ("unityActivity");  
+              }  
+          }  
+      
+          return picoUnityAcvity;  
+      }  
+    }
+
+- 5)	In the script file, Use “CallObjectMethod” interface to call the methods defined in JAR files as below. 
+
+.. code-block:: C#
+
+    public class CalljarMethod : MonoBehaviour {  
+      
+      // Use this for initialization  
+      void Start () {  
+        PicoUnityActivity.CallObjectMethod("startJar")  
+      }  
+    }     

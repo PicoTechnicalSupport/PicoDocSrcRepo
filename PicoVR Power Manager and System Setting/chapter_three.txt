@@ -1,0 +1,48 @@
+.. _3 Operating Instructions:
+
+3.	Operating Instructions
+===============================
+
+a. Download jar file
+
+   You can download jar file at https://github.com/picoxr/pico-power-manager/blob/master/resource/powermanager.jar
+
+   Copy the “PicoVRPowerManager_vxxx.jar” package and /res/xml folder to the directory “Plugins/Android” in Unity project.
+   
+b. Modify the “AndroidMinifest.xml” script. Add permissions (if none):
+   
+   Modify main activity, take the following picture for reference：
+   
+   android:name= "com.picovr.picovrpowermanager.PicoVRPowerManagerActivity"
+   
+.. image:: _static/3.1.png
+
+Add permissions:
+
+   <uses-permission android:name="android.permission.WAKE_LOCK" />
+   
+   <uses-permission android:name="android.permission.DEVICE_POWER" /> <uses-permission android:name="android.permission.SHUTDOWN"/> 
+   
+   <uses-permission android:name="android.permission.REBOOT"/> 
+   
+   <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+   
+   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+   
+   <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
+   
+   <uses-permission android:name="android.permission.DELETE_PACKAGES"/>
+   
+c. Copy the “PicoUnityActivity.cs” script to Unity project.
+
+d. Call Android interface in C# script. (Method set out above)
+
+**Note:**
+
+1.If you want to motify and build your own jar file, the source code of Android project and jar file could be found at https://github.com/picoxr/pico-power-manager.
+   
+2.The Bundle Identifier in Unity PlayerSetting must be consistent with that in the Android project.
+
+
+
+

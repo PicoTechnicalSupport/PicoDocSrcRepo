@@ -1,0 +1,63 @@
+﻿.. _2 Operation Guide:
+
+2 Operation Guide
+========================
+
+First please download “Hmbirdservertob_signed_2019052101.apk” and install it on the device. Download link: 
+
+https://drive.google.com/open?id=1jn83L5c9WImW8JGlUXYzwfUGHdT_oOAn 
+
+There are mainly three functionalities in this app:
+
+1st functionality – Bind the controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Case 1 – Controller already connected
+
+If the controller is already connected, when you start the app, the “HB ConnectState” value would be 1, see the following picture for reference. Please use the controller to click “COMPLETE” button to bind itself to current device and quit this app. 
+
+.. image:: _static/2.1.png
+
+- Case 2 – Controller not connected
+
+If there is no controller connected, the app will show a controller MAC address which is being scanned and a list of controller MAC addresses that are waiting to be connected. Choose one in the list to connect and then use the connected controller to click the “COMPLETE” button to bind itself to the device and quit this app. 
+
+The controller MAC address could be found back side of the controller and just under the battery cover. 
+
+.. image:: _static/2.2.png
+
+After the controller bonded to the device, please reboot the headset to verify whether the solution works properly. During the headset boot up, press controller Home button to enable it and the controller should be connected automatically.
+
+If the headset failed to connect to the controller in 60s, the “HummingbirdServiceTob” application will start and show the following page. Follow the instructions and click “RETRY” for one more attempt and meanwhile quit the app.
+
+.. image:: _static/2.3.png
+
+If the controller still got failed to be connect in another 60s, the app will start again. In this case a wrong controller may be used or some unknown issue may occur. Please follow the instruction of 2nd functionality to bind a new controller.
+
+2nd functionality – Replace Bonded Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a controller is already bonded and you want to replace it with a new one, please start the app, the UI should be the same as the picture below. 
+
+.. image:: _static/2.4.png
+
+Click “MODIFY” button to unbind current controller and the following page would be showed.
+
+.. image:: _static/2.5.png
+
+Click the Home button of the new controller to make it able to be scanned. Its MAC address will be showed in the list and use the current connected controller to choose it to connect the new one. At last, click “COMPLETE” button to bind the new controller to the device and quit the app. 
+
+3rd functionality – Disconnect the Controller
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the controller is no more needed, please make sure not to enable (press Home button of) the controller when the Headset boot up, so that the device will not connect any controller. In this situation, the “HummingbirdServiceTob” application will automatically start in 60s, click the “SKIP” button to close it and the app will not start any more.
+
+.. image:: _static/2.6.png
+
+Otherwise, if the controller has already been connected, please manually start the “HummingbirdServiceTob” app and click “SKIP” button to disconnect the controller and quit the app.
+
+
+
+
+
+

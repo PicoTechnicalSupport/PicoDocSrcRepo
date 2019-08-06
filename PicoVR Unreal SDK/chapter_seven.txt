@@ -1,0 +1,392 @@
+﻿.. _7 	Payment system:
+
+7 	Payment system
+============================
+
+Pico payment is a game currency payment system based on the Pico account system, and the settlement method is based on the current game currency unit under Pico (P currency).
+
+7.1 	Preparations
+-------------------------
+
+7.1.1 	Get the string used for payment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When developer accesses the payment SDK, an application needs to be created on the developer platform and the corresponding string should be gotten. The application process is as follows:
+
+> 1. Log in to the developer platform and register a Pico member (http://dev.picovr.com/)
+
+> 2. Apply to become a developer
+
+  The developers are divided into individual developers and enterprise developers, please apply according to the actual situations. After the review is submitted, we will provide feedback within 3 working days, please view the status of the developer platform in time.
+
+> 3. View merchant ID
+
+  Once you've applied to become a developer, you can view the developer ID after click on the nickname in the top right corner, i.e. the merchant ID:
+  
+.. image:: _static/7.1.png
+
+Figure 7.1 Developer ID
+
+Note: Before applying for a developer, you need to become a member of Pico.
+
+> 4.Get the corresponding string
+
+  The developers can enter from "Application Management" to the "Creation Application" phase:
+
+.. image:: _static/7.2.png
+
+Figure 7.2 Application creation
+
+After clicking creation application, the platform to be published should be firstly selected.
+
+After selecting the platform, the information about the application can be improved, including whether the application is free or paid, and how much P currency you need to pay when you pay:
+
+.. image:: _static/7.3.png
+
+Figure 7.3 Information about application improvment
+
+Note: Please pay key attention to the red position of the above figure, please fill out the application type carefully, and it can't be modified once you fill it out! After the application is successfully created, the developer platform will assign a string to it, including APPKEY, APPID, APP SECRET:
+
+.. image:: _static/7.4.png
+
+Figure 7.4 APP ID, APP KEY, APP Secret
+
+
+If there is a case of external payment of props for game applications, we require the developers to use the way of adding product codes in the background of developers for unified management. Please select "In-game payment configuration" and configure the game's internal purchase information:
+
+Attention should be paid that the rule of the product code is defined as follows: 'the first letter is a letter, only the entry of letters and numbers is allowed, and it should not be more than 20 characters'. The product code between different props cannot be repeated. The prop types are divided into consumable prop and non-consumable prop. Consumable prop are reusable commodities, such as gold currency, blood bottle, etc. Non-consumable props are disposably purchased products, such as weapons and unlocking levels.
+
+
+> 5.  Fill in the strings
+
+  Go to Edit->Project Settings..., expand PicoMobile under the Plugins sub-item, check "Enable Payment Module", then select "Is Foreign" according to the actual situations, and finally get the merchant (developer) ID, APPID, APP KEY., APP secret and fill them in the following location:
+
+.. image:: _static/7.7.png
+
+Figure 7.5 String filling 
+
+Set the callback proxy event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Before using payment, the callback proxy event should be set firstly, so that you can get the parameters output by the callback functions and set the subsequent execution flow. Here, please use the PicoPaymentSetCallbackDelegates node we provide:
+
+.. image:: _static/unsigned_7121.png
+
+Among them, On Pico Payment Exception Callback is a callback for various exceptions from payment, and the exact meaning of the other callback function parameters will be introduced in the next section which introduces its related main callback functions.
+
+
+7.2 	Other related interfaces
+------------------------------------
+
+7.2.1 	Register
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pico provides developers with Oauth2.0-based authentication and authorization, therefore, the users need to log in before paying, and here the Pico Payment Login node we provide should be used:
+
+.. image:: _static/unsigned_7131.png
+
+> Callback functions: The parameters of OnPicoLogInOutCallback are as follows:
+
+.. image:: _static/unsigned_7132.png
+
+> IsSuccess: Whether the login and logout are successful (boolean), true means success, and false means failure
+
+> Reason: Reasons for successful or login and logout failures
+
+For the login part, the login can be executed only once, then the payment can be directly used, the login expiration time is about two weeks, and after the expiration, the payment interface will be provided with a return code (login expiration code), and it will be successful after the user only logs in again.
+
+
+
+7.2.2 	Logout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/unsigned_7211.png
+
+> Function performance: Logout
+
+> Its callback function: OnPicoLogInOutCallback has been introduced above.
+
+
+
+7.2.3 	Payment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/unsigned_7231.png
+
+- Function performance: Pay in P currency
+
+- Input parameter Order:
+
+.. image:: _static/unsigned_7232.png
+
+- OrderNumber: The characters of the order number defined by the merchant itself are within 32, which may contain letters and numbers;
+
+- OrderTitle: Order title;
+
+- ProductDetail: Product detail;
+
+- Notify Url: The URL to be notified (not required) must be a directly accessible url and cannot be provided with parameters;
+
+- PicoCoinCount: Paid Amount in P currency.
+
+- Callback function On Pico Pay Order Callback
+
+.. image:: _static/unsigned_7233.png
+
+Code and Msg are as follows:
+
+============================   ==================================================
+code	                       Message
+============================   ==================================================
+00000	                       Network anomaly
+10000	             	       Log-in is successful
+10001	                       User not logged in
+10002	             	       Please enter the correct amount
+10003					       Log-in has been expired, please re-log in
+11000					       Merchant verification successful
+11001					       Merchant authentication failed
+11002					       User authentication parameter is wrong or request has been expired
+11003					       Merchant is not verified
+12000					       Payment is successful
+12001					       Payment failure
+12003					       P currency is insufficient
+12004					       Balance available
+13000					       The order is generated
+13001					       Get acquisition failure
+13002					       The order generation failure
+14000					       The order query is successful
+14001					       There is no order / the order is wrong
+14002					       The user cancels payment operation
+15000				 	       The product information is not entered
+15001					       The prepaid ID is not entered
+15002					       Please enter the Pico payment order number or merchant order number
+NOAUTH					       The merchant does not have the interface permission
+SYSTEMERROR				       The system is wrong
+APP_ID_NOT_EXIST		       There is no APP_ID
+MCHID_NOT_EXIST	MCHID	       There is no MCHID
+APP_ID_MCHID_NOT_MATCH	       App_id and mch_id are mismatched
+LACK_PARAMS				       The parameters are lacked
+SIGNERROR				       The signature is wrong
+NO_DATA					       No data is found / the user does not recharge
+ORDER_EXIST				       There has been an order
+PAY_CODE_NOT_EXIST		       There is no consumption code
+PAY_CODE_EXIST			       The user has consumed the product code
+============================   ==================================================
+
+
+.. image:: _static/unsigned_7241.png
+
+> Function performance: Pay with a payment code
+
+> Input parameter Order:
+
+.. image:: _static/unsigned_7242.png
+
+> OrderNumber: The characters of order number generated by the merchant itself are within 32, which may contain letters and numbers;
+
+> OrderTitile: Order title;
+
+> Product Detail: Product detail:
+
+> Notify Url: The URL to be notified (not required) must be a directly accessible url and cannot be provided with parameters;
+
+> PicoPayCode: I.e., product code, which can be get by the user through the 7.1.1 in-game payment configuration.
+
+> Callback function: On Pico Pay Order Callback, same as payment in P currency.
+
+
+7.2.4 	Order query
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/unsigned_7251.png
+
+> Function performance: Order query
+
+> Input parameter Order Number: Order number (string):
+
+> Callback function On Pico Query Order Callback
+
+.. image:: _static/unsigned_7252.png
+
+> The parameter meaning is the same as OnPicoPayOrderCallback
+
+7.2.5 	Get user information
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/unsigned_7221.png
+
+> Function performance: Get user information
+
+> Callback function On Pico Get User Info Callback
+
+.. image:: _static/unsigned_7222.png
+
+> Info: An unprocessed Json string (string), the query success example is as follows:
+
+.. code-block:: java
+
+	{"ret_code":"0000",
+	"data" : {
+		"aboutme":"",
+			"birthday" : 1460476800000,
+			"phone" : "13100000000",
+			"username" : "Admin",
+			"email" : "",
+			"gender" : "male",
+			"lastname" : "",
+			"openid" : "4f3148bdc34d9bca104927729a173b64",
+			"firstname" : "",
+			"avatar" : "http://172.31.83.11/upload/6dd6ee103714e967846c3d38ae48d511",
+			"signature" : "14a25d7219d8dfc91e55f63286ae5c0a",
+			"country" : "China",
+			"city" : ""
+	},
+	"ret_msg": a. "Successful call"
+	}
+
+The query failure example is as follows:
+
+.. code-block:: java
+
+	{
+	"ret_code":"00003000",
+	"ret msg": "Signature verification failure".
+	}
+
+List of other ret_code codes and ret_msg:
+
+Table 7.1 On Pico Get User Info Callback output parameter ret_code code and ret_msg list
+
+======================   ==============================================
+ret_code	                 ret_msg
+======================   ==============================================
+0000	                 Successful request
+00020000	             Database operation failure
+9999	                 System error
+00001000	             Parameter error
+00002000	             Data parsing failure
+00003000		         Signature verification failure
+00003001                 Time verification failure
+00060000         		 User not found
+00060001                 User password error
+00060002                 Unknown user login error
+00061000                 User token finding failure
+00061001                 User token verification failure
+00061002				 Unknown user token error
+00070001                 Application verification failure
+00071001				 Application key verification failure
+00080001				 OAUTH_CODE verification failure
+00090001				 REFRESH_TOKEN verification failure
+00100001				 ACCESS_TOKEN verification failure
+00110001				 SCOPE verification failure
+======================   ==============================================
+
+
+7.3	Developer server interaction
+------------------------------------
+
+After the payment is completed, the payment system will send the relevant payment results and user information to the merchant, and the merchant needs to receive and process them and return a response.
+
+When the background notifies the interaction, if the receiving of the merchant's response by the payment system receives is not successful or overtime, the notification should be considered as failed, and the payment system will periodically re-initiate the notification through certain policies to maximize the success rate of the notification, but it may not guarantee that the notification will be eventually successful.
+
+The same notification may be sent to the merchant system repeatedly and the merchant system must be able to process duplicate notifications correctly. The recommended practice is to firstly check the status of the corresponding service data when it receives and processes the notification, and determine whether the notification has been processed, it should be re-processed if it has not been processed, and the result return will be successful directly if it has been processed. Before the status check and processing of business data, data locks should be used for concurrency control to avoid data confusion caused by function reentry.
+
+The merchant server needs to implement the following interface for receiving the request from the Pico server and get the payment result and user information of the Pico payment system:
+
+Table 7.2 Interfaces that the merchant server needs to implement
+
+============================   ========================================================================
+Name                           Payment results callback interface
+Request Type                   POST
+Request URL                    payment，PayOrder input value notify_url
+Request Format                 JSON
+Return Format                  JSON
+Require Login                  Yes
+Parameters                     Check details in "List 7.3 Notification parameters in the payment results notification"          
+============================   ========================================================================
+Return value                   .. image:: _static/unsigned_7253.png	
+                               Check details in “List 7.4 Return result” 
+Example                        {
+                               "ret_code":"SUCCESS",
+							   "ret_msg":"OK"
+                               }
+Update description
+============================   ========================================================================
+
+List 7.3 Notification parameters in the payment results notification
+
+====================================   ===============   ===============   ============   ==================================================
+Field Name                             Param Name        Required          Type           Description
+====================================   ===============   ===============   ============   ==================================================
+Return Status Code                     ret_code          Yes               String         SUCCESS/FAIL This is communication identification，not transaction identification，please use result_code to judge if the deal is finished
+Return Message                         ret_msg           No                String         Return message, if not null, it contains error message: Signature failed, parameters format check error
+Error Code                             sub_code          No                String         Error code
+Error code description                 sub_msg           No                String         Message description of error
+Pico pay order number                  trade_no          Yes               String         Pico trade number
+Merchant order number                  out_trade_no      Yes               String         Merchant trade number
+App ID                                 app_id            Yes               String         APP_ID
+Merchant ID                            mch_id            Yes               String         Merchant ID
+User ID                                open_id           Yes               String         User ID under each app id
+Device ID                              device_id         No                String         Device ID
+Random string                          nonce_str         Yes               String         Random strings, not longer than 32 bits. A random number generation algorithm is recommended 
+Name                                   Name              Yes               String         signature，see the signature generation algorithm 
+Business Result                        result_code       Yes               String         SUCCESS/FAIL
+Trade Type                             trade_type        Yes               String         The type user paid by.
+Currency Type                          fee_type          Yes               String         The currency user chose.
+Total Fee                              total_fee         Yes               String         Total fee of the order
+Actual Fee                             receipt_fee       Yes               String         Actual value of the order
+The amount of the fee the buyer paid   buyer_pay_fee     No                String         The fee user paid
+Voucher or Discount Amount             coupon_fee        No                String         Coupon fee
+Merchant Packet                        attach            No                String         Merchant data package
+Pay completion time                    pay_time          Yes               String         Payment finish time, yyyy-MM-dd HH:mm:ss
+====================================   ===============   ===============   ============   ==================================================
+
+List 7.4 Return result
+
+===================   ===============   ============   ========   ==========================================================================
+Field Name            Param             Required       Type       Description
+===================   ===============   ============   ========   ==========================================================================
+Return status code    ret_code          Yes            String     SUCCESS/FAIL, SUCCESS: merchant received the notification and verify is successful
+Return message        ret_msg           No             String     Return message，if not null, it contains error message: signature failed, parameter format check error
+===================   ===============   ============   ========   ==========================================================================
+
+Special Reminder:  developer system must sign to verify the contents for payment results to prevent data leakage, which could result in "false notification" and loss of funds.
+
+The signature check rule is:
+
+1.	For the returned list of parameters, remove the signature parameter, and adds key = "app_secret", value=paykey. Then, sort out the key value by natural order, separate the parameters by & if there are more than one, and encrypt by MD5.
+
+2.  Compare the encrypted string with the Name you obtained
+
+The signature function is as following:
+
+.. code-block:: java
+
+	public static String createSign(Map<String, Object> result, String paykey)
+	{
+		if (result == null || result.size() == 0)
+			return null;
+		result.put("app_secret", paykey); 
+		String sign = result.get("signature"); 
+		result.remove("signature"); 
+		String[] tmp = new String[result.size()];
+		int i = 0;
+		for (String key : result.keySet())
+		{
+			tmp[i++] = key;
+		}
+		Arrays.sort(tmp); 
+		String sign = "";
+		for (String string : tmp)
+		{
+			if (m.get(string) == null)
+				continue;
+			sign += string + "=" + URLEncoder.encode(m.get(string).toString()
+				, "utf-8") + "&";
+		}
+		if (sign.endsWith("&"))
+			sign = sign.substring(0, sign.length() - 1);
+		Log.i(TAG, "createSign: " + sign);
+		String localSign = MD5.MD5(sign); 
+		return localSign.equal(sign); 
+	}

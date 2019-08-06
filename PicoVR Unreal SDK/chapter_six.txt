@@ -1,0 +1,57 @@
+﻿.. _6 	API interface function list:
+
+6 	API interface function list
+==================================
+
+6.1 	General function library
+-------------------------------------
+
+The SDK supports VR general functions in the following red dot-marked engine:
+
+.. image:: _static/6.1.png
+
+Figure 6.1 Supported general functions
+
+For their detailed usage, please refer to the official UE4 document at https://docs.unrealengine.com/en-us/.
+
+Among them, the Reset Orientation and Position nodes only support the function of resetting the positive direction, and the Yaw parameter values in the function node do not work.
+
+
+6.2 	Dedicated function library
+---------------------------------------
+
+For system functions such as volume and brightness, the SDK also provides the corresponding APIs in the form of blueprint nodes, and in case of right-click on the event graph, and you can see these APIs after entering the Pico Mobile sub-item:
+
+.. image:: _static/6.2.png
+
+Figure 6.2 System interface
+
+The detailed instructions for APIs are as follows:
+
+.. image:: _static/6.3.png
+
+.. image:: _static/6.4.png
+
+.. image:: _static/6.5.png
+
+.. image:: _static/6.6.png
+
+.. image:: _static/6.7.png
+
+.. image:: _static/6.8.png
+
+.. image:: _static/6.9.png
+
+.. image:: _static/6.10.png
+
+.. image:: _static/6.11.png
+
+.. image:: _static/6.12.png
+
+.. image:: _static/6.13.png
+
+.. image:: _static/6.14.png
+
+.. image:: _static/6.15.png
+
+.. image:: _static/6.16.png

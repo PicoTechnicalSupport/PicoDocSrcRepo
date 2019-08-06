@@ -1,0 +1,168 @@
+.. _5 	Hardware product development guide:
+	
+5 	Hardware product development guide
+============================================
+
+This chapter will introduce the use method of SDK on Pico hardware products, and the developers should only choose to view the corresponding contents according to demands.
+
+5.1	Pico Goblin/G2/G2 4K
+--------------------------------------------------
+
+5.1.1 	Realize head tracking and stereo rendering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Realize the consistency of head tracking with the QuickStart of SDK mentioned above, and only Prefabs under Pvr_UnitySDK need to be put into the scenes. However, one thing needs to be noted: After placing it in the scenes, expand the Pvr_UnitySDK object in the scenes and switch to its details panel:
+
+.. image:: _static/5.1.png
+
+Figure 5.1 Switching of tracking options
+
+You need to ensure the following properties of the Pvr_Unity SDK Manager component: Head Pose: Three Dof: Hand Pose: Three Dof.
+
+5.1.2 	Instructions for Use
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pico single controller currently supports three devices, including Pico Goblin, Pico G2 and Pico G2 4K. Please follow the following steps when using Pico single controller:
+
+1. Expand Asserts> PicoMobileSDK> Pvr_Controller> Prefabs, and place PvrController0 prefabs into the scenes as sub-GameObject of Pvr_United SDK at the same level as Head:
+
+.. image:: _static/5.2.png
+
+Figure 5.2 Drag and Drop Position of PvrController0 Prefabs
+
+2. Expand Asserts> Pvr_Controller> Prefabs, place the ControllerManager in the scenes, then hang PvrController0 in the script of Pvr_Controller on the ControllerManager, and hang the toast under PvrController0 in the script of Pvr_ControllerManager:
+
+.. image:: _static/5.3.png
+
+Figure 5.3 Setting of ControllerManager
+
+5.1.3 	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When using the key and touchpad of the single controller, you need to call the interfaces related to the controller. Please refer to Section 6.3 in Chapter 6 List of API Interface Function for specific interfaces. Here, the corresponding relationship between the parameters of the following interfaces and the physical controller keys is introduced.
+
+Correspondence between physical keys of Goblin Controller and parameters in API Interface Function
+
+================================       ===============================
+Goblin controller key                  Input binding
+================================       ===============================
+.. image:: _static/5.1.3.1.png         Pvr_KeyCode.APP
+.. image:: _static/5.1.3.2.png         Pvr_KeyCode.TOUCHPAD
+.. image:: _static/5.1.3.3.png         Pvr_KeyCode.HOME
+.. image:: _static/5.1.3.4.png         Pvr_KeyCode.VOLUMEUP
+.. image:: _static/5.1.3.5.png         Pvr_KeyCode.VOLUMEDOWN
+================================       ===============================
+
+The correspondence between physical keys of G2 and G2 4K controllers and parameters in API interface functions is the same as Goblin controllers except for the following two differences.
+
+================================       ===============================
+G2 controller key                      Input binding
+================================       ===============================
+.. image:: _static/5.1.3.6.png         Pvr_KeyCode.APP
+.. image:: _static/5.1.3.7.png         Pvr_KeyCode.TRIGGER
+================================       ===============================
+
+The schematic diagram of the touchpad is as follows:
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. image:: _static/5.7.png
+
+Figure 5.4 Schematic diagram of touchpad
+
+5.2	Pico Neo
+------------------------
+
+
+5.2.1 	Realize head tracking and stereo rendering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Realize the consistency of head tracking with the QuickStart of SDK mentioned above, and only Prefabs under Pvr_UnitySDK need to be put into the scenes. It should be noted that Pico Neo supports a variety of tracking methods. Expand the Pvr_UnitySDK object in the scenes and switch to its details panel:
+
+.. image:: _static/5.8.png
+
+Figure 5.5 Options Panel of Pvr_SDKManager
+
+6Dof Position Reset: When Head Pose is Six Dof, the position can be reset only if “Enable 6Dof Position Reset” is selected; otherwise, pressing the Home key for a long time will only reset the controller orientation.
+
+- Show SafePanel: When selecting Show SafePanel, there will be a safety prompt panel when starting the game.
+
+- Head Pose：
+
+1. Three Dof means that the head tracking is a 3-degree-of-freedom tracking, with only orientation and no position;
+
+2. Six Dof means that the head tracking is a 6-degree-of-freedom tracking, with both orientation and position.
+
+- Hand Pose：
+
+1. Three Dof means that the hand tracking is 3 degrees of freedom with orientation, while the position is calculated based on the head orientation and sensor data of the controller, and the tracking range is limited.
+
+2. Six Dof means that the hand tracking is 6 degrees of freedom, and both orientation and position can be tracked.
+			   
+- Use Default Range: The radius of the security zone is 0.8m by default. After exceeding the safety range, there will be an area prompt and a darkening effect of the visual field.
+
+- Moving Ratios: The moving ratio means the ration of moving distance in reality and the moving in the scenes, which is 1: 1 by default.
+
+- If you want to customize the radius of the security zone, you need to uncheck the Use Default Range, and the following option will appear. You can freely fill in the scope of setting the security zone.
+
+.. image:: _static/5.9.png
+
+Figure 5.6 Setting of freely defined security zone
+
+5.2.2 	Instructions for Use
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To use double controllers, the following steps need to be followed:
+
+1. Place PvrController0 and PvrController1 Prefabs under Pvr_UnitySDK, which is of the same level as Head. As shown in the following Figure:
+
+.. image:: _static/5.10.png
+
+Figure 5.7 Hierarchical relationship of 6dof controller prefabs
+
+2. Place the ControllerManager Prefabs in the scenes, and then hang PvrController0 and PvrController1 on Pvr_Controller under ControllerManager, as shown in the following Figure:
+
+.. image:: _static/5.11.png
+
+Figure 5.8 Details panel of ControllerManager
+
+The use of controller keys needs to be in the form of calling interface API. For specific API, please refer to Chapter 6 Controller Related Interfaces.
+
+
+5.2.3 	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When using the keys and touchpads of double controllers, you need to call the interface API. See Section 6.3 for details. Here, only the corresponding relationship between the parameters of the interface API and the physical controller keys is introduced:
+
+================================       ===============================
+Keys                                   Input event
+================================       ===============================
+.. image:: _static/5.2.3.1.png         Pvr_KeyCode.APP
+.. image:: _static/5.2.3.2.png         Pvr_KeyCode.TOUCHPAD
+.. image:: _static/5.2.3.3.png         Pvr_KeyCode.HOME
+.. image:: _static/5.2.3.4.png         Pvr_KeyCode.VOLUMEUP
+.. image:: _static/5.2.3.5.png         Pvr_KeyCode.VOLUMEDOWN
+================================       ===============================
+
+In addition, the touchpad is identical to the Goblin controller and will not be repeated here.
+
+
+5.3 	Pico all-in-one key
+------------------------------------
+
+The following table refers to the correspondence between the keys on the head display of the all-in-one machine and the key values in Unity.
+
+============================     ======================================================================
+HMD Key                          Input Key of Unity
+============================     ======================================================================
+Return Key                       KeyCode.Escape
+OK Key                           KeyCode.JoystickButton0
+HOME Key                         KeyCode.Home (system occupied, not open by default)
+Volume Up Key                    Android standard VOLUME_UP (system occupied, not open by default)
+Volume Down Key                  Android standard VOLUME_DOWN (system occupied, not open by default)
+============================     ======================================================================
+ 
+
+
+
+
+

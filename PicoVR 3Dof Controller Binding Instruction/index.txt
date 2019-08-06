@@ -1,0 +1,24 @@
+.. Pico 3Dof Controller Binding Instruction
+
+Pico 3Dof Controller Binding Instruction
+==================================================
+.. toctree::
+   :hidden:
+
+   chapter_one
+   chapter_two
+   chapter_three
+
+Contents
+^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+   :widths: 10 130
+   :header-rows: 0
+
+   * - 1
+     - :ref:`Device Supported <1 Device Supported>`  
+   * - 2
+     - :ref:`Operation Guide <2 Operation Guide>`   
+   * - 3
+     - :ref:`Calling Interface <3 Calling Interface>`  

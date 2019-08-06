@@ -1,0 +1,110 @@
+﻿.. _3 	Development notes:
+
+3 	Development notes
+===============================
+
+3.1 	Enable device USB Debugging
+-------------------------------------
+
+Enter the setting interface-> About, click PUI version entry 8 times continuously to open the developer mode, enter the 2D interface of developer mode-> developer options, then open the "USB debugging" function in the list of options, and set "select USB configuration" to MTP mode.
+
+3.2 	Android Manifest Document
+---------------------------------------
+
+- Special meta-data needs to be added; otherwise, an exception will be displayed:：
+
+.. code-block:: xml
+
+    <meta-data android:name=" pvr.app.type " android:value="vr"/>
+    <meta-data android:name=" pvr.display.orientation " android:value="180"/>
+
+- All Acitivity that need to be displayed need to inherit from
+
+.. code-block:: java
+    
+    com.unity3d.player.UnityPlayerNativeActivityPico    
+
+- Add the necessary permissions
+
+.. code-block:: xml
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
+
+3.3 	SDK recommended configuration
+---------------------------------------
+
+- For Color Space, Gamma and Linear are supported.
+
+If Linear is selected, then Blit Type need to choose Never, otherwise Unity will have the problem of probability screen.
+
+.. image:: _static/3.1.PNG
+
+Figure 3.1 Setting of Blit Type
+
+If Gamma is selected , you can select Never or Always in Blit Type
+
+- Graphics APIs does not support Vulkan for the time being. For OpenGLES2 and OpenGLES3, the developers need to choose according to their needs.
+
+- When multi-thread rendering is active, the frame rate is improved, but there are restrictions on the use of multi-thread rendering. See the Unity official document for details: (https://docs.unity3d.com/ScriptReference/SystemInfo-graphicsMultiThreaded.html)
+
+.. image:: _static/3.2.PNG
+
+Figure 3.2 Setting of rendering
+
+- In Default Orientation under Unity Player Setting, select Landscape Left (Required)
+
+.. image:: _static/3.3.PNG
+
+Figure 3.3 Setting of Default Orientation
+
+- Check the setting of V Sync Count, and the specific steps are as follows: Enter Edit>Project Settings>Quality, select Simple under Levels, and ensure that V Sync Count under Other is Don't Sync (Required):
+
+.. image:: _static/3.4.PNG
+
+Figure 3.4 Check the setting of V Sync Count
+
+3.3 	LWRP configuration instructions
+---------------------------------------
+
+For example,In Unity 2019.1.0f2.
+
+1. Open Window/Package Manager
+
+.. image:: _static/3.5.PNG
+
+Figure 3.5 Window toolbar
+
+2. Select Show preview packages
+
+.. image:: _static/3.6.PNG
+
+Figure 3.6 The advanced option of Packages
+
+3. After selecting Lightweight RP, click Install in the lower right corner
+
+.. image:: _static/3.7.PNG
+
+Figure 3.7 Install the LWRP
+
+4.	Create LightweightRenderPipelineAsset
+
+.. image:: _static/3.8.PNG
+
+Figure 3.8 Create LWRP Asset
+
+5.	Use LightweightRenderPipelineAsset
+
+Drag the file created in step 4 to Scriptable Render Pipeline Setting in Project Setting/Graphics
+	
+.. image:: _static/3.9.PNG
+	
+Figure 3.9 Use LWRP Asset
+
+6.	Replace materials in the project with LWRP materials
+
+.. image:: _static/3.10.PNG
+
+Figure 3.10 Update materials in the project

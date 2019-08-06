@@ -1,0 +1,79 @@
+.. _4 Manual Modification Scheme:
+
+
+4 Manual Modification Scheme
+=================================================
+
+- Step1:get the configuration file “SystemKeyConfig.prop”; (available on: https://drive.google.com/file/d/1ygjq3LdjU_jsbZRwyrpWcxysOe3GieKS)
+
+- Step2:Open the configuration file "SystemKeyConfig.prop" with Notepad
+
+- Step3:Modify the definitions of keys
+
+  The key values of the home keys include "tap" "double-tap" “long press” as follows:
+
+=========================     =====================
+action_home_single_tap        Tap
+action_home_double_tap 	  	  Double-tap
+action_home_long_press        Long press
+=========================     =====================
+
+  The above key values can be set at 0/1/2/3/4/5/6/7. The response corresponding to each value is as below: 
+      
+      0: Invalid;
+      
+      1: boot the applications in the specified package names or generic names; 
+      
+      2: Back to Launcher; 
+      
+      3: boot settings; 
+      
+      4: Back;
+      
+      5: No function, only sending the key notice;
+      
+      6: Correct the positive direction of vision;
+      
+      7: Clean up the memory. 
+
+  The values of the Power key include tap: 
+
+    action_power_press			Tap
+	
+  The key values may be set at: 0/1; 
+
+	  0: Invalid;
+	  
+	  1: Back;
+    	
+  Change the values after the key values according to the needs, and assign different functions to each key value respectively; 
+    
+  Example: Change the “Home” key to the “back” function, and just modifying the "action_home_single_tap = 4" is fine.
+    
+  Set the “double-tap” interval and“long press” duration (in milliseconds) as below: 
+    
+======================     ====================================================
+time_home_double_tap 	   time gap between the two Home button click (ms)
+time_home_long_press 	   duration of Home button long press function (ms)
+======================     ====================================================
+    
+Set the to-be-booted applications in the specified package names and generic names, as below: 
+    
+    action_home_XXX_package=YYY
+    
+    action_home_XXX_class=ZZZ
+    
+    XXX refers to “single tap”, “double tap” and “long press”, respectively corresponding to single_tap, double_tap, long_press
+	
+    YYY replaces the package name of the to-be-booted application 
+
+    ZZZ replaces the generic name of the to-be-booted application
+
+
+- Step4:Open adb, and copy files to the data/local/tmp directory. Instructions are as follows: 
+
+  adb push SystemKeyConfig.prop /data/local/tmp/
+
+- Step5: Reboot the device.
+
+  Remarks: Modification of the “Home” key definition just is only applicable to the “Home” key on the helmet body; the definition of the “Home” key on the supporting handle still cannot be customized. 

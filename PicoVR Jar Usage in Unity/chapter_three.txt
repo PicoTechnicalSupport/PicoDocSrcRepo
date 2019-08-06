@@ -1,0 +1,72 @@
+﻿.. _Method 2. Non-inheriting the main Activity:
+
+Method 2. Non-inheriting the main Activity
+==============================================================
+
+1. Writing JAR file in Android Studio 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+- 1)	Create a new class and write your own method (here's how to create the file and update the media library
+
+.. code-block:: java
+
+    package com.pico.jartest
+    Import …
+    public class JarClass {
+    public void updateFile(Context context, String fullFileName) {
+      Log.e(TAG, "updateFile: ");
+      Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+      intent.setData(Uri.fromFile(new File(fullFileName)));
+      context.sendBroadcast(intent);
+    }}
+
+- 2)	Add the following code on the app-> build.gradle root node, which is the same level as android and dependencies
+
+.. code-block:: java
+
+    task createJarDebug(type: Jar,dependsOn: ['build']) {
+      baseName "test"
+      from 'build/intermediates/javac/debug/compileDebugJavaWithJavac/classes' 
+      include('**')
+      exclude('**/R.class')
+      exclude('**/R$*.class')
+      exclude('**/BuildConfig.class')
+      exclude('**/MainActivity.class')
+      exclude('**/MainActivity$*.class')
+    }
+
+- 3)	In Terminal, type gradlew createJarDebug (you need to generate the obguile package, type gradlew createJarDebug proguard)
+
+If prompted build success, the package succeeds
+
+**Jar package path**: app/build/libs/test.jar
+
+Copy to Unity engineer and tell them package name. Class name, interface name
+
+2. Use the JAR file in Unity project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+- 1)	Copy the Jar package to the **Assets/Plugins/Android/** directory
+
+- 2)	Create a new script, use “**PackageName.ClassName**” to initialize object of the class defined in JAR file.
+
+.. code-block:: c#
+
+    public class filetest : MonoBehaviour {
+      string fullFileName;
+      AndroidJavaObject updateFileManager;
+      AndroidJavaObject ActivityContext;
+      
+      private void Start()
+      {
+        fullFileName = "/storage/emulated/0/Download/update.txt";
+        updateFileManager = new AndroidJavaObject("com.picovr.updateanyfile.UpdateManager");
+        ActivityContext = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+      }
+      public void updateFile()
+      {
+        updateFileManager.Call("updateFile", ActivityContext, fullFileName);
+      }
+    }
+
+

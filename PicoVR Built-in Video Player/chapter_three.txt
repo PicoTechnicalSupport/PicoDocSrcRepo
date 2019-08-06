@@ -1,0 +1,37 @@
+.. _3	Video Player Control:
+
+3	Video Player Control
+===============================
+
+  To control player’s actions, including Pause/Play video, Exit player
+
+3.1	Pause/Play Video
+-----------------------------
+
+  Control video to pause and continue by broadcasting an action:
+
+  action: com.picovr.wing.player.playorpause
+
+  After sending this broadcast, if player was playing video, it will pause; if player was paused, it will continue playing.
+
+  It could be sure that every time the status of Video Player is changed, it will broadcast an action: 
+
+  action name: com.picovr.wing.player.PLAY_STATUS
+
+  For example, every time you play or pause the video, its status is changed and will send this broadcast. Thus, you could listen to this broadcast for instead, and record the player status (play/pause) in broadcast onReceive() method, with codes like:
+
+  String s =intent.getStringExtra("status")
+
+3.2	Exit Player
+------------------------
+
+  Control video player to quit by broadcasting an action.
+
+  action name: com.picovr.wing.player.exit
+
+  After sending this broadcast, video playing will be stopped, and player will quit playing.
+
+
+
+
+

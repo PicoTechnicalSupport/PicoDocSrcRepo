@@ -1,0 +1,10 @@
+.. _3 Calling Interface:
+
+3 Calling Interface
+==============================================================
+
+If you are not using Pico default launcher (Home page), please use the following package name and class name to start the app.
+
+Package Name：com.picovr.hmbirdservertob
+
+Class Name：com.picovr.hmbirdservertob.MainActivity

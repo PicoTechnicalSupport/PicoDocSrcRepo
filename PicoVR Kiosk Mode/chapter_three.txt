@@ -1,0 +1,39 @@
+﻿.. _3	 AndroidManifest.xml Modification:
+
+3	 AndroidManifest.xml Modification
+============================================
+
+The Android Manifest is an XML file which contains important metadata about the Android app. This includes the package name, activity names, main activity (the entry point to the app), configurations, Android version support, hardware features support, and permissions.
+
+
+- Step1: Modify package name
+
+  Change the package name of launcher application to “com.picovrtob.vrlauncher”, and change VersionCode to 3000, as shown below:
+
+.. image:: _static/2.1.png
+
+Note: In all PicoNeo system and above PicoGoblinPUI version 2.3.0, when there is a launcher contains a package named “com.picovrtob.vrlauncher”, it is the system default launcher. To switch Picolauncher, users can modify home screen as PicoVRlauncher via 2D settings.
+
+
+- Step2: Modify Main Activity
+
+  Change Main Activity as codes shown below:
+
+  <category android:name="android.intent.category.HOME" />
+
+  <category android:name="android.intent.category.DEFAULT" />
+
+.. image:: _static/2.2.png
+
+
+- Step3: Unity Packaging
+
+  For Unity packaging, package name and version number of Player Settings must be consistent with AndroidManifest file.
+
+
+
+- Step4: Install New Launcher
+
+  After you built the application, install and press Home button, the new launcher would be started.
+
+

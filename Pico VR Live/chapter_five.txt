@@ -1,0 +1,35 @@
+.. _5 FAQ Description:
+
+5 FAQ Description
+======================================
+
+5.1.	Configure Background Picture
+----------------------------------------------
+
+This feature is used to set the background picture for this application.
+
+Background picture path: pre_resource/live/pic
+
+Six pictures are needed: skybox_back, skybox_down, skybox_front, skybox_left, skybox_right, skybox_up.
+
+Format: .png or .jpg
+
+Size: 2048*2048
+
+5.2.	Configure logo
+-------------------------------
+
+This feature is used to add logo and set its location.
+
+Logo icon path: pre_resource/live/pic
+
+Left: logo_left; Format: .png or .jpg; Size: 256*256,
+
+Ratio should be 1:1 as well. Size which is less than 256*256 is not recommended.
+
+Top: logo_top; Format: .png or .jpg; Size: 400*150,
+
+Ratio should be 8:3. Size which is less than 400*150 is not recommended.
+
+Note: You can also delete the left and the top logo picture files, and then the application will not show the logos.
+

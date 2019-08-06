@@ -1,0 +1,133 @@
+﻿.. _3 Installation Steps:
+
+3 Installation Steps
+===============================
+
+
+After extracting zip file, you will get the file catalog structure mentioned in 2.2. Open Videolist.xml file.
+
+3.1.	Modify Configuration Document
+-------------------------------------------
+
+Videolist.xml file is used to modify video filename, to play URL and posters and so on:
+
+Configuration file path: pre_resource/live/videolist.xml
+
+.. image:: _static/3.1.png
+
+Open the XML document in Notepad for editing. Modify specific fields.
+
+3.1.1.	Modify video ID (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.2.png
+
+It represents the ID number of the video, which you can use to calculate the number of the videos. At present, it has no other meaning and is an optional field.
+
+3.1.2.	Modify Name field (essential)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.3.png
+
+It represents the video filename displayed on the UI list.
+
+3.1.3.	Modify Type field (essential)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.4.png
+
+It represents the type of the video. Please assign its value according to the types in the following table, so that the video could be played in the proper type.
+
+  0 -- 2D Video
+  
+  1 -- 3D Left-Right Video
+  
+  2 – 360° 2D Full Screen Video
+  
+  3 – 360° 3D Up-Down Full Screen Video
+  
+  4 – 360° 3D Down-Up Full Screen Video
+  
+  5 -- 360° 3D Left-Right Full Screen Video
+  
+  6 -- 360° 3D Right-Left Full Screen Video
+  
+  7 -- 3D Up-Down Video
+  
+  8 -- 3D Down-Up Video
+  
+  9 -- 3D Right-Left Video
+  
+  10 – 180° 2D Video
+  
+  11 – 180° 3D Up-Down Video
+  
+  12 – 180° 3D Down-Up Video
+  
+  13 -- 180° 3D Left-Right Video
+  
+  14 -- 180° 3D Right-Left Video
+
+3.1.4.	Modify Key field (essential)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.5.png
+
+Set the type of video: 
+
+"0" stands for unknown; 
+
+"1" stands for local video; 
+
+"3" stands for live-streaming video.
+
+3.1.5.	Modify “Url” field (essential)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.6.png
+
+Url is the video address. Fill out the video address in the field on the marked field above.
+
+Attention:
+
+- Do not include any spaces. Video address must be in between“>” and“<”.
+
+- Different video formats have different video address. For on-demand video on server and live video, copy the address of the service provider to the Url field.
+
+- Local videos need to be copied to be under the catalog:
+
+“/storage/emulated/0/pre_resource/live/video” 
+
+.. image:: _static/3.7.png
+
+Copy this address to the Url field. For example: 
+
+“/storage/emulated/0/pre_resource/live/video/XXX.mp4” (XXX.mp4 is the video filename.)
+
+3.1.6.	Modify Pic field (essential)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: _static/3.8.png
+
+To set the poster address for the video, you need to select a specific picture under the“pre_resource/live/videoPic”folder.
+
+Note that the picture's length-to-width ratio should be 16:9.
+
+3.2.	Save Configuration Document
+---------------------------------------
+
+Save XML document when settings are complete. (Note: Save it as an XML file and overwrite the original XML document).
+
+3.3.	Copy Files
+---------------------------------------
+
+Copy the modified pre_resource folder (cover if there is already one) and the VRLive and VideoPlayer applications to device root catalog.
+
+3.4.	Install Applications
+--------------------------------------
+
+Turn on the all-in-one and install two applications: VRLive and VideoPlayer. VRLive is for the displays of background, logo and video poster list and initiating calls to the application VideoPlayer.
+
+
+
+

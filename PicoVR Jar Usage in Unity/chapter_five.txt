@@ -1,0 +1,8 @@
+﻿.. _Notes:
+
+Notes
+========================================
+
+- 1.	If there is a dependency of the JAR file, please put all the related JAR files to the Unity project as well.
+
+- 2. It is required to register the relevant Android components in Unity project AndroidManifest.xml script.

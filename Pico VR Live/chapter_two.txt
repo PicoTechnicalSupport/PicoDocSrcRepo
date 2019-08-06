@@ -1,0 +1,37 @@
+﻿.. _2 Resource Downloads:
+
+2 Resource Downloads
+=====================================
+
+
+
+2.1.	Resource Download Path
+--------------------------------------
+
+https://pan.baidu.com/s/1LJCNVBX-2ESE3A8AUr58zA
+
+2.2.	Extract Files
+------------------------------------------------
+
+Extract zip file and see the following catalogs:
+
+.. image:: _static/2.1.png
+
+- 【pre_resource】 is a configuration and settings file.
+
+- 【VRLive】 is an application for the background and poster logo display.
+
+- 【VideoPlayer】 is a video player application.
+
+Extract "pre_resource.rar" file, you will see the folder structure under "pre_resource/live":
+
+.. image:: _static/2.2.png
+
+【pic】 is the folder for saving background and logo pictures (It will be mentioned in following settings).
+
+【vide】 is the folder for saving local video files.
+
+【videoPic】 is the folder for saving video poster files.
+
+【videoList.xml】 is the configuration and setting document (It will be mentioned in following settings).
+

@@ -1,0 +1,13 @@
+﻿.. _4 Start Debugging:
+
+4 Start Debugging
+=======================================
+
+
+Start the VRLive application to see the background pictures, logos, other information and video list that have been set previously. Play corresponding video file according to the video list.
+
+
+
+
+
+

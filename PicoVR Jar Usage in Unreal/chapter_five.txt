@@ -1,0 +1,79 @@
+﻿.. _5 Usage of FJavaWrapper: 
+
+
+5 Usage of FJavaWrapper 
+================================================
+
+Usage of FJavaWrapper::FindMethod（）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Call Example:
+
+FJavaWrapper::FindMethod(Env,FJavaWrapper::GameActivityClassID,"AndroidThunkJava_UEPvr_SetLED","(IIIII)Z",false);
+
+- Parameter:
+
+**a. Env**
+
+Java environment, you can get it using FAndroidApplication::GetJavaEnv() method，
+
+**b. FJavaWrapper::GameActivityClassID**
+
+This parameter is the java function you added in GameActivity of the xml file.   GameAcitivity. You don’t have to modify it. This parameter indicate the function you need is declared in this xml file. 
+
+**c. AndroidThunkJava_UEPvr_SetCurrentBrightness**
+
+This is the function name you defined in xml file. You need to modify it according to xml file you wrote.
+
+**d. (IIIII)Z**
+
+This parameter is the input parameter and return parameter of the call function. Inside the bracket are the input type. And outside the bracket are the returned type. In this example, it means input parameters are 5 int type, and return type is 1 bool type. 
+
+
+Please refer to the following list for the type.
+
+
+==========    ===================
+Data Type      Symbol           
+==========    ===================
+Bool           Z 
+Int            I
+Double         D         
+FString        Ljava/lang/String
+Void           V
+int[]          [I          
+double[]       [D
+==========    ===================
+
+Usage of FJavaWrapper::CallBooleanMethod（）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Call Example:
+
+FJavaWrapper::CallBooleanMethod(Env, FJavaWrapper::GameActivityThis, Method, index,level)
+
+- Parameters:
+
+**a.	Env**
+
+Java environment, you can get it using FAndroidApplication::GetJavaEnv() method.
+
+**b.	FJavaWrapper::GameActivityThis**
+
+This indicate the GameActivity. You don’t need to modify it.
+
+**c.	Method**
+
+This is the method ID you need to call. In the example, it is the returned value of FJavaWrapper::FinMethod()
+
+**d.	led, color, blink, ontime, offtime**
+
+These are input parameters of the function your defined in xml file. In the example, these are necessary parameters to control LED. You need to modify it according to xml file you wrote.
+
+
+
+
+
+
+
+

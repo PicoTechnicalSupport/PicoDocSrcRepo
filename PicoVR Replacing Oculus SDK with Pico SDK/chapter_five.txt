@@ -1,0 +1,47 @@
+﻿.. _5	Replacing the Oculus SDK with the Pico SDK in other Projects:
+
+5	Replacing the Oculus SDK with the Pico SDK in other Projects
+==============================================================================
+
+Other Oculus projects can be updated in a similar way as the video player example. Such projects involve the following:
+
+- The Oculus player is based on the **GearVrControllerTest** scene.
+
+- A room can be replaced by following all of the steps described in the previous section.
+
+- A cube can be replaced by following steps 1 to 3 in the previous section.
+
+- To update a basic scene, just replace **MainCamera** with the **Pvr_UnitySDK** prefab.
+
+.. image:: _static/5.1.png
+
+Figure 17 - A project containing an Oculus GearVrControllerTest scene.
+
+Follow the steps below to replace the Oculus SDK with the Pico SDK in a UI scene:
+
+
+- 1.	Delete the OVR components including **EventSystem**:
+
+.. image:: _static/5.2.png
+
+Figure 18 – Deleting OVR components.
+
+2.	Delete the OVR scripts and **Mask**:
+
+.. image:: _static/5.3.png
+
+Figure 19 – Deleting the scripts and Mask.
+
+- 3.	Drag **Pvr_UnitySDK** and **ControllerManager** from **Pvr_Controller_UI** into the scene:
+
+.. image:: _static/5.4.png
+
+Figure 20 – Adding Pvr_UnitySDK and ControllerManager to the scene.
+
+- 4.	Set the **Canvas** and add the **Pvr_UICanvas** script and **Graphic Raycaster** to **LightCanvas**:
+
+.. image:: _static/5.5.png
+
+Figure 21 – Setting the Canvas and adding the Pvr_UICanvas script and Graphic Raycaster.
+
+- 5.	Build and install the application.

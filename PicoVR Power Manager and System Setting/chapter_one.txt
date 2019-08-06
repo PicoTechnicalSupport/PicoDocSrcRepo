@@ -1,0 +1,17 @@
+.. _1	Introduction:
+
+1.	Introduction
+========================
+
+Pico implements a solution for business clients for the requirements on controlling Pico device such as power off, reboot and lock the screen. This document describes how to call the Jar file which contains the functionalities of controlling Pico device and modifying system settings in your Unity project.
+
+1.1.	Supported Devices
+------------------------------------------------------
+
+- Pico Goblin
+
+- Pico Neo
+
+- Pico G2
+
+- Pico G2 4K 

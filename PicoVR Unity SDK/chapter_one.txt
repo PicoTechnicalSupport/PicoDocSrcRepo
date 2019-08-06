@@ -1,0 +1,28 @@
+﻿.. _1 	Introduction to SDK:
+
+1 	Introduction to SDK
+===============================
+
+This document describes the application of VR made and run on Pico all-in-one equipment by PicoVRAndroidSDK_Unity (hereinafter referred to as SDK) under the Unity game development engine environment. SDK can mainly provide: many functions such as sensor fusion, Binocular stereo rendering, optical distortion correction, asynchronous time warping, single buffer rendering, 3DoF/6DoF multi-interaction support, power supply and thermal dissipation management, account and payment management.
+
+The SDK architecture is shown in the following figure:
+
+.. image:: _static/1.1.PNG
+
+Figure 1.1 SDK architecture diagram
+
+The SDK is provided in the format of UnityPackage. After importing, the developers can see the following directories:
+
+.. image:: _static/1.2.PNG
+
+Figure 1.2 Directory structure of SDK plugin
+
+Each subdirectory under Assets>PicoMobileSDK corresponds to the corresponding function in the SDK. The Scenes directory under the subdirectory provides scenes for your reference. If you encounter problems when adapting the SDK, you can view the documents or refer to the methods in the scenes.
+
+Pvr_Controller contains the related functions of the controller
+
+Pvr_Payment contains the related functions of payment
+
+Pvr_UnitySDK contains the relevant functions of the sensor and rendering
+
+Pvr_VolumePowerBrightness contains the related functions of volume, brightness and power related resources

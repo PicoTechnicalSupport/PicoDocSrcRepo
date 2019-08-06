@@ -1,0 +1,21 @@
+﻿.. _2 	Instructions for SDK configuration:
+
+2 	Instructions for SDK configuration
+=============================================
+
+2.1 	Supporting device
+-----------------------------
+
+Pico Goblin，Pico Neo，Pico G2，Pico G2 4K
+
+2.2 	Development environment requirements
+---------------------------------------------------
+
+Support Unity2017.4 – Unity 2019.1.
+
+LTS 2017.4.x is recommended.
+
+===================    ======================================
+JDK                    jdk1.8.0 and above
+Android SDK            API Level 24 (Android 7.0) and above
+===================    ======================================

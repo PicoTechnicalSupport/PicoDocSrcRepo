@@ -1,0 +1,271 @@
+﻿.. _2 FAQ:
+
+2 FAQ
+===============================
+
+Q1: How to access Developer Options?
+---------------------------------------------------------
+
+**A:**
+
+G2/G2 4K: 
+^^^^^^^^^^^^^
+
+Press “Confirm” and “Volume Down” button to enter 2D Settings - “System” - “Developer Options”
+
+.. image:: _static/2.1.png
+
+Goblin & Neo: 
+^^^^^^^^^^^^^
+
+**1.** Press “Confirm” and “Volume Down” button together to go into 2D Setting menu. 
+
+**2.** In this 2D menu, select “About Device”, and click PUI Version 8 times. 
+
+.. image:: _static/2.2.png
+
+**3.** Go back to the main 2D menu and you should now see Developer Options appear at the bottom under System.
+
+.. image:: _static/2.3.png
+
+Q2: How to enable USB Debugging?
+---------------------------------------------------------
+
+**A:**
+
+**1.** Enter developer options (refer to Q1), enable " USB debugging".
+
+.. image:: _static/2.4.png
+
+**2.** Find "Select USB Configuration” under "Networking" category. Set to "MTP (Media Transfer Protocol)".
+
+.. image:: _static/2.5.png
+
+Q3: Frequently used shortcut keys.
+---------------------------------------------------------
+
+**A:** 
+
+**Clear background processes**: Double click "Home" button to shut down background processes.
+
+**Screenshot**: Long press "Power" plus "Volume Down" buttons to take a screenshot.
+
+**Switch VR/Android mode**: Click "Confirm" and "Volume Up" simultaneously to switch between VR and Android native mode.
+
+
+Q4: What is recommended Video Encoding Formats?
+------------------------------------------------------------------------------------------------------------------
+
+**A:** 
+
+**Applied products**: G2 /G2 pro / G2 4K
+
+**Video Encoding Formats**: 
+
++-----------------+------------+-----------------------+       
+|Parameter        |Recommended |  Maximum              |     
++=================+============+==========+============+     
+|Resolution       |3840*2160   |3840*3840 |5120*2560   |
++-----------------+------------+----------+------------+   
+|FPS              |60          |30        |60          |
++-----------------+------------+----------+------------+   
+|Bitrate（Mbps）  |80          |100       |100         |
++-----------------+------------+----------+------------+   
+|Decoder Standard |H.264, H.265|H.264     |H.264, H.265|     
++-----------------+------------+----------+------------+
+
+**Audio**: Support decoding multi-channel, but the output is 2 channel.
+
+For more applicable formats, here is the list of codecs that can be used on the headsets:
+
+https://drive.google.com/open?id=1rhjvDJjZYSTiCAcGZWP0GhM-1sJSKIEB
+
+Q5: How to enter recovery mode?
+------------------------------------------------------------------------------------
+
+**A:** 
+
+Goblin and Pico Neo Recovery Mode:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**1.** Power off device
+
+**2.** Long press “HOME + Volume Up” keys at the same time, and then press “Power” key to enter flash mode.
+
+**3.** When shown “No Command” after seeing an Android robot, long press "Home" key to enter the menu screen as shown in the below figure.
+
+G2/G2 4K Recovery Mode:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**1.** Hold "Power" + "Volume Up" button for a while, you should be able to see an Android Robot.
+
+**2.** Hold "Power" button and click "Volume Up" button for once to enter Recovery Mode menu.
+
+**Note**: Functions of keys in the flash mode: "Volume up" key -- Move up; "Volume down" key -- Move down; “Confirm" key -- Confirm. 
+
+
+Q6: How to do factory reset?
+------------------------------------------------------------------------------------
+
+**A:** 
+
+There are three methods to do factory reset: PUI, 2D Settings, Recovery mode
+
+G2/G2 4K:
+^^^^^^^^^^^^^
+
+**PUI:**
+
+Go to "Setting" - "General" - "Reset", and select "Factory Reset"
+
+**2D Settings:**
+
+1. Press "Confirm" + "Volume Down" button go to 2D Setting
+
+2. Enter "System" - "Reset Options", choose "Erase all data (factory reset)"
+
+**Recovery mode:**
+
+1. Power off the device.
+
+2. Hold "Power" + "Volume Up" button simultaneously for a while, you should be able to see an Android Robot.
+
+3. Hold "Power" button and click "Volume Up" button for once to enter Recovery Mode menu.
+
+4. Use Volume buttons to move and power button to choose "Wipe data/ Factory reset"
+
+5. Confirm and wait for a while, if no error occurs, the device will reboot automatically and work as normal.
+
+Goblin:
+^^^^^^^^^^^
+
+**PUI:**
+
+Go to "Setting" - "General" - "Reset", and select "Factory Reset"
+
+**2D Settings:**
+
+1. Press "Confirm" + "Volume Down" button go to 2D Setting
+
+2. Enter "System" - "Reset", choose "Reset Phone"
+
+**Recovery mode:**
+
+1. Power off the device.
+
+2. Hold "Power" + "Home" + "Volume Up" button simultaneously for a while, you should be able to see an Android Robot.
+
+3. Press "Home" button to enter Recovery Mode menu.
+
+4. Use Volume buttons to move and power button to choose "Wipe data/ Factory reset"
+
+5. Confirm and wait for a while, if no error occurs, the device will reboot automatically and work as normal.
+
+Q7: How to mitigate Chromatic Aberration?
+-----------------------------------------------------------
+
+**A:** 
+
+Open “Remove dispersion mode”
+
+**1.** Go to "Setting";
+
+.. image:: _static/2.6.png
+
+**1.** Go to "Pico Lab",  enable "Remove dispersion mode".
+
+.. image:: _static/2.7.png
+
+Q8: How to reset orientation only horizontally?
+-----------------------------------------------------------
+
+**A:** 
+
+When using Pico SDK to reset orientation, the default behavior will be a global reset. 
+
+If you need to reset only horizontally.
+
+**Use adb command**: set adb shell setprop persist.pvr.reset_mode 0
+
+- Note that this setting works for all applications. 
+
+If you need to set back to reset globally: adb shell setprop persist.pvr.reset_mode 1
+
+Q9: How to upgrade system via SD card?
+-----------------------------------------------------------
+
+**A:** 
+
+There are two methods:
+
+- Method 1 – Upgrade via PUI :
+
+**1.** Create the "dload" folder in the SD root directory;
+
+**2.** Copy the ROM package to the "dload" folder of the SD card; 
+
+**3.** In "My Applications" → "System Update", click "Offline Upgrade";
+
+.. image:: _static/2.8.png
+
+- Method 2 – Upgrade via Recovery Mode:
+
+**1.** Copy the ROM package to root folder of the SD card
+
+**2.** Enter the Recovery mode (refer Q6 step a, b, c): 
+
+**3.** Select "Apply update from SD card", and confirm
+
+**4.** Select the ROM package previously copying the SD card. Installation will take 3-5 minutes. No operation during this period. 
+
+**5.** Select "Wipe data/factory reset to” to erase existing data.
+
+**Notes**: 
+
+**1.** One SD Card in the FAT32 format (the SD card memory should be higher than 2G, to the maximum of 128G);
+
+**2.** The remaining battery should be more than 40% during upgrading and the upgrading process lasts for 3 to 5 minutes.
+
+**3.** System can be upgraded only from a low version to a high version.
+
+Q10: How to cast screen to a TV/TV box?
+-----------------------------------------------------------
+
+**A:** 
+
+To cast screen, please make sure your TV/TV box supports Miracast.
+
+**1.** Find Miracast application on TV/TV box, and make sure the application to start scanning.
+
+**2.** Double click "Home" button on headset to pop up shortcut panel
+
+**3.** Click the "Screencast" button.
+
+.. image:: _static/2.9.png
+
+**4.** Choose projection device from the list.
+
+Note：If you need to project monocular view, please enter the 2D Settings, find "Connected devices" and click to enter, make sure the "Single-eyed Display" is enabled.
+
+.. image:: _static/2.12.png
+
+Q11: How to format SD card as internal storage?
+-----------------------------------------------------------
+
+**A:** 
+
+If you want to copy a large file (>4GB) or install apps on SD card, follow the steps below:
+
+**1.** Long press "Confirm” and “Volume-" keys to enter the 2D Settings;
+
+**2.** Find "Storage", and click to enter
+
+**3.** Find "SD Card", and click to enter
+
+**4.** Click option icon on top right, and find "Storage Settings"
+
+.. image:: _static/2.10.png
+
+**5.** Select "Format as Internal" in pop-up menu
+
+.. image:: _static/2.11.png

@@ -430,7 +430,7 @@ Functions: Get the connected controller type
 
 Parameter: none
 
-Return value: 0: No connection 1: Goblin 2: Neo 3: G2, G2 4K (If the return value is 0, the lower controller connection status needs to be called at the same time, and the two values cooperate to decide whether to enable the head control)
+Return value: 0: No connection 1: Goblin 2: Neo 3: G2, G2 4K (If the return value is 0, the controller connection state needs to be checked at the same time, and the two values must coincide to determine whether to enable head control).
 
 Method of calling: Pvr_UnitySDKAPI.Controller. UPvr_GetDeviceType ();
 
@@ -622,13 +622,13 @@ Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness. UPvr_SetVolumeNum(volu
 UPvr_GetScreenBrightnessLevel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public bool UPvr_GetScreenBrightnessLevel ()
+Function name: public int UPvr_GetScreenBrightnessLevel ()
 
 Functions: Gets the brightness level of the current screen
 
 Parameter: none
 
-Return value: int array. The first bit is the total brightness level supported, the second bit is the current brightness level, and it is the interval value of the brightness level from the third bit to the end bit
+Return value: An integer where the first bit is the total brightness level supported and the second bit is the current brightness level. Remaining bits indicate the interval value of the brightness level.
 
 Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_GetScreenBrightnessLevel()
 
@@ -641,7 +641,7 @@ Function name: public bool UPvr_SetScreenBrightnessLevel (int vrBrightness, int 
 
 Functions: Set the brightness of the screen
 
-Parameter: vrBrightness: Brightness mode; level: Brightness value (brightness level value). If vrBrightness passes in 1, level passes in brightness level; if vrBrightness passes in 0, it means that the system default brightness setting mode is adopted. Level can be set to a value between 1 and 255.
+Parameter: vrBrightness: Sets the brightness mode: Set to 0 to select the system’s default brightness level or 1 to use the brightness level specified in the level parameter; level: The brightness level to set. Set to a value in the range of 1 through 255.
 
 Return value: none
 

@@ -15,23 +15,15 @@ Pico Goblin，Pico Neo，Pico G2，Pico G2 4K
 ==============================================    ==================================================================
 Software name                                      Version information
 ==============================================    ==================================================================
-Unreal Engine                                     4.18.3、4.19.2、4.20.3、4.21.2
-Visual Studio                                     2015 and above (for UE 4.20+, please be sure to install the latest version of VS2017)
-Android Works                                     Try to use the latest version
+Unreal Engine                                     4.20.3、4.21.2 (recommended for Pico G2-4K), 4.22.3
+Visual Studio                                     2017
+Codeworks for Android                             The latest version is recommended. See https://docs.unrealengine.com/en-US/Platforms/Mobile/Android/InstallingAndroidCodeWorksAndroid for information on installing Codeworks.
 ==============================================    ==================================================================
 
-The SDK has no special requirements for ROM version of the hardware, but the latest version should be ensured as much as possible.
-
-For Android Works, please refer to: Installation of https://docs.unrealengine.com/en-US/Platforms/Mobile/Android/InstallingAndroidCodeWorksAndroid.
-
-In addition, be sure to check common tools for visual c++ 2015 when installing Visual Studio 2015, otherwise the project cannot be compiled and may affect packaging.
-
-.. image:: _static/2.1.png
-
-Figure 2.1 Visual Studio 2015
+The SDK has no special requirements for the ROM version of the hardware, but the latest version should be used when possible.
 
 Be sure to check "Game development with C++" when installing Visual Studio 2017:
 
 .. image:: _static/2.2.png
 
-Figure 2.2 Installation options for Visual Studio 2017
+Figure 2.1 Installation options for Visual Studio 2017

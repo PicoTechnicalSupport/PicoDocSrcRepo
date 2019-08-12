@@ -12,21 +12,23 @@
 
 Figure 8.1 Enable FullScreent Immersive on KitKat and above devices checking
 
-**2.Q:** How to improve the frame rate of the game?
+**2.Q:** How can the frame rate of the game be increased?
 
-**A:** To improve the game frame rate, you can start from the following two aspects:
+**A:** There are two methods to increase the frame rate:
 
-1 ) 	Turn off the ambient light obscuration. At this phase, the requirements of VR project for global illumination are not too high, the ambient light obscuration can be turned off by opening the project setup, entering the Engine/Rendering/Default Setting, and unchecking Ambient Occlusion and Ambient Occlusion Static Fraction:
+1 ) 1.	Navigate to Project Setting > Engine > Default Setting and disable Ambient Occlusion and Ambient Occlusion Static Fraction:
 
 .. image:: _static/8.2.png
 
-Figure 8.2 Ambient light obscuration use cancellation
+Figure 8.2 Disabling Ambient Occlusion and Ambient Occlusion Static Fraction.
 
-2 ) Turn off Mobile HDR. The practice is as follows: open the project setup, go to Engine/Rendering/Mobile, and uncheck Mobile HDR:
+At this stage, global illumination is not really required for mobile VR games, so ambient light shielding can be turned off. 
+
+2 ) Navigate to Project Settings > Engine > Rendering > Mobile and disable Mobile HDR. Note that due to a bug in HDR on the Pico Goblin, unchecking Mobile HDR is recommended.
 
 .. image:: _static/8.3.png
 
-Figure 8.3 Mobile HDR unchecking
+Figure 8.3 Disabling Mobile HDR.
 
 **3.Q:** How to reduce the size of the game pack?
 
@@ -78,3 +80,15 @@ Figure 8.7 UE command keyword
 .. image:: _static/8.8.png
 
 Figure 8.8 Disable Low Latency Update
+
+**9.Q:** How do I adjust the size of RenderTexture (RT)?
+
+RT defaults to the screen resolution size. You can set the RT value in multiples by changing the Project Settings > Plugin > PicoMobile > multiples of RT size field:
+ 
+.. image:: _static/8.9.png
+
+Figure 8.8 - Multiples of RT size field.
+
+Note: The maximum value of RT is limited to 2048. The resolution of G2 4K device is relatively large. In 4.21 version, the default size of 4K device is set to 1600, and the resolution of 4K device before 4.21 is always 2048.
+
+

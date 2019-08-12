@@ -17,37 +17,30 @@ When using the Pico Goblin controller, please follow the following steps:
 
 .. image:: _static/5.1.png
 
-Figure 5.1 MotionController component addition 
+Figure 5.1 Adding a MotionController component
 
-This component is not affected by the Hand property, for example, if the left and right hands are changed, please go to the system setup to modify it. In addition, please check Disable Low Latency Update to avoid model flashing caused by the second refreshing per frame: 
+Note: This component is not affected by the Hand property. For example, if you change the left and right hands, navigate to the system settings to modify it. 
+
+2. Enable Disable Low Latency Update, so the controller model won’t twinkle as a result of the dual updates per frame:
 
 .. image:: _static/5.2.png
 
 Figure 5.2 Disable Low Latency Update checking 
 
-Once packaged and installed, the component will be moved following the position/orientation of the Pico Goblin handle. 
+After packaging and installation, the component will follow the position and orientation movements of the Pico Goblin controller.
 
-2、Add a model to MotionController: 
+3、Add a model to MotionController: 
 
-For UE 4.18, please add StaticMesh component to MotionController component firstly: 
+	1. For UE 4.20 and higher:
 
-.. image:: _static/5.3.png
+		* Add the model under the Visualization sub-menu of the MotionController details panel and enable Show Plugin Content:
 
-Figure 5.3  StaticMesh component addition 
 
-When adding a model, please go to the detail panel of StaticMesh component and find StaticMesh property. To add the Pico Goblin controller model, please check "Show Plugin Content" firstly and then select MotionControllerG1Mesh/MotionControllerG2Mesh:
+		.. image:: _static/5.1.6.png
 
-.. image:: _static/5.4.png
+		Figure 5.3 UAE 4.20+ Pico Goblin controller model.
 
-Figure 5.4 Pico Goblin controller model addition onto UE4.18 
-
-For UE 4.19 and higher versions, please add the model under the Visualization sub-item of MotionController detail panel (the display can also be achieved after checking "Show Plugin Content"):
-
-.. image:: _static/5.5.png
-
-Figure 5.5 Pico Goblin controller model addition onto UE4.19+ 
-
-It should be noted that in our plug-in directory, we will package the handle with key animation into an Actor, and if you want to reuse it, please attach it to the Pawn or Character in your level. 
+Note: In the plugin directory, the handle with button animation is packaged into an Actor. If you want to reuse it, attach it to the Pawn or Character in your level.
 
 5.1.2 	Input instructions 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -67,7 +60,7 @@ Goblin controller key                              Input binding                
 .. image:: _static/5.1.5.png                      .. image:: _static/5.2.5.png                      .. image:: _static/5.3.5.png                 
 ==============================================    ==============================================    ==============================================
 
-Pico G2 Except for the following two points, the other same correspondences with Pico Goblin controller key are as follows:
+Pico G2 Input Bindings. All elements are the same as the Pico Goblin controller except for the following two items:
 
 ==============================================    ==============================================    ==============================================
 G2 controller key                                 Input binding                                      Blueprint node
@@ -76,22 +69,22 @@ G2 controller key                                 Input binding                 
 .. image:: _static/5.4.4.png                      .. image:: _static/5.4.5.png                      .. image:: _static/5.4.6.png                
 ==============================================    ==============================================    ==============================================
 
-2. 	Axle
+2. 	Axes
 """""""""""""""""""""""""""
 
 The axis input of the Goblin series controller only contains the touchpad, and the schematic diagram of the touchpad is as follows:
 
 .. image:: _static/5.6.png
 
-Figure 5.6 Schematic diagram of the Goblin controller
+Figure 5.6 Goblin controller touchpad axes.
 
-Attention should be paid that unlike Steam, Oculus, Google, etc., our touch range is 0-1, and if your project has logic involving input axes, you need to map 0-1 to -1-1.
+Note: The value of the X and Y axes range from 0 to 1. This differs from the touchpad axes of Steam, Oculus, and Google devices. If there are functions related to the touchpad axes in your project, map the values that range from -1 through 1 to 0 through 1.
 
-The corresponding input values can be obtained through the following nodes:
+Use the nodes below to get the axes values:
 
 .. image:: _static/5.7.png
 
-Figure 5.7 How to get the touchpad axis value
+Figure 5.7 Nodes to get the touchpad axes values.
 
 5.1.3 	Related blueprint nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -122,12 +115,11 @@ The Pico Neo controller is as shown below:
 
 Figure 5.8 Pico Neo controller
 
-For the Pico Neo controller, there is a very important logical concept: Main handle and auxiliary handle. The main handle is the handle in the system that has rays which can interact with the UI, while the auxiliary handle is another handle. When only one handle is connected, the currently connected handle will be the main handle.
+The Pico Neo controller consists of the main controller and a sub controller. The main controller has a ray and can interact with the user interface. When there is only one controller connected to the HMD, it is the main controller.
 
-It is also recommended that the developer should attach the WidgetInteraction component to the main handle so that the handle in the application that interacts with the UI through the ray will be consistent with the handle in the system that interacts with the UI through the ray.
+It’s recommended that you add a WidgetInteraction component on the main controller, to ensure that the same controller is always used to interact with the user interface, both in the system and in your own application.
 
-
-When using the Pico Goblin controller, please follow the following steps:
+Use the following steps to set up the Pico Neo Controller:
 
 1、Add two MotionController components to the default Pawn class in the game (named as MotionController_Main, MotionController_Sub), and make them the same level as the Camera component:
 
@@ -135,35 +127,52 @@ When using the Pico Goblin controller, please follow the following steps:
 
 Figure 5.9  MotionController component addition 
 
-2、Select MotionController_Main, find the Hand property in its detail panel, and modify it to Special 1, so that the component will be moved following the main handle (in the case of just one handle, please set its Hand property as Special 1):
+2、Rename the MotionController components to MotionController_Main and MotionController_Sub.
+
+3. Select MotionController_Main and set the value of Hand to Special 1 in its property panel. This enables the component to follow the main handle movement. 
+
+4. Select MotionController_Sub and set the value of Hand to Special 2:
 
 .. image:: _static/5.10.png
 
-Figure 5.10 Hand property setting 
+Figure 5.10 Setting the hand property.
 
-3、Similarly, for MotionController_Sub, its Hand property should be set as Special 2.
+5.	Add a model to the MotionController:
+	1.	For UE 4.20 and higher: 
 
-4、Add a model to MotionController:
+		* Add the model under the Visualization sub-menu of the MotionController details panel and enable Show Plugin Content:
 
-For UE 4.18, please add StaticMesh component to MotionController component firstly:
+		.. image:: _static/5.2.6.png
 
-.. image:: _static/5.11.png
+		Figure 5.11 Adding a Controller model in UE 4.20+.
 
-Figure 5.11  StaticMesh component addition 
+When using the Pico Neo 2 controller, perform the following steps:
 
-Go to the detail panel of StaticMesh component and find StaticMesh property. To add the Pico Neo controller model, please check "Show Plugin Content" firstly and then select MotionControllerNeoMesh:
+1.	Add two MotionController components to the default Pawn class in the game (named as MotionController_Left,and MotionController_Right), and make them the same level as the Camera component:
 
-.. image:: _static/5.12.png
+	.. image:: _static/5.2.7.png
 
-Figure 5.12 Pico Goblin Controller model addition
+	Figure 27 - Addition of the MotionController Component.
 
-For UE 4.19 and higher versions, please add the model under the Visualization sub-item of MotionController detail panel (the display can also be achieved after checking "Show Plugin Content"):
+2.	Select MotionController_Left, find the Hand property in its detail panel, and modify it to Left:
 
-.. image:: _static/5.13.png
+	.. image:: _static/5.2.8.png
 
-Figure 5.13 Controller model addition onto UE4.19+ 
+	Figure 28 - Hand Property Setting.
 
-It should be noted that in our plug-in directory, we will package the handle with key animation into an Actor, and if you want to reuse it, please attach it to the Pawn or Character in your level.
+3.	Similarly, for MotionController_Right, its Hand property should be set as Right.
+
+4.	Add a model to MotionController:
+
+	1.	For UE 4.20 and higher: 
+
+		* Add the model under the Visualization sub-menu of the MotionController details panel and enable Show Plugin Content:
+
+		.. image:: _static/5.2.9.png
+
+		Figure 29 - Controller Model Addition in UE4.20+.
+
+Note: In the plug-in directory, we will package the controller with the key animation into an Actor. If you want to reuse it, attach it to the Pawn or Character in your level.
 
 5.2.2 	Input instructions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -183,8 +192,11 @@ The keys used by the Neo controller are not predefined by the engine, and when d
 
 .. image:: _static/5.13.5.png
 
+Neo 2 needs to drive the events through the corresponding blueprint node as follows:
 
-2. 	Axle
+.. image:: _static/5.4.7.png
+
+2. 	Axes
 """""""""""""""""""""""""""
 
 The axis input of the Pico Neo controller is divided into a touchpad and a trigger, and the schematic diagram of the touchpad is as follows:
@@ -199,7 +211,7 @@ The values of the main and auxiliary handle touchpads can be Get through the fol
 
 Figure 5.15 Touchpad-related blueprint nodes
 
-The input range of the trigger is 0-1, and the trigger input values of the main and auxiliary handles can be Get through the following blueprint nodes:
+The value of the trigger ranges from 0 to 1 and the trigger input values of the main and auxiliary (left and right) controllers can be obtained through the following blueprint nodes:
 
 .. image:: _static/5.16.png
 

@@ -6,7 +6,7 @@
 2.1 	Supporting device
 -----------------------------
 
-Pico Goblin，Pico Neo，Pico G2，Pico G2 4K
+Pico Goblin，Pico Neom Pico Neo 2，Pico G2，Pico G2 4K
 
 2.2 	Development environment requirements
 ---------------------------------------------------

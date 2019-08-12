@@ -69,7 +69,7 @@ The schematic diagram of the touchpad is as follows:
 
 Figure 5.4 Schematic diagram of touchpad
 
-5.2	Pico Neo
+5.2	Pico Neo/Neo 2
 ------------------------
 
 
@@ -98,11 +98,11 @@ Figure 5.5 Options Panel of Pvr_SDKManager
 
 2. Six Dof means that the hand tracking is 6 degrees of freedom, and both orientation and position can be tracked.
 			   
-- Use Default Range: The radius of the security zone is 0.8m by default. After exceeding the safety range, there will be an area prompt and a darkening effect of the visual field.
+- Use Default Safe Radius: The radius of the security zone is 0.8m by default. After exceeding the safety range, there will be an area prompt and a darkening effect of the visual field.
 
-- Moving Ratios: The moving ratio means the ration of moving distance in reality and the moving in the scenes, which is 1: 1 by default.
+- Position ScaleFactor: The ratio of movement, which is the ratio of moving distance in reality and moving in the scene. The default ratio is 1:1.
 
-- If you want to customize the radius of the security zone, you need to uncheck the Use Default Range, and the following option will appear. You can freely fill in the scope of setting the security zone.
+Note: If you want to customize the radius of the safe region, you first need to change defaultRange=true in pvr_unitysdkmanager.cs to false, after which Use Default Range will be enabled. You can then enter the range of safe areas.
 
 .. image:: _static/5.9.png
 

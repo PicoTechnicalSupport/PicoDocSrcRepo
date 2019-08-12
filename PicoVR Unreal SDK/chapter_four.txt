@@ -12,8 +12,7 @@ The blueprint and C++ project can be selected when creating new project, and the
 
 Figure 4.1 New project creating
 
-Please be sure to ensure that the target hardware is: Mobile/Tablet, the target image level is: Scalable 3D or 2D. In addition, the project name and project path should not be in Chinese.
-
+Please be sure to ensure that the target hardware is: Mobile/Tablet, the target image level is: Scalable 3D or 2D. Ensure that the Folder and Name do not contain Chinese characters.
 
 Step2: Set project
 ------------------------------
@@ -84,7 +83,7 @@ Figure 4.10 Pico-related plug-in
 Step4: Project completion 
 ------------------------------
 
-1、Create a new Pawn blueprint class, add a Scene component to its DefaultSceneRoot assembly, and then create a new Camera component under the Scene component: 
+1、Create a new Pawn blueprint class, add a Scene component to its DefaultSceneRoot assembly, and then create a new Camera component under the DefaultSceneRoot assembly:
 
 .. image:: _static/4.11.png
 

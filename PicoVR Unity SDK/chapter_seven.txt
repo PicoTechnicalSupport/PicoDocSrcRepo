@@ -58,7 +58,14 @@ The SDK provides the function of customizing the application to launch animation
 
 Figure 7.6 Splash Screen option
 
-SplashScreenType contains three types of values: UseUnitySplashScreen, UsePicoSplashScreen, UseDynamicSplashScreen. Each type corresponds to a different application startup animation, and the following describes   the configuration methods of the three startup animations. 
+SplashScreenType can be set to the following values corresponding to a different application startup animation:
+
+UseUnitySplashScreen: The application startup animation uses the startup animation set in Unity PlayerSetting > Splash Image.
+
+UsePicoSplashScreen: The application startup animation uses the default startup animation provided by the Pico SDK.
+
+UseDynamicSplashScreen: When enabled, displays the Splash Screen interface with the following options:
+
 
 7.5.1 Launch animation with the Unity app
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -129,9 +136,7 @@ Normally, our scene content will be directly rendered to the "Eye Buffer", and t
 
 The Compositor Layers (also known as "transmission layer") provides a rendering method that is different from "rendering scene content directly into the eye buffer": this method does not need to render the content to the "Eye Buffer", but directly “transparently” the content to ATW thread for sampling and synthesis processing, thus avoiding a texture sampling process (rendering the content onto the “eye buffer”), which significantly improves the sharpness of the texture and video.
 
-Compositor Layers supports up to 15 layers (more than 15 layers will not be displayed).
-
-Compositor Layers currently supports two texture types: 
+Compositor Layers supports up to 15 layers (more than 15 layers will not be displayed) and two "transparent" texture types: 
 
 - Standard Texture : standard 2D texture 
 

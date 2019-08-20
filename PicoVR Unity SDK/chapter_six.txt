@@ -9,805 +9,1295 @@
 UPvr_GetUnitySDKVersion
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static string UPvr_GetUnitySDKVersion()
+``public static string UPvr_GetUnitySDKVersion()``
 
-Functions: Get SDK version number
+Returns the SDL version Number.
 
-Parameter: none
+**Namespace**
 
-Return value: SDK version number
+``Pvr_UnitySDKAPI.System``
 
-Method of calling: Pvr_UnitySDKAPI.System.UPvr_GetUnitySDKVersion()
+**Parameters**
+
+None.
+
+**Returns**
+
+The version number of the SDK.
+
 
 6.2 	Sensor tracking related
 -------------------------------------
 
-UPvr_StartSensor
+
+6.2.1	UPvr_StartSensor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static int UPvr_StartSensor(int index)
+``public static int UPvr_StartSensor(int index)``
 
-Functions: Open sensor tracking
+Enables sensor tracking.
 
-Parameter: 0
+**Namespace**
 
-Return value: 0: Call success; 1: Call failure
+``Pvr_UnitySDKAPI.Sensor``
 
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_StartSensor(index)
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``index``                              32-bit Integer                        The sensor to enable tracking for. Set to ``0`` for the main sensor, or ``1`` for the subsidiary sensor. The main sensor is the HMD (head tracking) sensor of Pico Viewer, Pico Neo, and Goblin, Goblin2. Pico Viewer does not have a subsidiary sensor.
+================================       ===============================       ===============================
 
-UPvr_ResetSensor
+**Returns**
+
+``0`` if the function succeeded or ``1`` if the function failed.
+
+
+6.2.2	UPvr_ResetSensor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static int UPvr_ResetSensor (int index)
+``public static int UPvr_ResetSensor(int index)``
 
-Functions: Reset sensor tracking, the direction is determined by the system, and the horizontal and vertical directions are reset by default
+Resets sensor tracking.
 
-Parameter: 0
+**Namespace**
 
-Return value: 0: Call success; 1: Call failure
+``Pvr_UnitySDKAPI.Sensor``
 
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_ResetSensor (index)
+**Parameters**
 
-UPvr_OptionalResetSensor
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``index``                              32-bit Integer                        The sensor to reset tracking for. Set to ``0`` for the main sensor, or ``1`` for the subsidiary sensor. 
+================================       ===============================       ===============================
+
+**Note**: Pico Viewer resets the sensor to track the horizontal direction.
+
+**Returns**
+
+``0`` if the function succeeded or ``1`` if the function failed.
+
+
+6.2.3	Upvr_OptionalResetSensor 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static int UPvr_OptionalResetSensor (int index, int resetRot, int resetPos)
+``public bool Upvr_OptionalResetSensor(int index, int resetRot, int resetPos)``
 
-Functions: Reset sensor orientation and position
+Resets the sensor’s rotation and position.
 
-Parameter: index: 0 resetRot: Orientation resetPos: Position 0: Not reset 1: Reset
+**Namespace**
 
-Return value: 0: Call success; 1: Call failure
+``Pvr_UnitySDKAPI.Sensor``
 
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_OptionalResetSensor (0,1,1)
+**Parameters**
+
+Name	Type	Description
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``index``                              32-bit Integer                        The sensor to reset tracking for. Set to ``0`` for the main sensor, or ``1`` for the subsidiary sensor. 
+``resetRot``	                       32-bit Integer                        Set to ``1`` to reset the rotation, or ``0`` to not reset the rotation. 
+``resetPos``	                       32-bit Integer                        Set to ``1`` to reset the position, or ``0`` to not reset the position.
+================================       ===============================       ===============================
+
+**Returns**
+
+**true** if the function succeeded or **false** if the function failed.
 
 
-6.3 	Controller related
------------------------------------------
+6.3 	Controller Functions
+-------------------------------------
 
-UPvr_GetControllerPower
+6.3.1	UPvr_GetControllerPower
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static int UPvr_GetControllerPower(int hand)
+``public static int UPvr_GetControllerPower(int hand)``
 
-Functions: Get controller power
+Gets the battery level of a controller.
 
-Parameter: For Goblin and G2, G2 4K, please enter 0; For Pico Neo, it corresponds to the corresponding controller 0/1 (For Pico Neo, 0/1 is the index number of the controller, 0 represents the first bound controller, and 1 represents the second bound controller)
+**Namespace**
 
-Return value: Goblin、G2: 0-4，Pico Neo: 1-9
+``Pvr_ControllerAPI.Controller``
 
-Method of calling: UnitySDKAPI.Controller.UPvr_GetControllerPower(int hand)
+**Parameters**
 
-changeMainControllerCallback
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit Integer                        Specifies the controller from which to get the battery level. For Goblin, G2, and G2 4K, pass ``0``. For Pico Neo, pass ``0`` for the first bound controller or ``1`` for the second bound controller.
+================================       ===============================       ===============================
 
-Function name: public static void changeMainControllerCallback (string index)
+**Returns**
 
-Functions: Callback of Master Hand Change
+For Goblin and Goblin2 the battery level returned is 0 through 4. For Pico Neo, the battery level returned is 1 through 9.
 
-Parameter: 0/1 represents which the current master control controller is changed (the main control controller is a controller for enabling ray to participate in UI interaction, which has no specific relationship with the index number of the controller)
+6.3.2	changeMainControllerCallback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Return value: none
+``public static void changeMainControllerCallback (string index)``
 
-Method of calling: Pvr_ControllerManager.ChangeMainControllerCallBackEvent += XXXXX
+A callback that is invoked when the main controller is changed.
 
-UPvr_GetControllerAbility
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Parameters**
 
-Function name: public static int UPvr_GetControllerAbility(int hand)
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``index``                              ``String``                            Indicates which controller has been switched to be the main control controller. Will be set to either ``0`` or ``1``. The main control controller is a controller that enables the beam, participates in the user interface interaction, and has no specific relationship with the index of the controller.
+================================       ===============================       ===============================
 
-Functions: Gets whether the current Pico Neo controller supports 3Dof or 6Dof.
+**Returns**
 
-Parameter: 0/1 (For Pico Neo, 0/1 is the index number of the controller, 0 represents the first bound controller, and 1 represents the second bound controller)
+Nothing
 
-Return value: 0 is call failure, 1 is 6Dof, and 2 is 3Dof
+6.3.3	UPvr_GetControllerAbility
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Method of calling: Pvr_UnitySDKAPI.Controller. UPvr_GetControllerAbility(int hand)
+``public static int UPvr_GetControllerAbility(int hand)``
 
-setControllerStateChanged
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Gets the Pico Neo controller’s support for 3Dof/6Dof.
 
-Function name: public static void setControllerStateChanged (string state)
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               ``String``                            Indicates which hand is switched to be the main control controller. Set to ``0`` or ``1``. The main control controller is a controller that enables the beam, participates in the UI interaction, and has no specific relationship with the index of the controller.
+================================       ===============================       ===============================
 
-Functions: Callback of change in connection status of Pico Neo controller
+**Returns**
 
-Parameter: The format is (x,x). The first number is the serial number of the controller, and the second number is the connection status of the controller. For example, in 0,0, 0 means the controller 0 is disconnected, 1 means controller 0 is connected
-
-Return value: none
-
-Method of calling: Pvr_ControllerManager.SetControllerStateChangedEvent += XXXXX
-
-UPvr_GetControllerState
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static ControllerState UPvr_GetControllerState(int hand)
-
-Functions: Get the connection status of Controller
-
-Parameter: For Goblin and G2, G2 4K, please enter 0; For Pico Neo, it corresponds to the corresponding controller 0/1.
-
-Return value: Connection status (Note: For Pico Neo using one controller, it is recommended to call twice to determine the connection status because the index of the current controller is inconvenient to be determined)
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetControllerState(hand)
+``0`` if the call failed, ``1`` if the controller supports 6Dof, or ``2`` if the controller supports 3Dof.
 
 
-ResetController
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6.3.4	setControllerStateChanged
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static void ResetController(int num)
+``public static void setControllerStateChanged(string state)``
 
-Functions: Reset controller orientation
+A callback that is invoked when the connection status of a Pico Neo controller has changed.
 
-Parameter: For Goblin and G2, G2 4K, please enter 0; For Pico Neo, it corresponds to the corresponding controller 0/1.
+**Parameters**
 
-Return value: none
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``state``                              ``String``                            A string indicating the connection status. The first number is the index number of the controller and the second number is the connection status of the controller. The two numbers are separated by a comma. For example: ``0,0`` means that controller 0 is disconnected, and ``0,1`` means controller 0 is connected.
+================================       ===============================       ===============================
 
-Method of calling: Pvr_ControllerManager.ResetController(num)
+**Returns**
+
+Nothing
 
 
+6.3.5	UPvr_GetControllerState
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static ControllerState UPvr_GetControllerState(int hand)``
+
+Gets the connection status of a Pico controller. 
+
+**Note**: When only one controller is connected to a Pico Neo device, it’s recommended that this function be invoked twice, passing 0 and 1 in the respective calls, since the index of the controller cannot be determined ahead of time.
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               ``String``                            The controller from which to get the state. For Goblin, G2, and G2 4K, pass ``0``. For  Pico  Neo  pass  ``0`` or ``1`` for the respective controller.
+================================       ===============================       ===============================
+
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Returns**
+
+A ``ControllerState`` containing the controller’s connection status.
+
+
+6.3.6	ResetController
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void ResetController(int num)``
+
+Resets the pose for a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``num``                                32-bit Integer                        The index of the controller for which to perform the reset. For Goblin, G2, and G2 4K, pass ``0``. For Pico Neo, set to ``0`` or ``1`` for the respective controller. Set to ``0`` if there is only one controller or a 3DoF controller in use.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+6.3.7	StartUpgrade
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool StartUpgrade()``
+
+Starts an upgrade.
+
+**Namespace**
+
+``Pvr_ControllerManager``
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+6.3.8	GetBLEVersion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static long GetBLEVersion()``
+
+Gets the BLE version number. 
+
+**Note**: Not applicable to G2/G2 4K.
+
+**Namespace**
+
+Pvr_ControllerManager
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+The BLE version number.
+
+
+6.3.9	setupdateFailed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void setupdateFailed()``
+
+A callback that is invoked when an upgrade fails. You can either add logic directly within this method or use a delegate to perform the call.
+
+**Namespace**
+
+``Pvr_ControllerManager``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+Nothing.
+
+
+6.3.10	setupdateSuccess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void setupdateSuccess()``
+
+A callback that is invoked when an upgrade succeeds. You can either add logic directly within this method or use a delegate to perform the call. 
+
+**Note**: Not applicable to G2/G2 4K.
+
+**Namespace**
+
+``Pvr_ControllerManager``
+
+**Parameters**
+
+None
+
+**Returns**
+
+Nothing.
+
+6.3.11	setupdateProgress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void setupdateProgress(string progress)``
+
+A callback that is invoked during an upgrade process to provide the current progress. You can either add logic directly within this method or use a delegate to perform the call.
+
+**Namespace**
+
+``Pvr_ControllerManager``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``progress``                           ``string``                            The current progress. Will be set to a value from 0 through 100 to indicate the percentage complete.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing.
+
+
+6.3.12	UPvr_GetControllerQUA
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static Quaternion UPvr_GetControllerQUA(int hand)``
+
+Gets the pose for a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The controller from which to get the pose. For Goblin, G2, and G2 4K, set to ``0``. For Pico Neo, set to ``0`` or ``1`` for the respective controller. 
+================================       ===============================       ===============================
+
+**Returns**
+
+A Quaternion containing the pose for the controller.
+
+6.3.13	UPvr_GetControllerPOS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static Vector3 UPvr_GetControllerPOS (int hand)``
+
+Gets the position of a controller.
+
+**Note**: This function is only applicable for the Pico Neo.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The controller from which to get the position. For Goblin, G2, and G2 4K, set to ``0``. For Pico Neo, set to ``0`` or ``1`` for the respective controller. 
+================================       ===============================       ===============================
+
+**Returns**
+
+A ``Vector3`` containing the position for the controller.
+
+
+6.3.14	UPvr_GetMainHandNess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static int UPvr_GetMainHandNess()``
+
+Gets the index of the controller that is currently set as the main controller.
+
+**Note**: On the Pico Neo this function can only return the correct value after the bind service has succeeded. The SDK will start the Bind Controller service when the app starts. We recommend that developers check if the bind has first succeeded using the Bind callback function.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+None
+
+**Returns**
+
+The index of the main controller (0 or 1).
+
+6.3.15	UPvr_SetMainHandNess
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void UPvr_SetMainHandNess(int hand)``
+
+Sets the main controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to set as the main controller. Set to ``0`` or ``1`` for the respective controller. 
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+6.3.16	UPvr_GetKey
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool UPvr_GetKey (int hand，Pvr_KeyCode key)``
+
+Checks if a specific key is currently pressed on a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to check. Set to ``0`` or ``1`` for the respective controller.  
+``key``                                Pvr_KeyCode                           The key code specifying which physical key to check on the controller.
+================================       ===============================       ===============================
+
+**Returns**
+
+``true`` if the specified key is currently pressed on the controller or ``false`` if the key is not currently pressed.
+
+6.3.17	UPvr_GetKeyDown
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool UPvr_GetKeyDown(int hand，Pvr_KeyCode key)``
+
+Checks if a specific key is currently pressed on a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to check. Set to ``0`` or ``1`` for the respective controller.  
+``key``                                Pvr_KeyCode                           The key code specifying which physical key to check on the controller.
+================================       ===============================       ===============================
+
+
+**Returns**
+
+``true`` if the specified key is currently pressed on the controller or ``false`` if the key is not currently pressed.
+
+
+6.3.18	UPvr_GetKeyUp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool UPvr_GetKeyUp(int hand，Pvr_KeyCode key)``
+
+Checks if a specific key is not currently pressed on a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to check. Set to ``0`` or ``1`` for the respective controller.  
+``key``                                Pvr_KeyCode                           The key code specifying which physical key to check on the controller.
+================================       ===============================       ===============================
+
+
+**Returns**
+
+``true`` if the specified key is not currently pressed on the controller or ``false`` if the key is currently pressed.
+
+6.3.19	UPvr_GetKeyLongPressed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool UPvr_GetKeyLongPressed(int hand，Pvr_KeyCode key)``
+
+Checks if a specific key is currently long pressed on a controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to check. Set to ``0`` or ``1`` for the respective controller.  
+``key``                                Pvr_KeyCode                           The key code specifying which physical key to check on the controller.
+================================       ===============================       ===============================
+
+
+**Returns**
+
+``true`` if the specified key is currently long pressed on the controller or ``false`` if the key is not currently long pressed.
+
+
+6.3.20	UPvr_IsTouching
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static bool UPvr_IsTouching(int hand)``
+
+Checks if the touchpad on a controller is currently being touched.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to check. Set to ``0`` or ``1`` for the respective controller.  
+================================       ===============================       ===============================
+
+**Returns**
+
+``true`` if the touchpad is currently being touched or ``false`` if the touchpad is not currently being touched.
+
+
+6.3.21	UPvr_GetSwipeDirection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static SwipeDirection UPvr_GetSwipeDirection(int hand)``
+
+Gets the state of the sliding gesture.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller from which to get the swipe pose. Set to ``0`` or ``1`` for the respective controller.  
+================================       ===============================       ===============================
+
+**Returns**
+
+A ``SwipeDirection`` indicating the swipe direction.
+
+6.3.22	UPvr_GetTouchPadPosition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static Vector2 UPvr_GetTouchPadPosition(int hand)``
+
+Gets the touch value of the touchpad.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller from which to get the touchpad value. Set to ``0`` or ``1`` for the respective controller.  
+================================       ===============================       ===============================
+
+**Returns**
+
+The touchpad’s touch value. This value is the same for Pico Goblin and Pico Neo. 
+
+6.3.23	UPvr_GetTouchPadClick
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static TouchPadClick UPvr_GetTouchPadClick(int hand)``
+
+Gets the touch value click. The value is based on dividing the touchpad into four areas to simulate the up, down, left, and right functions of a game controller.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller from which to get the touchpad click. Set to ``0`` or ``1`` for the respective controller.  
+================================       ===============================       ===============================
+
+**Returns**
+
+A ``TouchPadClick`` indicating the current touchpad click.
+
+
+6.3.24	Upvr_GetControllerTriggerValue
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static int Upvr_GetControllerTriggerValue(int hand)``
+
+Gets the input value of the trigger. 
+
+**Note**: This function is applicable to Goblin2 and Neo Controllers.	
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller from which to get the input value. Set to ``0`` or ``1`` for the respective controller.  
+================================       ===============================       ===============================
+
+**Returns**
+
+The input value in the range of 0 through 255.
+
+6.3.25	VibateController
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public void VibateController(int hand, int strength)``
+
+Vibrates the controller.
+
+**Namespace**
+
+``Pvr_ControllerManager.controllerlink``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``hand``                               32-bit integer                        The index of the controller to vibrate. Set to ``0`` or ``1`` for the respective controller.  
+``strength``                           32-bit integer                        The strength at which to vibrate. Can be set from 0 through 255.
+================================       ===============================       ===============================
+
+
+**Returns**
+
+Nothing
+
+6.3.26	UPvr_GetDeviceType
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static int UPvr_GetDeviceType()``
+
+Gets the type of the connected controller. 
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Controller``
+
+**Parameters**
+
+None
+
+**Returns**
+
+The type of the device. Will be set to one of the following values: 
+
+*	``0``: No connection
+*	``1``: Goblin
+*	``2``: Neo
+*	``3``: G2, G2 4K
+
+If the return value is ``0``, the controller connection state needs to be checked at the same time, and the two values must coincide to determine whether to enable head control.
+
+
+
+
+6.4 	Battery, Volume, Brightness Services
+-----------------------------------------------
+
+6.4.1	UPvr_InitBatteryVolClass
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_InitBatteryVolClass()``
+
+Initializes battery, volume, and brightness services. This function must be invoked before using any of those services.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+6.4.2	UPvr_StartAudioReceiver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_StartAudioReceiver()``
+
+Starts the audio service.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+
+6.4.3	UPvr_SetAudio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public void UPvr_SetAudio(string s)``
+
+Notifies Unity of the current volume when the volume changes.	
+
+**Namespace**
+
+This is a low-level Android call, not a Unity-level function. If you need to perform any operations when the volume changes, write the related logic in this function.
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``s``                                  ``string``                            The value of the volume after the volume has changed.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+6.4.4	UPvr_StopAudioReceiver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_StopAudioReceiver()``
+
+Stops the audio service.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+
+6.4.5	UPvr_StartBatteryReceiver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_StartBatteryReceiver()``
+
+Starts the battery service.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+None
+
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+6.4.6	UPvr_SetBattery
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public void UPvr_SetBattery(string s)``
+
+Notifies Unity of the current battery level when the battery level changes.	
+
+**Namespace**
+
+This is a low-level Android call, not a Unity-level function. If you need to perform any operations when the battery level changes, write the related logic in this function.
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``s``                                  ``string``                            The battery level. Will be set in the range of 0.00 through 1.00.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+
+6.4.7	UPvr_StopBatteryReceiver
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_StopBatteryReceiver()``
+
+Stops the battery service.	
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+
+6.4.8	UPvr_GetMaxVolumeNumber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public int UPvr_GetMaxVolumeNumber()``
+
+Returns the maximum value for the volume.	
+
+**Namespace**
+
+Pvr_UnitySDKAPI.VolumePowerBrightness
+
+**Parameters**
+
+None
+ 
+**Returns**
+
+The maximum volume.
+
+
+6.4.9	UPvr_GetCurrentVolumeNumber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public int UPvr_GetCurrentVolumeNumber()``
+
+Returns the current value for the volume.	
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+None
+
+**Returns**
+
+The current volume value in the range of 0 through 15.
+
+6.4.10	UPvr_VolumeUp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_VolumeUp()``
+
+Turns up the volume.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+6.4.11	UPvr_VolumeDown
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_VolumeDown()``
+
+Turns down the volume.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+None
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+
+6.4.12	UPvr_SetVolumeNum
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_SetVolumeNum()``
+
+Turns down the volume.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``volume``                             ``string``                            The volume level to set. Set to a value in the range of 0 through 15.
+================================       ===============================       ===============================
+
+**Returns**
+
+``true`` if the function succeeded or ``false`` if the function failed.
+
+6.4.13	UPvr_GetScreenBrightnessLevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static int[] UPvr_GetScreenBrightnessLevel()``
+
+Gets the current brightness level of the screen.
+
+**Note**: This function is applicable for Goblin only.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+
+**Parameters**
+
+None
+
+**Returns**
+
+An array of integers where the first element is the total brightness level supported, the second element is the current brightness level, and the remaining elements are the brightness interval values.
+
+6.4.14	UPvr_SetScreenBrightnessLevel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public  static void UPvr_SetScreenBrightnessLevel(int  vrBrightness, int level)``
+
+Sets the current brightness level of the screen.
+
+**Note**: This function is applicable for Goblin only.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``vrBrightness``                       32-bit Integer                        The brightness mode to set. Set to ``0`` to specify the system default or ``1`` to set a custom brightness level via the ``level`` parameter.
+``level``                              32-bit Integer                        The brightness level to set. Set to a value in the range of 0 through 255.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+6.4.15	UPvr_GetCommonBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public int UPvr_GetCommonBrightness()``
+
+Gets the current brightness level of common devices.
+
+**Note**: This function is applicable for Pico Neo and other regular mobile phones.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+None
+
+**Returns**
+
+An integer indicating the current brightness level in the range of 0 through 255.
+
+6.4.16	UPvr_SetCommonBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public bool UPvr_SetCommonBrightness(int brightness)``
+
+Sets the current brightness level for common devices.
+
+**Note**: This function is applicable for Pico Neo and other regular mobile phones.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.VolumePowerBrightness``
+
+**Parameters**
+
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``vrBrightness``                       32-bit Integer                        The brightness level to set. Set to a value in the range of 0 through 255.
+================================       ===============================       ===============================
+
+**Returns**
+
+Nothing
+
+
+6.5	Head-mounted Distance Sensor
+-----------------------------------------------
+
+6.5.1	UPvr_InitPsensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void UPvr_InitPsensor()``
+
+Initializes the distance sensor.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Sensor``
+
+**Parameters**
+
+None
+
+**Returns**
+
+Nothing
+
+
+6.5.2	UPvr_GetPsensorState
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static int UPvr_GetPsensorState()``
+
+Gets the state of the head-mounted distance sensor.
+
+**Note**: invoke ``UPvr_InitPsensor`` for initialization before invoking ``UPvr_GetPsensorState``.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Sensor``
+
+**Parameters**
+
+None
+
+**Returns**
+
+``0`` if the device is currently worn on the head or ``1`` if it’s not currently worn on the head.
+
+
+6.5.3	UPvr_UnregisterPsensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void UPvr_UnregisterPsensor()``
+
+Releases the distance sensor
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.Sensor``
+
+**Parameters**
+
+None
+
+**Returns**
+
+Nothing
+
+
+6.6	Hardware Devices
+-----------------------------------------------
+
+6.6.1	UPvr_GetDeviceMode
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static string UPvr_GetDeviceMode()``
+
+Gets the device type.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.System``
+
+**Parameters**
+
+None
+
+**Returns**
+
+A ``SystemInfo.deviceModel`` containing device information.
+
+6.6.2	UPvr_GetDeviceSN
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static string UPvr_GetDeviceSN()``
+
+Gets the device’s serial number.
+
+**Namespace**
+
+``Pvr_UnitySDKAPI.System``
+
+**Parameters**
+
+None
+
+**Returns**
+
+The device’s serial number.
+
+6.6.3	UPvr_ShutDown
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``public static void UPvr_ShutDown()``
+
+Powers off the device.
+
+**Note**: Before this function can be invoked, the ``DEVICE_POWER`` permission must first be added to ``AndroidManifest.xml``:
+
+.. code-block:: XML
 	
-StartUpgrade
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	...
+	android:sharedUserId="android.uid.system" 
+	<uses-permission android:name="android.permission.DEVICE_POWER"/>
 
-Function name: public static bool StartUpgrade ()
 
-Functions: Start upgrading the controller
+**Namespace**
 
-Parameter: none
+Pvr_UnitySDKAPI.System
 
-Return value: true: true false: false
+**Parameters**
 
-Method of calling: Pvr_ControllerManager.StartUpgrade()
+None
 
+**Returns**
 
-GetBLEVersion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nothing
 
-Function name: public static bool StartUpgrade ()
+6.6.4	UPvr_Reboot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Functions: Get the BLE version
+``public static void UPvr_Reboot()``
 
-Parameter: none
+Reboots the device.
 
-Return value: BLE version(Not applicable to G2/G2 4K)
+**Note**: Before this function can be invoked, the DEVICE_POWER permission must first be added to AndroidManifest.xml:
 
-Method of calling: Pvr_ControllerManager.GetBLEVersion()
+.. code-block:: XML
 
+	...
+	android:sharedUserId="android.uid.system" 
+	<uses-permission android:name="android.permission.DEVICE_POWER"/>
 
-setupdateFailed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static void setupdateFailed()
+**Namespace**
 
-Functions: Callback of failed upgrading
+``Pvr_UnitySDKAPI.System``
 
-Parameter: none
+**Parameters**
 
-Return value: none
+None
 
-Method of calling: You can either add logic directly within this method or use delegate to call
+**Returns**
 
- 
+Nothing
 
-setupdateSuccess
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6.6.5	UPvr_Sleep
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static bool setupdateSuccess()
+``public static void UPvr_Sleep()``
 
-Functions: Callback of successful upgrading
+Turns off the screen.
+**Note**: Before this function can be invoked, the DEVICE_POWER permission must first be added to AndroidManifest.xml:
 
-Parameter: none
+.. code-block:: XML
 
-Return value: none (Not applicable to G2/G2 4K)
+	…
+	android:sharedUserId="android.uid.system" 
+	<uses-permission android:name="android.permission.DEVICE_POWER"/>
 
-Method of calling: You can either add logic directly within this method or use delegate to call
+**Namespace**
 
-setupdateProgress
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``Pvr_UnitySDKAPI.System``
 
-Function name: public static void setupdateProgress (string progress)
+**Parameters**
 
-Functions: Callback of upgrading schedule
+None
 
-Parameter: Schedule 0-100
+**Returns**
 
-Return value: none
+Nothing
 
-Method of calling: You can either add logic directly within this method or use delegate to call
-	
-UPvr_GetControllerQUA
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static Quaternion UPvr_GetControllerQUA (int hand)
 
-Functions: Get controller orientation
 
-Parameter: For Goblin and G2, G2 4K, please enter 0; For Pico Neo, it corresponds to the corresponding controller 0/1.
 
-Return value: Quaternion, controller orientation
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetControllerQUA(hand)
 
 
-UPvr_GetControllerPOS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static Vector3 UPvr_GetControllerPOS (int hand)
 
-Functions: Get controller position
 
-Parameter: For Goblin and G2, G2 4K, please enter 0; For Pico Neo, it corresponds to the corresponding controller 0/1.
 
-Return value: 3 dimensional vector, controller position
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetControllerPOS(hand)
 
 
-UPvr_GetMainHandNess
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static int UPvr_GetMainHandNess()
 
-Functions: Get the current master control controller index
 
-Parameter: none
 
-Return value: 0/1 (Note: Pico Neo is exclusive and only returns the correct value after the bind controller service is successful. Our SDK will bind the controller service when the application starts, and it is recommended that developers use the Bind callback function to judge whether the bind is successful)
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetMainHandNess()
 
-	
-UPvr_SetMainHandNess
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static void UPvr_SetMainHandNess(int hand)
 
-Functions: Set the current master control controller
 
-Parameter: 0/1
 
-Return value: none
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_SetMainHandNess(hand)
 
 
-	
-UPvr_GetKey
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Function name: public static bool UPvr_GetKey (int hand, Pvr_KeyCode key)
 
-Functions: Judging whether the key is pressed or not
 
-Parameter: 0/1, Pvr_KeyCode
 
-Return value: true: Press false: Fail to press
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetKey (hand, key)
 
 
 
-UPvr_GetKeyDown
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static bool UPvr_GetKeyDown (int hand, Pvr_KeyCode key)
 
-Functions: Judging whether the key is pressed or not
 
-Parameter: 0/1，Pvr_KeyCode
 
-Return value: true: Press false once: Fail to press
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetKeyDown (hand , key)
 
 
-	
-UPvr_GetKeyUp
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static bool UPvr_GetKeyUp (int hand, Pvr_KeyCode key)
 
-Functions: Judging whether the key is lifted or not
 
-Parameter: 0/1, Pvr_KeyCode
 
-Return value: true: Lift false once: Fail to lift
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetKeyUp (hand , key)
 
-	
-UPvr_GetKeyLongPressed
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static bool UPvr_GetKeyLongPressed (int hand, Pvr_KeyCode key)
 
-Functions: Judging whether the key is pressed for a long time
 
-Parameter: 0/1, Pvr_KeyCode
 
-Return value: true: Long press the key for 0.5 seconds false: Fail to reach the long press time
 
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetKeyLongPressed (hand , key)
-
-
-
-UPvr_IsTouching
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static bool UPvr_IsTouching (int hand)
-
-Functions: Judging whether the touchpad is touched or not
-
-Parameter: 0/1
-
-Return value: true: Touching false: Not touching
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_IsTouching(hand)
-
-
-
-UPvr_GetSwipeDirection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static SwipeDirection UPvr_GetSwipeDirection(int hand)
-
-Functions: Get the state of a sliding gesture.
-
-Parameter: 0/1
-
-Return value: SwipeDirection
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetSwipeDirection(hand)
-
-
-	
-UPvr_GetTouchPadPosition
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static Vector2 UPvr_GetTouchPadPosition (int hand)
-
-Functions: Get the touch value of the touchpad
-
-Parameter: 0/1
-
-Return value: The touch value and Pico Goblin of the touchpad are the same as Pico Neo, as shown in Figure 6.4.
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetTouchPadPosition(hand)
-
-
-
-UPvr_GetTouchPadClick
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static TouchPadClick UPvr_GetTouchPadClick(int hand)
-
-Functions: The simulation clicking function of the touchpad (divide the touchpad into 4 pieces to simulate the up and down and left and right functions of the game controller)
-
-Parameter: 0/1
-
-Return value: TouchPadClick
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetTouchPadClick (hand)
-
-
-	
-UPvr_GetControllerTriggerValue
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static int UPvr_GetControllerTriggerValue(int hand)
-
-Functions: Get the input value of the trigger
-
-Parameter: 0/1
-
-Return value: 0-255 (applicable to G2 and Neo Controller)
-
-Method of calling: Pvr_UnitySDKAPI.Controller.UPvr_GetControllerTriggerValue(hand)
-
-
-	
-VibateController
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public void VibateController(int hand, int strength)
-
-Functions: Vibration interface of Pico Neo Controller
-
-Parameter: hand: 0,1 Vibration strength: 0-255
-
-Return value: none
-
-Method of calling: Pvr_ControllerManager.controllerlink. VibateController(hand,strength)
-
-
-
-UPvr_GetDeviceType
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	
-Function name: public static int UPvr_GetDeviceType ()
-
-Functions: Get the connected controller type
-
-Parameter: none
-
-Return value: 0: No connection 1: Goblin 2: Neo 3: G2, G2 4K (If the return value is 0, the controller connection state needs to be checked at the same time, and the two values must coincide to determine whether to enable head control).
-
-Method of calling: Pvr_UnitySDKAPI.Controller. UPvr_GetDeviceType ();
-
-	
-6.4 	Power, volume and brightness service-related
----------------------------------------------------------		
-
-UPvr_InitBatteryVolClass
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_InitBatteryVolClass()
-
-Functions: Initialize power, volume and brightness service
-
-Parameter: none
-
-Return value: true: Successful false: Failure (Please call this interface to initialize before using services such as power, volume, brightness, etc.)
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_InitBatteryVolClass()
-
-
-
-UPvr_StartAudioReceiver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_StartAudioReceiver ()
-
-Functions: Turn on volume service
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_StartAudioReceiver ()
-
-
-
-UPvr_SetAudio
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public void UPvr_SetAudio(string s)
-
-Functions: Callback when volume changes
-
-Parameter: Current volume
-
-Return value: none
-
-Method of calling: You can either add logic directly within this method or use delegate to call
-
-
-	
-UPvr_StopAudioReceiver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public void UPvr_StopAudioReceiver ()
-
-Functions: Turn off volume service
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_StopAudioReceiver()
-
-
-	
-UPvr_StartBatteryReceiver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public void UPvr_StartBatteryReceiver ()
-
-Functions: Turn on power service
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_StartBatteryReceiver()
-
-
-	
-UPvr_SetBattery
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public void UPvr_SetBattery(string s)
-
-Functions: Callback when volume changes
-
-Parameter: Current electric quantity (range: 0.00-1.00)
-
-Return value: none
-
-Method of calling: You can either add logic directly within this method or use delegate to call
-
-
-
-UPvr_StopBatteryReceiver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_StopBatteryReceiver ()
-
-Functions: Turn off power service
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_StopBatteryReceiver()
-
-
-
-UPvr_GetMaxVolumeNumber
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public int UPvr_GetMaxVolumeNumber ()
-
-Functions: Get maximum volume
-
-Parameter: none
-
-Return value: Maximum volume
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_GetMaxVolumeNumber ()
-
-
-
-UPvr_GetCurrentVolumeNumber
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public int UPvr_GetCurrentVolumeNumber ()
-
-Functions: Get the current volume
-
-Parameter: none
-
-Return value: Current volume value (range is 0-15)
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_GetCurrentVolumeNumber ()
-
-
-	
-UPvr_VolumeUp
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_VolumeUp ()
-
-Functions: Increase volume
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_VolumeUp ()
-
-
-
-	
-UPvr_VolumeDown
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_VolumeDown ()
-
-Functions: Decrease volume
-
-Parameter: none
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_VolumeDown ()
-
-
-
-UPvr_SetVolumeNum
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_SetVolumeNum(int volume)
-
-Functions: Set volume
-
-Parameter: Set volume value (volume value range is 0-15)
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness. UPvr_SetVolumeNum(volume)
-
-
-
-UPvr_GetScreenBrightnessLevel
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public int UPvr_GetScreenBrightnessLevel ()
-
-Functions: Gets the brightness level of the current screen
-
-Parameter: none
-
-Return value: An integer where the first bit is the total brightness level supported and the second bit is the current brightness level. Remaining bits indicate the interval value of the brightness level.
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_GetScreenBrightnessLevel()
-
-
-
-UPvr_SetScreenBrightnessLevel
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_SetScreenBrightnessLevel (int vrBrightness, int level)
-
-Functions: Set the brightness of the screen
-
-Parameter: vrBrightness: Sets the brightness mode: Set to 0 to select the system’s default brightness level or 1 to use the brightness level specified in the level parameter; level: The brightness level to set. Set to a value in the range of 1 through 255.
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_SetScreenBrightnessLevel (vrBrightness,level)
-
-
-
-UPvr_GetCommonBrightness
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public int UPvr_GetCommonBrightness ()
-
-Functions: Get the brightness value of the current general device
-
-Parameter: none
-
-Return value: Current brightness value (brightness value range: 0-255)
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_GetCommonBrightness()
-
-
-	
-UPvr_SetCommonBrightness
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public bool UPvr_SetCommonBrightness(int brightness)
-
-Functions: Set the brightness value of the current general device
-
-Parameter: Brightness value (brightness value range is 0-255
-
-Return value: true: Successful false: Failure
-
-Method of calling: Pvr_UnitySDKAPI.VolumePowerBrightness.UPvr_SetCommonBrightness (brightness)
-
-	
-6.5 	Head-mounted distance sensor related
---------------------------------------------------
-
-UPvr_InitPsensor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static void UPvr_InitPsensor()
-
-Functions: Initialize the distance sensor
-
-Parameter: none
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_InitPsensor ()
-
-
-	
-UPvr_GetPsensorState
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static int UPvr_GetPsensorState()
-
-Functions: Get the status of the head-mounted distance sensor
-
-Parameter: none
-
-Return value: The return value is 0 when wearing a headset and it is 1 when walking away.
-
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_GetPsensorState() (Note: UPvr_InitPsensor needs to be called for initialization (initialization for only once) before getting the status of Psensor)
-
-
-	
-UPvr_UnregisterPsensor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static void UPvr_UnregisterPsensor ()
-
-Functions: Release distance sensor
-
-Parameter: none
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI. Sensor. UPvr_UnregisterPsensor ()
-
-
-6.6 	Hardware device related
----------------------------------------
-
-UPvr_GetDeviceMode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static string UPvr_GetDeviceMode ()
-
-Functions: Get device type
-
-Parameter: none
-
-Return value: SystemInfo.deviceModel
-
-Method of calling: Pvr_UnitySDKAPI. System. UPvr_GetDeviceMode ()
-
-
-	
-UPvr_GetDeviceSN
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static string UPvr_GetDeviceSN ()
-
-Functions: Get SN serial number of device
-
-Parameter: none
-
-Return value: Serial number SN of device
-
-Method of calling: Pvr_UnitySDKAPI. System. UPvr_GetDeviceSN ()
-
-
-
-UPvr_ShutDown
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static void UPvr_ShutDown()
-
-Functions: Power off
-
-Parameter: none
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI. System. UPvr_ShutDown ()
-
-
-	
-UPvr_Reboot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static void UPvr_Reboot ()
-
-Functions: Restart
-
-Parameter: none
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI. System. UPvr_Reboot ()
-
-
-
-UPvr_Sleep
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function name: public static void UPvr_Sleep ()
-
-Functions: Screen closing
-
-Parameter: none
-
-Return value: none
-
-Method of calling: Pvr_UnitySDKAPI. System. UPvr_Sleep ()
-
-
-
-**Note: When using the UPvr_ShutDown, UPvr_Reboot, and UPvr_Sleep interfaces, it is required to add the following permissions to AndroidManifest and the system signature is required:**
-
-::
-
-	android:sharedUserId="android.uid.system"
-	<uses-permission android:name="android.permission.DEVICE_POWER" />
-
-	

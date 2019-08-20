@@ -1,140 +1,58 @@
-﻿.. _9 	Frequently Asked Questions:
+﻿.. _9 	Auxiliary Tools:
 
-9 	Frequently Asked Questions
+9 	Auxiliary Tools
 ====================================
-**1.Q** Modification of rotating label in manifest file
 
-**A:** Confirm that the manifest file has not been replaced and needs to be replaced with the latest manifest file. Notice that the 180-degree rotation label has been changed
+9.1 ShowFPS
+--------------------------------------
 
-  Label in V2.7.4:
-  
-  <meta-data android:name="com.picovr.type" android:value="vr" />
-  
-  <meta-data android:name="com.picovr.display.orientation" android:value="180" />
-  
-  V2.7.6 and above labels:
-  
-  <meta-data android:name="pvr.app.type" android:value="vr" />
-  
-  <meta-data android:name="pvr.display.orientation" android:value="180" />
+To show the frame rate, navigate to the **Inspector** panel of the Pvr_UnitySDK and enable **Show FPS in Scene** under the **Pvr_Unity SDK Manager** component.
 
-**2.Q:** How to set Camera Culling Mask?
+.. image:: _static/7.1.png
 
-**A:** The attribute Culling Mask can be set in LeftEye of Pvr_UnitySDK and Camera of RightEye:
+Figure 9.1 Enabling the frame rate metric
 
-  1. Those that have adapted to the Cardboard SDK and used the toggle culling mask option can be done by modifying the Camer property directly.
-  
-  2. If you need to modify the toggle culling mask by code, please refer to the modification methods of ordinary camera.
-  
-  3. When the left eye and the right eye need to see different objects, the lefteye and righteye camera Culling Mask of PicoVR controls and displays the Layer. The left eye camera Culling Mask does not check the Layer of the right eye object and the righteye camera Culling Mask does not check the Layer of the lefteye object.
+9.2 Scene Switch Gradient Effect
+--------------------------------------
 
-**3.Q:** How to set the anti-aliasing?
+The SDK provides a scene switch gradient effect through the **Screen Fade** option:
 
- **A:** It is set in the Inspector panel of Prefabs under Pvr_UnitySDK. X_1 is anti-aliasing not turned on.
+.. image:: _static/7.2.png
 
-.. image:: _static/9.1.png
+Figure 9.2 Location of the Screen Fade option
 
-Figure 9.1 Setting of multiple anti-aliasing
+The duration and color of the scene switching gradient are controlled by the **Fade Time** (in seconds) and **Fade Color** options respectively:
+
+.. image:: _static/7.3.png
+
+Figure 9.3 Screen Fade Time and Color of Scenes (time unit is S)
 
 
-**4.Q:**  How to implement the exit function in PicoNeo?
+9.3 Setting the Framerate
+--------------------------------------
 
-**A:** The developers can realize the corresponding functions themselves or find the QuitGame.cs script under the Assets\PicoVRSDK\Scripts directory of SDK, drag it to PicoVR’s GameObject, and press the return key to exit at runtime. Note that in this way, the developers need to release the resources loaded dynamically by games or applications themselves.
+The SDK provides an option to set the framerate:
 
-**5.Q:** How to apply sensor to other objects in the scenes?
+.. image:: _static/7.4.png
 
-**A:**  Set up according to the following steps:
-
-1 ) Uncheck the PicoVRheadTrack script on head in PicoVR in the scenes:
-
-.. image:: _static/9.2.png
-
-Figure 9.2 HeadTrack check setting
-
-2 ) Select the desired object and add PicoVRHeadTrack script.
-
-**6.Q:** What are the requirements for frame rate and scenes to achieve smooth effect on Pico all-in-one machine? 
-
-**A:** Frame rate：
-
-  The scene frame rate of Pico all-in-one machine shall not be lower than 30 frames, and it is recommended to have more than 45 frames.
-  
-  Scenes:
-  
-  The triangular patch of the model is controlled within 100,000
-  
-  The number of model vertices is controlled within 100,000
-  
-  The number of common unity lights such as electric light sources is controlled within 50
-  
-  The number of ordinary unity particle systems is controlled within 50
-  
-  Try to use the more efficient Unity shader
-  
-  Examples of optimization methods:
-  
-  Reduce the number of fixed points on model faces when guaranteed to be displayed
-  
-  Try to share the material and animation
-  
-  Try to use a compressed texture format
-  
-  Try to use as few lighting effects as possible
-  
-  Try to use static batch processing
-  
-  Script optimization to reduce unnecessary memory, computing and other resource consumption
+Figure 9.4 Option to set the frame rate
 
 
-**7.Q:** How to replace the loading animation when the application is open?
+Disable **Use Default FPS** and then enter the desired frame rate.
 
-**A:** Open AndroidManifest and find the platform_logo label. The default value of android: value is 0, which means using Unity's default loading interface or custom loading interface. If you want to use Pico proprietary loading interface, please change the value of android:value to 1.
+9.4 Configuring the Render Text Size
+--------------------------------------
 
-.. image:: _static/9.3.png
+The SDK provides the option to configure the size of the **Eyebuffer**, which is opened by unchecking the **Use Default RenderTexture** option as follows:
 
+.. image:: _static/7.4a.png
 
-**8.Q:** How to set the dragging function of the controller?
+Figure 9.5 - Configuring the Render Texture Size
 
-**A:** Please refer to the Pvr_Controller_UI scene under PicoMobileSDK/Pvr_Controller/Scenes.
+**Tips**:
+Developers should only use **Use Default RenderTexture** for custom render texture sizes for special needs. Developers should take the following into consideration:
 
-The specific modification steps are as follows.
-
-1 ) Hang Pvr_UIPointer script on the model you want to use as control, such as dot under Pvr_Controller0
-
-.. image:: _static/9.4.png
-
-Figure 9.3 Pvr_UIPointer mounting instructions
-
-2 ) Add Pvr_InputModule under Event and put the control point with Pvr_UIPointer into Element.
-
-.. image:: _static/9.5.png
-
-Figure 9.4 Description of Event Script
-
-3 ) Mount Pvr_UICanvas and GraphicRaycaster on the Canvas to which the drag control belongs.
-
-.. image:: _static/9.6.png
-
-Figure 9.4 Instructions for setting of Canvas
+* If the render texture setting is too small, performance will improve and latency will be reduced, but it will also result in a lower resolution.
+* If the render texture setting is too large, performance will be reduced and latency will be increased. It’s not recommended that the render texture setting exceed the texture size for the hardware.
 
 
-4 ) Mount Pvr_UIDragbableItem and Canvas Group on the drag control.
-
-.. image:: _static/9.7.png
-
-Figure 9.5 Explanation of the Draggable Item Script
-
-
-**9.Q:** How do you upgrade the PicoVR Unity SDK to the latest version?
-
-**A:** The use of the SDK application for the first time can follow the steps described above for adaption.
-	
-   For applications that have been adapted to the old version of SDK, if you want to upgrade them to the latest version of SDK, you need to follow the following steps:
-	
-   1 ) Delete all files from the old PicoVR Unity SDK.
-   
-   2 ) Import the new version of SDK UnityPackage, replace the old controller prefabs in the scenes with PvrController0 or PvrController1 prefabs in the SDK, and the related functions attached to the old controller prefabs need to be transplanted into the new controller prefabs.
-   
-   3 ) 	The PvrController0/ controller is the Pico’s controller model, which can automatically switch the model based on the type of controller currently connected.
-
-   4 ) White dots, rays, and models under PvrController0 will automatically display and hide according to the connection state of the controller.

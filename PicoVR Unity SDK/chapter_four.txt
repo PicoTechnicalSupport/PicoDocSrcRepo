@@ -1,110 +1,135 @@
-﻿.. _4 	Development notes:
+﻿.. _4 	Quickstart:
 
-4 	Development notes
-===============================
+4 	Quickstart
+======================================
 
-4.1 	Enable device USB Debugging
--------------------------------------
+Use the steps in the following subsections to create a new project in UE4 using the SDK.
 
-Enter the setting interface-> About, click PUI version entry 8 times continuously to open the developer mode, enter the 2D interface of developer mode-> developer options, then open the "USB debugging" function in the list of options, and set "select USB configuration" to MTP mode.
+**Note:** The SDK supports both blueprint and C++ projects.
 
-4.2 	Android Manifest Document
----------------------------------------
+4.1 	Create a New Project
+----------------------------------
 
-- Special meta-data needs to be added; otherwise, an exception will be displayed:：
+Create a new **Blank** blueprint project. Ensure that the target hardware is set to **Mobile / Tablet** and the target graphic level is set to **Scalable 3D or 2D**:
 
-.. code-block:: xml
+.. image:: _static/4.1b.PNG
 
-    <meta-data android:name=" pvr.app.type " android:value="vr"/>
-    <meta-data android:name=" pvr.display.orientation " android:value="180"/>
+Figure 4.1 New Project Screen
 
-- All Acitivity that need to be displayed need to inherit from
+**Note:** Ensure that the **Folder** and **Name** do not contain Chinese characters.
 
-.. code-block:: java
-    
-    com.unity3d.player.UnityPlayerNativeActivityPico    
 
-- Add the necessary permissions
+4.2 	Set Project Compatibility
+----------------------------------
 
-.. code-block:: xml
+Use the following steps to ensure that the project is compatible with the SDK:
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.INJECT_EVENTS" />
+1. Save the current map.
 
-4.3 	SDK recommended configuration
----------------------------------------
+2. Navigate to **Edit > Project Setting > Project > Maps and Modes** and set **Editor Start Map** and **Game Default Map** to **NewMap**:
 
-- For Color Space, Gamma and Linear are supported.
+.. image:: _static/4.2b.PNG
 
-Gamma and linear modes are supported for the color space. If Linear is selected, then Blit Type must be set to Never, otherwise Unity will have the problem of a probability screen. If Gamma is selected , you can select either Never or Always in Blit Type:
+Figure 4.2 Setting the Default Maps
 
-.. image:: _static/3.1.PNG
+3. Navigate to **Engine > Input > Mobile** and set **Default Touch Interface** to **None**:
+ 
+.. image:: _static/4.3b.PNG
 
-Figure 4.1 Setting of Blit Type
+Figure 4.3 Setting the Default Touch Interface
 
-Notes:
+4. Navigate to **Platforms > Android > APKPackaging** and enable **Enable FullScreen Immersive on KitKat and above devices**:
+ 
+ .. image:: _static/4.4b.PNG
+ 
+Figure 4.4 Setting Enable FullScreen Immersive on KitKat and Above Devices
 
-- Graphics APIs does not support Vulkan for the time being. For OpenGLES2 and OpenGLES3, the developers need to choose according to their needs.
+5. Navigate to **Platforms > Android** to set both **Minimum SDK Version** and **Target SDK Version** to **19**:
+ 
+.. image:: _static/4.5b.PNG
 
-- When multi-thread rendering is active, the frame rate is improved, but there are restrictions on the use of multi-thread rendering. See the Unity official document for details: (https://docs.unity3d.com/ScriptReference/SystemInfo-graphicsMultiThreaded.html)
+Figure 4.5 Setting the Target SDK Versions
 
-.. image:: _static/3.2.PNG
+6. Navigate to **Platforms > Android SDK** to set the **SDK API Level** to **matchndk** and **NDK API Level** to **android-19**:
+ 
+.. image:: _static/4.6b.PNG
 
-Figure 4.2 Setting of rendering
+Figure 4.6 Setting the SDK and NDK Levels
 
-- In Default Orientation under Unity Player Setting, select Landscape Left (Required)
+7. Navigate to **Platforms > Android > Build** and enable **Support armv7**:
+ 
+.. image:: _static/4.7b.PNG
 
-.. image:: _static/3.3.PNG
+Figure 4.7 Enabling the Support armv7 Option
 
-Figure 4.3 Setting of Default Orientation
+8. Open the project.
 
-- Check the setting of V Sync Count, and the specific steps are as follows: Enter Edit>Project Settings>Quality, select Simple under Levels, and ensure that V Sync Count under Other is Don't Sync (Required):
+9. Navigate to **Menu > Edit > Plugins**, and disable all the options under **Built-in > Virtual Reality**. At this point, the editor will prompt to restart. **Close** the editor instead of restarting it.
 
-.. image:: _static/3.4.PNG
+4.3 	Import the SDK
+----------------------------------
 
-Figure 4.4 Check the setting of V Sync Count
+1. With the editor closed, copy the **Plugins** directory to the project’s root directory:
+ 
+.. image:: _static/4.8b.PNG
 
-4.3 	Lightweight Render Pipeline Configuration
----------------------------------------------------
+Figure 4.8 The Plugins Directory
 
-For example,In Unity 2019.1.0f2.
+2. Double-click on the project name to reopen it.
 
-Follow the steps below to configure Unity’s Lightweight Render Pipeline (LWRP):
+3. If you use UE4.20+,the system will display a prompt indicating that the SDK modules are not compiled. Click **Yes (Y)** to continue:
+ 
+.. image:: _static/4.9b.PNG
+ 
+Figure 4.9 Prompt Indicating That the SDK Modules are not Compiled
 
-1. Open Window/Package Manager
+4. Locate the **Plugins** tab and verify that the Pico plugins are listed:
+ 
+.. image:: _static/4.10b.PNG
 
-.. image:: _static/3.5.PNG
+Figure 4.10 List of Compiled Pico Plugins
 
-Figure 4.5 Package Manager menu item.
 
-2. Select Show preview packages
+4.4 	Complete the Project
+----------------------------------
 
-.. image:: _static/3.6.PNG
+1. Create a **Pawn** blueprint class and add a **Scene** component to it.
 
-Figure 4.6 Show preview package menu item.
+2. Add a **Camera** component to the **Scene** component under the **DefaultSceneRoot** assembly.
+ 
+.. image:: _static/4.11b.PNG
 
-3. Selecting Lightweight RP and click Install in the lower right corner:
+Figure 4.11 The Hierarchy of the Pawn Blueprint
 
-.. image:: _static/3.7.PNG
+After being packaged and mounted to the helmet, the relative position/pose of the **Camera** will be refreshed in real time according to the helmet allows for head tracking and stereo rendering.
 
-Figure 4.7 Selecting Lightweight RP.
+3.	Drag the Pawn into the scene and set **Auto Possess Player** to **Player 0**:
+ 
+.. image:: _static/4.12b.PNG
 
-4.	Create LightweightRenderPipelineAsset
+Figure 4.12 Setting the Auto Posses Player Option for the Pawn
 
-.. image:: _static/3.8.PNG
+4.5 	Package the Project
+----------------------------------
 
-Figure 4.8 Creating the pipeline asset.
+The texture compression format supported by the Pico Neo and Pico Goblin is **ASTC**. Use the following steps to select this format when packaging the project:
 
-5.	Use LightweightRenderPipelineAsset: drag the file created in Step 4 to Scriptable Render Pipeline Setting in Project Setting > Graphics:
-	
-.. image:: _static/3.9.PNG
-	
-Figure 4.9 Scriptable Render Pipeline Setting.
+1. Navigate to **Project Settings** and enable **Package game data inside .apk?** in the **Platforms** sub items. This ensures that the data can be packaged into an apk.
 
-6.	Replace materials in the project with LWRP materials
+2. Select **File > Package Project > Android > Android (ASTC)**:
+ 
+.. image:: _static/4.13b.PNG
 
-.. image:: _static/3.10.PNG
+Figure 4.13 Selecting the ASTC Format
 
-Figure 4.10 Update materials in the project.
+3. Disable **Enable Gradle instead of Ant** before packing:
+
+.. image:: _static/4.14.PNG
+
+Figure 4.14 Disabling the Option: Enable Gradle Instead of Ant
+
+4.	After packaging, execute **Install_project name_compiler configuration -armv7-es2.bat** to start the installation:
+ 
+.. image:: _static/4.15b.PNG
+
+Figure 4.15 Installing the APK

@@ -1,29 +1,19 @@
-﻿.. _2 	Instructions for SDK configuration:
+﻿.. _2 	SDK Structure:
 
-2 	Instructions for SDK configuration
-===========================================
+2 	SDK Structure
+=============================================
 
-2.1 	Supporting device 
--------------------------------
+The SDK is provided in the form of an engine plugin that implements UE4’s VR abstraction layer and bridges the engine with Pico’s virtual reality hardware device(s). The SDK package contains the following content
+
+- **PicoVRAndroidSDK_UE4_Development_Document.pdf and PicoVRAndroidSDK_UE4+¬+ó-¦+˜+-¦¦.pdf:** English and Chinese versions of this document.
+- **UE_4.x:** Contains the UE4.x plugin modules: PicoMobile, PicoMobileController, and PicoNeoController.
+
+Figure 2.1 shows the architecture of the SDK.
+
+.. image:: _static/1.1.png
+
+Figure 2.1 SDK Architecture
 
 
-Pico Goblin，Pico Neo，Pico G2，Pico G2 4K 
 
-2.2 	Development environment requirements
--------------------------------------------------
 
-==============================================    ==================================================================
-Software name                                      Version information
-==============================================    ==================================================================
-Unreal Engine                                     4.20.3、4.21.2 (recommended for Pico G2-4K), 4.22.3
-Visual Studio                                     2017
-Codeworks for Android                             The latest version is recommended. See https://docs.unrealengine.com/en-US/Platforms/Mobile/Android/InstallingAndroidCodeWorksAndroid for information on installing Codeworks.
-==============================================    ==================================================================
-
-The SDK has no special requirements for the ROM version of the hardware, but the latest version should be used when possible.
-
-Be sure to check "Game development with C++" when installing Visual Studio 2017:
-
-.. image:: _static/2.2.png
-
-Figure 2.1 Installation options for Visual Studio 2017

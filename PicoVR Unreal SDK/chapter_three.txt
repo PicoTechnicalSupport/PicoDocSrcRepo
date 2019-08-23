@@ -1,16 +1,45 @@
-﻿.. _3 	Development notes:
+﻿.. _3 	Requirements:
 
-3 	Development notes
+3 	Requirements
 ===============================
 
-> "Virtual reality preview" in the scene editor is not supported.
+3.1 	VR Devices
+-------------------------------------
 
-.. image:: _static/3.1.png
+The SDK works with the following VR devices from Pico:
 
-Figure 3.1 does not support virtual reality preview
+- **VR All-in-one Headset:** Pico Goblin, Pico Neo, Pico Goblin2, Pico Golbin2 4K
 
-> When packaging, the package can only be successful after going to Edit >> Project Setup >> Platform >> Android and unchecking Enable Gradle instead of Ant:
+**Note:** The SDK does not support normal Android phones.
 
-.. image:: _static/3.2.png
+3.2 	Unreal Engine
+---------------------------------------
 
-Figure 3.2 Uncheck Enable Gradle instead of Ant
+The SDK is compatible with the following version of Unreal:
+
+- **Unreal Engine:** 4.20.3, 4.21.2 (recommended for Pico G2-4K), 4.22.3
+
+3.3 	Android Development Environments
+----------------------------------------
+
+The SDK requires the following dependencies:
+
+- **JDK:** jdk1.7.0_01 and above
+
+- **Codeworks for Android:** The latest version is recommended. See `Installing CodeWorks for Android 1R6u1 <https://docs.unrealengine.com/en-US/Platforms/Mobile/Android/InstallingAndroidCodeWorksAndroid>`_.
+
+The SDK has no special requirements for the ROM version of the hardware, but the latest version should be used when possible.
+
+
+3.4 	Visual Studio
+---------------------------------------
+
+The SDK is compatible with the following version of Visual Studio:
+
+- 2017
+
+**Note:**  When installing Visual Studio 2017, the option **Game development with C++** must be enabled.
+
+.. image:: _static/1.2b.png
+
+Figure 3.1 Game Development with C++ Option

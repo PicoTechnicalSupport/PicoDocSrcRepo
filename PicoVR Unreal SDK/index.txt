@@ -1,6 +1,6 @@
-.. PicoVRAndroidSDK(UE4)
+.. PicoVRAndroidSDK(Unity)
 
-PicoVRAndroidSDK(UE4)
+PicoVRAndroidSDK(Unity)
 ========================================
 .. toctree::
    :hidden:
@@ -13,28 +13,18 @@ PicoVRAndroidSDK(UE4)
    chapter_six
    chapter_seven
    chapter_eight
-
+   chapter_nine
 
 目录
 ^^^^^^^^^^^^^^^^^^^^^
-
-.. list-table::
-   :widths: 10 100
-   :header-rows: 1
-
-   * - 1
-     - :ref:`Introduction to SDK <1 	Introduction to SDK>`  
-   * - 2
-     - :ref:`Instructions for SDK configuration <2 	Instructions for SDK configuration>` 
-   * - 3	 
-     - :ref:`Development notes <3 	Development notes>` 
-   * - 4
-     - :ref:`Quick Start of SDK Access <4 	Quick Start of SDK Access>` 
-   * - 5
-     - :ref:`Hardware product development guide <5 	Hardware product development guide>`
-   * - 6 
-     - :ref:`API interface function list <6 	API interface function list>`
-   * - 7   
-     - :ref:`Payment system <7 	Payment system>`
-   * - 8   
-     - :ref:`Frequently asked questions <8 	Frequently asked questions>`
+=== =========
+1	:ref:`Overview <1 	Overview>`						
+2	:ref:`SDK Structure <2 	SDK Structure>`				
+3	:ref:`Requirements <3 	Requirements>`			
+4	:ref:`Quickstart <4 	Quickstart>`		
+5	:ref:`SDK Usage <5 	SDK Usage>`
+6	:ref:`API interface function list <6 	API interface function list>`
+7	:ref:`Advanced features <7 	Advanced features>`		
+8	:ref:`Payment system <8 	Payment system>`										
+9	:ref:`Frequently Asked Questions <9 	Frequently Asked Questions>`			
+=== =========

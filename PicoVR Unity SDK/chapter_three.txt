@@ -1,113 +1,45 @@
-﻿.. _3 	Quickstart:
+﻿.. _3 	Requirements:
 
-3 	Quickstart
-======================================
+3 	Requirements
+===============================
 
-Step1: New Project
-------------------------
+3.1 	VR Devices
+-------------------------------------
 
-Use the following steps to create a new project in Unity using the SDK:
+The SDK works with the following VR devices from Pico:
 
-1.	Open Unity, create a new project as shown below:
+- **VR All-in-one Headset:** Pico Goblin, Pico Neo, Pico Goblin2, Pico Golbin2 4K
 
-.. image:: _static/4.1.PNG
+**Note:** The SDK does not support normal Android phones.
 
-Figure 3.1 Creating a New Project.
+3.2 	Unreal Engine
+---------------------------------------
 
-2.	Create objects: ``cube1``, ``cube2``, ``cube3``, and configure their transforms as follows:
+The SDK is compatible with the following version of Unreal:
 
-Table 1 - Cube Transforms
+- **Unreal Engine:** 4.20.3, 4.21.2 (recommended for Pico G2-4K), 4.22.3
 
-+------------+------------+----------------------+
-| Cube1                                          |
-+------------+------------------+----------------+
-|            | Position (x,y,z) | 0, 2.38, 6.51  |
-+------------+------------------+----------------+
-|            | Rotation (x,y,z) | 0, 0, 0        |
-+------------+------------------+----------------+
-|            | Scale (x,y,z)    | 1, 1, 1        |
-+------------+------------------+----------------+
-| Cube2                                          |
-+------------+------------------+----------------+
-|            | Position (x,y,z) | -2, 0, 5       |
-+------------+------------------+----------------+
-|            | Rotation (x,y,z) | 0, 0, 0        |
-+------------+------------------+----------------+
-|            | Scale (x,y,z)    | 1, 1, 1        |
-+------------+------------------+----------------+
-| Cube3                                          |
-+------------+------------------+----------------+
-|            | Position (x,y,z) | 2, 0, 5        |
-+------------+------------------+----------------+
-|            | Rotation (x,y,z) | 0, 0, 0        |
-+------------+------------------+----------------+
-|            | Scale (x,y,z)    | 1, 1, 1        |
-+------------+------------------+----------------+
+3.3 	Android Development Environments
+----------------------------------------
 
-3.	Navigate to **Assets** > **Import Package** > **Custom Package…**:
+The SDK requires the following dependencies:
 
-.. image:: _static/4.5.png
+- **JDK:** jdk1.7.0_01 and above
 
-Figure 3.2 Importing a custom package.
+- **Codeworks for Android:** The latest version is recommended. See `Installing CodeWorks for Android 1R6u1 <https://docs.unrealengine.com/en-US/Platforms/Mobile/Android/InstallingAndroidCodeWorksAndroid>`_.
 
-4.	Select PicoVR_Unity_SDK-<versionnumber>.unitypackage and click Open:
+The SDK has no special requirements for the ROM version of the hardware, but the latest version should be used when possible.
 
-.. image:: _static/4.6.png
 
-Figure 3.3 Selecting a Unity package.
+3.4 	Visual Studio
+---------------------------------------
 
-5.	Import the corresponding elements according to your needs:
+The SDK is compatible with the following version of Visual Studio:
 
-.. image:: _static/4.7.png
+- 2017
 
-Figure 3.4 Import options
+**Note:**  When installing Visual Studio 2017, the option **Game development with C++** must be enabled.
 
-6.	Navigate to the **Project** tab, expand **Assets** > **Pvr_UnitySDK** > **Prefabs**.
+.. image:: _static/1.2b.png
 
-7.	Drag the **Pvr_UnitySDK** prefab into the scene and set the position and rotation of its transform component to (0, 0, 0):
-
-.. image:: _static/4.8.png
-
-Figure 3.5 Directory for Pvr_UnitySDK prefab
-
-The hierarchy of the scene should look as follows with the Unity prefab: 
-
-.. image:: _static/4.9.png
-
-Figure 3.6 Scene hierarchy
-
-8.	Delete **Main Camera** from the hierarchy. This prevents other cameras in the scene from interfering with the stereo rendering of the SDK.
-
-9.	Click on the **Run** button. This displays output in the **Game** window similar to the following: 
-
-.. image:: _static/4.10.png
-
-Figure 3.7 Running the simulation
-
-10.	Press and hold **Alt** and then move the mouse. The screen will follow your mouse to rotate up, down, left, and right. Press and hold **Alt** and click the left mouse button to select **VR** mode or **Mono** mode (Unity Editor only).
-
-11.	Navigate to the Inspector panel of Pvr_UnitySDK and set the tracking type for the head and hand according to your current platform: 
-
-	a.	If the head is 6DoF, set the Head Pose to Six DoF. 
-
-	b.	If the hand is 6DoF, set the Hand Pose to Six DoF.
-
-.. image:: _static/4.11.png
-
-Figure 3.8 Adapting Target Platform
-
-12.	Save your current scene before packaging.
-
-13.	Navigate to **File** > **Build Settings…**.
-
-14.	Click **Add Current** to add the current scene to the build list. 
-
-15.	Select **Android** in the **Platform** field. 
-
-16.	Click **Switch Platform** and **Build** to build the package.
-
-**Note**: Pico Viewer does not support controllers and/or 6DoF.
-
-.. image:: _static/4.12.png
-
-Figure 3.9 Packaging
+Figure 3.1 Game Development with C++ Option

@@ -1,28 +1,35 @@
-﻿.. _1 	Introduction to SDK:
+﻿.. _1 	Overview:
 
-1 	Introduction to SDK
+1 	Overview
 ===============================
 
-Welcome to the Pico VR Android SDK Developer Guide for Unity. The Pico VR Android SDK for Unity (SDK) provides the following functionality for Pico’s VR devices: sensor fusion, binocular stereo rendering, optical distortion correction, asynchronous time warping, single buffer rendering, 3DoF/6DoF multi-interaction  support, 3D stereo sound effects, power and cooling management, and account and payment management. 
+Welcome to the Pico Virtual Reality (VR) Android SDK Developer Guide for Unreal Engine 4 (UE4). The Pico VR Android SDK for Unreal Engine 4 (SDK) provides the following functionality for Pico’s VR devices: sensor fusion, binocular stereo rendering, optical distortion correction, asynchronous time distortion, single buffer rendering, 3DoF/6DoF multi-interaction support, multiple peripheral support, compatibility for AR/VR software and hardware platforms, big data analysis and statistics, power and cooling management, and account and payment management. 
 
-The SDK architecture is shown in the following figure:
+The SDK allows the position/orientation of the camera component in the engine to follow the movements of Pico’s VR helmet, so that the engine's MotionController component will follow the Pico motion controller.
 
-.. image:: _static/1.1.PNG
+The engine’s API can be used to control a Pico VR hardware device. For example, the input, head mounted display (HMD), reset orientation, and position functions can be used to implement the gesture/position reset function of the HMD. Blueprint interfaces are provided for some Pico VR-specific features.
 
-Figure 1.1 SDK architecture diagram
+This document provides developers with the following information:
 
-The SDK is provided in the Unity Package format and developers can find the following directory after import:
+- SDK Structure
 
-.. image:: _static/1.2.PNG
+- Requirements
 
-Figure 1.2 Directory structure of SDK plugin
+- Quickstart
 
-The subdirectories under Assets > PicoMobileSDK correspond to their respective SDK functionality:
+- SDK Usage
 
-* **Pvr_Controller**: Contains controller related resources.
-* **Pvr_Payment**: Contains payment related resources.
-* **Pvr_UnitySDK**: Contains sensor and rendering related resources.
-* **Pvr_VolumePowerBrightness**: Contains volume, brightness, and power related resources.
+- API Reference
 
-The Scenes subdirectory provides scenarios for you to refer to.
+- Payment System
+
+- Development Considerations
+
+- Known Issues
+
+- Frequently Asked Questions
+
+
+
+
 

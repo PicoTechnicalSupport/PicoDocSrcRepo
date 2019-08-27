@@ -1,80 +1,119 @@
-﻿.. _8 	Frequently asked questions:
+﻿.. _8 	Development Considerations:
 
-8 	Frequently asked questions
-====================================
+8 	Development Considerations
+===============================
 
+8.1 	Goblin HMD Buttons
+--------------------------------------
 
-**1.Q:** Why do the virtual buttons of the Android system occur after the project is packaged?
+Figure 8.1 and Table 1 list the buttons on the Goblin HMD:
 
-**A:** Check: Project setup → Platform → Android → APKPackaging →Enable FullScreent Immersive on KitKat and above devices:
+.. image:: _static/8.1a.png
 
-.. image:: _static/8.1.png
+Figure 8.1 - Goblin HMD buttons.
 
-Figure 8.1 Enable FullScreent Immersive on KitKat and above devices checking
+Table 8.1 - Goblin HMD key mappings.
 
-**2.Q:** How to improve the frame rate of the game?
+================================       ==========================================
+Goblin HMD Buttons                     Description                    
+================================       ==========================================
+1                                      Android standard key code - POWER
+2                                      Android standard key code - HOME
+3                                      .. image:: _static/8.2a.png     
+4                                      Android standard key code - VOLUME_UP
+5                                      Android standard key code - VOLUME_DOWN
+================================       ==========================================
 
-**A:** To improve the game frame rate, you can start from the following two aspects:
+8.2 	G2 HMD Buttons
+--------------------------------------
 
-1 ) 	Turn off the ambient light obscuration. At this phase, the requirements of VR project for global illumination are not too high, the ambient light obscuration can be turned off by opening the project setup, entering the Engine/Rendering/Default Setting, and unchecking Ambient Occlusion and Ambient Occlusion Static Fraction:
+Figure 8.2 and Figure 8.3 show the G2 HMD buttons:
 
-.. image:: _static/8.2.png
+.. image:: _static/8.2b.png    
 
-Figure 8.2 Ambient light obscuration use cancellation
+Figure 8.2 - G2 HMD buttons.
 
-2 ) Turn off Mobile HDR. The practice is as follows: open the project setup, go to Engine/Rendering/Mobile, and uncheck Mobile HDR:
+.. image:: _static/8.2c.png   
 
-.. image:: _static/8.3.png
+Figure 8.3 - G2 HMD buttons.
 
-Figure 8.3 Mobile HDR unchecking
+8.3	Pico Neo HMD Buttons
+--------------------------------------
 
-**3.Q:** How to reduce the size of the game pack?
+Figure 8.4 and Table 8.2 list the buttons on the Pico Neo HMD:
 
-**A:** The size of the game pack can be decreased from three aspects:
+.. image:: _static/8.4b.png    
 
-a ) Check Create compressed cooked packages in the project setup / project / package and compress the baked contents;
+Figure 8.4 - Pico Neo HMD Buttons
 
-b ) Uncheck the unused Plugins;
+Table 8.2 - Goblin HMD key mappings.
 
-c ) Delete resources that are not used in the Content Browser.
-
-.. image:: _static/8.4.png
-
-Figure 8.4 Compression of baked contents
-
-**4.Q:** How to optimize the display results?
-
-**A:** The saw tooth can be effectively reduced and the display effects can be improved after opening the project setup, entering the engine/Rendering/Mobile and adjusting the Mobile MSAA. The higher the multiple, the better the optimization, but it may increase the performance consumption and affect the frame rate.
-
-.. image:: _static/8.5.png
-
-Figure 8.5 Mobile MSAA modification
-
-**5.Q:** The system displays virtual buttons, how to avoid it?
-
-**A:** Set the full screen mode through the UE, as shown bin the following figure.
-
-.. image:: _static/8.6.png
-
-Figure 8.6 Full screen mode setting 
-
-**6.Q:**  Project naming or path: in Chinese, why does package failure occur with the PicoVRSDK plugin?
-
-**A:** UE4 does not support Chinese, please don't use Chinese and Chinese directories.
+================================       ====================================================================================
+Goblin HMD Buttons                     Description                    
+================================       ====================================================================================
+Volume Up Key                          Android standard key code - VOLUME_UP
+Volume Down Key                        Android standard key code - VOLUME_DOWN
+Return Key                             Android standard key code – BACK (Note: Pico GoblinHMD does not have this button)    
+OK Key                                 .. image:: _static/8.2a.png 
+Home Key                               Android standard key code - HOME
+================================       ====================================================================================
 
 
-**7.Q:** The project is named as test, why does package failure occur with the PicoVRSDK plugin?
+8.4	Pico Neo Security Zone
+--------------------------------------
 
-**A:** test is the command keyword in the UE, as shown in the following figure. It is recommended that the project name should avoid the UE command keyword.
+The security zone of the Pico Neo is similar to that of the Oculus Rift Guardian and the SteamVR Chaperone. The system will show a notice when the player is out of the safe range (e.g. when the player runs into an obstacle such as a wall). Even though the VR all-in-one device is restricted by the inside-out tracking functionality and has no external sensor to input the absolute safe area axes, we still recommend developers set a range value to ensure the player’s safety.
 
-.. image:: _static/8.7.png
+One method to accomplish this, is to define the **Actor** blueprint class as the safe area in the form of a cylinder, with the normals facing to the inner side to remind the player of the range of the safe area:
 
-Figure 8.7 UE command keyword
+.. image:: _static/8.4c.png    
 
-**8.Q:** Why does the Goblin handle flash in game from time to time?
+Figure 8.5 - Safe area.
 
-**A:** Because the UE4 game logic is not in the same thread as the rendering, Epic is the motion of the smooth motion controller, it will be defaulted that the position and orientation of the motion controller will be updated before rendering, but this practice will also create a bug in which the model flashes from time to time. To circumvent this flashing, it is only necessary to select the Motion Controller component and check Disable Low Latency Update in its details panel:
+We recommend adding the ``Actor Safe Area`` node shown in Figure 8.5 after the ``BeginPlay`` event for the ``DefaultPawn`` of the scene:
 
-.. image:: _static/8.8.png
+.. image:: _static/8.4d.png   
 
-Figure 8.8 Disable Low Latency Update
+Figure 8.6 - Adding a safe area.
+
+After this has been configured, the safe area can be dynamically shown or hidden according to the camera or MotionController’s position relative to the parent component.
+
+The ``Actor Safe Area`` blueprint class provides two methods to get and set the radius value of the safe area:
+
+.. image:: _static/8.4e.png   
+
+Figure 8.7 - Functions of the safe area.
+
+We recommend that developers give users the ability to set the range of the safe area, based on their surrounding environment.
+
+8.5	Enabling 6DoF for Pico Neo
+--------------------------------------
+
+The SDK defaults to **3DoF** for head and hand tracking. 
+
+
+Use the following steps to enable 6DoF tracking for devices such as the **Pico Neo**, that support **6DoF** tracking functionality:
+
+1.	Navigate to **Edit** > **Project Settings** > **Plugins** > **Pico Neo**.
+2.	Enable **Enable HMD 6 Dof Module?** and **Enable Controller 6 Dof Module**.
+
+.. image:: _static/8.5a.png   
+
+Figure 8.8 - Pico Neo 6DoF options.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

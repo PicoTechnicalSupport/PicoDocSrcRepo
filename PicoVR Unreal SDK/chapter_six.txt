@@ -1,57 +1,273 @@
-﻿.. _6 	API interface function list:
+﻿.. _6 	API Reference:
 
-6 	API interface function list
-==================================
+6 	API Reference
+======================================
 
-6.1 	General function library
+6.1 	General API
 -------------------------------------
 
-The SDK supports VR general functions in the following red dot-marked engine:
+The SDK supports the generic VR functions marked with a red dot in Figure 6.1:
 
 .. image:: _static/6.1.png
 
-Figure 6.1 Supported general functions
+Figure 6.1 General API functions.
 
-For their detailed usage, please refer to the official UE4 document at https://docs.unrealengine.com/en-us/.
+For more information, see the official `UE4 document <https://docs.unrealengine.com/en-us/>`_. 
 
-Among them, the Reset Orientation and Position nodes only support the function of resetting the positive direction, and the Yaw parameter values in the function node do not work.
+**Note**: The **Reset Orientation and Position** node only supports resetting the positive direction and ignores the **Yaw** parameter, which is invalid.
 
+6.2	Pico API
+-------------------------------------
 
-6.2 	Dedicated function library
----------------------------------------
-
-For system functions such as volume and brightness, the SDK also provides the corresponding APIs in the form of blueprint nodes, and in case of right-click on the event graph, and you can see these APIs after entering the Pico Mobile sub-item:
+For system functions such as volume and brightness, the SDK provides the corresponding APIs in the form of blueprint nodes. Right-click in the event graph to enter the Pico Mobile sub-item and view the APIs:
 
 .. image:: _static/6.2.png
 
-Figure 6.2 System interface
+Figure 6.2 System Interfaces.
 
-The detailed instructions for APIs are as follows:
 
-.. image:: _static/6.3.png
 
-.. image:: _static/6.4.png
+6.2.1	Pico Get Current Orientation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: _static/6.5.png
+Returns the current orientation of the headset.
 
-.. image:: _static/6.6.png
+**Input**
 
-.. image:: _static/6.7.png
+None
 
-.. image:: _static/6.8.png
+**Output**
 
-.. image:: _static/6.9.png
+None
 
-.. image:: _static/6.10.png
+**Returns**
 
-.. image:: _static/6.11.png
+The current orientation of the headset.
 
-.. image:: _static/6.12.png
+6.2.2	Pico Get Current Position
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: _static/6.13.png
+Returns the current orientation of the headset.
 
-.. image:: _static/6.14.png
+**Input**
 
-.. image:: _static/6.15.png
+None
 
-.. image:: _static/6.16.png
+**Output**
+
+None
+
+**Returns**
+
+The current orientation of the headset.
+
+6.2.3	Pico Get Sensor Count
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the number of sensors in use.
+
+**Input**
+
+None
+
+**Output**
+
+The count of the sensors in use.
+
+**Returns**
+
+``True`` if the function succeeded or ``False`` if the function failed.
+
+6.2.4	Pico Get Fov
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the field of view (FOV).
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+The FOV.
+ 
+6.2.5	Pico Get Current Brightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the current system brightness level.
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+An integer indicating the current system brightness level, in the range of 0 through 255.
+
+6.2.6	Pico Set Brightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sets the system brightness level.
+
+**Input**
+
+The brightness level to set, in the range of 0 through 255.
+
+**Output**
+
+None
+
+**Returns**
+
+``True`` if the function succeeded or ``False`` if the function failed.
+
+6.2.7	Pico Volume Up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Increases the system volume by 1, within the range of 0 through 15.
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+Nothing
+
+6.2.8	Pico Volume Down
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Decreases the system volume by 1 within the range of 0 through 15.
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+Nothing
+
+6.2.9	Pico Get Current Volume
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the current system volume level.
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+The current system volume level.
+
+6.2.10	Pico Set Volume
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sets the system volume level.
+
+**Input**
+
+The system volume level to set, in the range of 0 through 15.
+
+**Output**
+
+None
+
+**Returns**
+
+Nothing
+
+6.2.11	Pico Get Max Volume Number
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the maximum system volume level.
+
+**Input**
+
+None
+
+**Output**
+
+None
+
+**Returns**
+
+The maximum system volume level.
+
+6.2.12	Pico Get Device SN
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the device’s serial number.
+
+**Input**
+
+None
+
+**Output**
+
+The device’s serial number.
+
+**Returns**
+
+Nothing
+
+
+6.2.13	Pico Get Device Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Returns the device model type.
+
+**Input**
+
+None
+
+**Output**
+
+A string containing the device name and model string, separated with “---”. This will be set to one of the following values:
+
+* ``Pico Neo --- Pico Neo``
+* ``Pico Goblin --- Pico Goblin``
+* ``Pico Goblin 2 --- Pico G2``
+* ``Pico G2 4K --- Pico G2 4K``
+
+**Returns**
+
+Nothing
+
+6.2.14	Get PSensor Status
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Gets the current PSensor Status.
+
+**Input**
+
+None
+
+**Output**
+
+Returns the following codes:
+
+* ``-1``: Failed to get (uncheck "Enable PSensor"?).
+* ``0``: Close to the device.
+* ``1``: Away from the device.
+ 

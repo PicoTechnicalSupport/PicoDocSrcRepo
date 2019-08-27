@@ -1,0 +1,96 @@
+﻿.. _10 	Frequently Asked Questions:
+
+10 	Frequently Asked Questions
+====================================
+
+* **Why are there virtual buttons for the Android system after packaging the project?**
+
+ Check: **Project Setting** > **Platform** > **Android** > **APKPackaging** > **Enable FullScreen Immersive on KitKat and above devices**:
+
+ .. image:: _static/10.1.png
+
+ Figure 10.1 – Check Enable FullScreen Immersive on KitKat and above devices.
+
+* **How can the frame rate of the game be increased?**
+
+ There are two methods to increase the frame rate:
+
+ 1.  Navigate to **Project Setting** > **Engine** > **Default Setting** and disable **Ambient Occlusion** and **Ambient Occlusion Static Fraction**:
+
+ .. image:: _static/10.2.png
+
+ Figure 10.2 - Disabling Ambient Occlusion and Ambient Occlusion Static Fraction.
+
+ At this stage, global illumination is not really required for mobile VR games, so ambient light shielding can be turned off. 
+
+2.  Navigate to **Project Settings** > **Engine** > **Rendering** > **Mobile** and disable **Mobile HDR** :sup:`1`:
+
+ .. image:: _static/10.3.png
+
+ Figure 10.3 - Disabling Mobile HDR.
+
+* **How can the size of the game package be reduced?**
+
+ There are three methods to reduce the size:
+
+ 1.  Navigate to **Project Settings** > **Project** > **package** and enable **Create compressed cooked packages**:
+
+ .. image:: _static/10.4.png
+
+ Figure 10.4 - Enabling Create compressed cooked packages.
+
+ 2.  Disable any plugins that are not in use.
+
+ 3.  Delete all resources that are not used in the content browser.
+
+* **How can the display effects be optimized?**
+
+ Navigate to **Project Settings** > **Engine** > **Rendering** > **Mobile** and choose the appropriate **Mobile MSAA** level. This can enhance the display effect by using anti-aliasing. 
+
+ .. image:: _static/10.5.png
+
+ Figure 10.5 - Choosing the appropriate MSAA level.
+
+ **Note**: The higher the multiplier is, the better the optimization effect will be, but this will also increase the cost to performance and reduce the frame rate.
+
+
+* **Why does packaging fail when the project is named “test”?**
+
+ The word “test” is a command keyword in UE. Use of this or the other command keywords shown in Figure 10.6 for a project, may cause failures when packaging and should be avoided:
+
+ .. image:: _static/10.6.png
+
+ Figure 10.6 - Command keywords that are reserved for use by UE.
+
+* **Why does the Goblin motion controller flash sometimes?**
+
+ By default, Epic moves the motion controller and updates the motion controller’s position and pose, but this also creates a bug whereby the model sometimes flashes. To avoid this flicker, select the **MotionController** component and enable **Disable Low Latency Update**:
+
+ .. image:: _static/10.7.png
+
+ Figure 10.7 - Enabling Disable Low Latency Update.
+
+* **How do you prevent the system from displaying virtual buttons?**
+
+ Set the full-screen mode through UE4, as shown in Figure 10.8:
+
+ .. image:: _static/10.8.png
+
+ Figure 10.8 - Option to Enable Full Screen.
+
+* **Why does a package failure occur with the PicoVRSDK plugin when a project or path is in Chinese?**
+
+ UE4 does not support Chinese characters in project names or directories.
+
+* **How do I adjust the size of RenderTexture (RT)?**
+
+ RT defaults to the screen resolution size. You can set the RT value in multiples by changing the **Project Settings** > **Plugin** > **PicoMobile** > **multiples of RT size** field:
+
+ .. image:: _static/10.9.png
+
+ Figure 10.9 - Multiples of RT size field.
+
+ **Note**: The maximum value of RT is limited to 2048. The resolution of G2 4K device is relatively large. In 4.21 version, the default size of 4K device is set to 1600, and the resolution of 4K device before 4.21 is always 2048.
+
+
+:sup:`1` Due to a bug in HDR on the Pico Goblin, unchecking Mobile HDR is recommended.

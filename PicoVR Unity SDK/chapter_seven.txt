@@ -1,276 +1,594 @@
-﻿.. _7 	Advanced features:
+﻿.. _7 	Payment system:
 
-7 	Advanced features
-===============================
+7 	Payment system
+============================
 
-This section describes several advanced features for some of the developer's specific needs and optimizations.
+Pico Pay is a game currency payment system. It’s based on the Pico account system and is settled according to the current game currency unit (P coin) under Pico. You can use Pico Pay if your project needs an in-app-purchase system. The following subsections describe Pico Pay in more detail.
 
-7.1 	Display frame rate
---------------------------------------
+7.1 	Preparing to Use Pico Pay
+----------------------------------------------
 
-To show the frame rate in real time, go to the Inspector panel of Pvr_UnitySDK and check the “Show FPS” under the Pvr_UnitySDK Manager component:
+Use the following steps to integrate the payment SDK:
 
-.. image:: _static/7.1.png
+1.	Log in to the developer platform at http://dev.picovr.com/ and register as a Pico member.
 
-Figure 7.1 Opening of FPS
+2.	Apply to be an *individual* or *enterprise* developer. Once your submission is reviewed, we’ll provide feedback within three working days. Please check on the status of your submission on the developer platform within this time frame.
 
-7.2 	Open Screen Fade of the Scenes
------------------------------------------------
+3.	Check the merchant ID. After becoming a developer, click on the nickname in the upper right corner to view the developer ID, which will be your unique merchant ID for the payment system:
 
-The SDK provides Open Screen Fade of the Scenes to be turned on through options as follows
+.. image:: _static/8.1.png
 
-.. image:: _static/7.2.png
+Figure 7.1 Checking the Merchant ID
 
-Figure 7.2 Opening of Screen Fade
+4.	Obtain the corresponding strings.
 
-Figure 7.3 can be used to set the Fade Time and Fade Color of the Scenes (time unit is S)
+5.	Enter the application creation step from the administration screen. Click the button to create an application and select a platform to publish to:
 
-.. image:: _static/7.3.png
+.. image:: _static/7.1a.png
 
-Figure 7.3 Fade Time and Fade Color after Opening the Scenes
+Figure 7.2 Selecting a Platform to Publish the App to.
 
-7.3 	Limited frame rate
--------------------------------------
+6.	Complete the app-related information for the corresponding platform:
 
-The SDK provides the function of limiting frame rate, which is opened by unchecking the Use Default FPS option as follows
+.. image:: _static/8.2.png
 
-.. image:: _static/7.4.png
+Figure 7.3 Entering the App-related Information
 
-Figure 7.4 Opening of limited frame rate
+Enter the values for each field carefully because the app type cannot be modified once completed. If there exists an inside-props payment in your application, you must use the developer backend to add a merchandise code for unified management.
 
-Then enter the desired frame rate value in the FPS text box.
+7.1.1 	Description of Payments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-7.4 	Configure the size of EyeBuffer
----------------------------------------------
+Pico currently has two types of payment methods: *P currency payment (application type)*, and *commodity code payment (game type)*. An application can only use one of the two payment methods.
+After the app has been created successfully, the developer platform will assign it a number of strings including an ``APPID``, ``APP KEY``, ``APP Secret``, and a developer ID:
 
-The SDK provides the function of configuring the size of the Eyebuffer, which is opened by unchecking the Use Default RenderTexture option as follows
+.. image:: _static/8.3.png
 
-.. image:: _static/7.5.png
+Figure 7.4 APP ID, APP KEY, APP Secret
 
-Figure 7.5 Configuration size of Eyebuffer
+Merchandise codes have the following attributes:
 
-7.5 	Custom Application Launch Animation
----------------------------------------------
+*	The first character is a letter.
+*	Only letter and number symbols are allowed.
+*	The code can have up to 20 symbols.
+*	Codes for different props cannot be duplicated. 
 
-The SDK provides the function of customizing the application to launch animation. Click the menu bar Pvr_UnitySDK/ Splash Screen to open the Splash Screen editing interface, as shown in the figure:
+7.1.2 	Use Payment Strings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: _static/7.6.png
+This SDK includes a pre-populated ``AndroidManifest.xml`` file. If your project doesn’t already have an ``AndroidManifest.xml`` file, you can use the file from this SDK directly. If your project already has an ``AndroidMaifest.xml file``, consolidate the following elements into your file:
 
-Figure 7.6 Splash Screen option
+7.1.2.1	Required Permissions:
 
-SplashScreenType contains three types of values: UseUnitySplashScreen, UsePicoSplashScreen, UseDynamicSplashScreen. Each type corresponds to a different application startup animation, and the following describes   the configuration methods of the three startup animations. 
+.. code-block:: xml
 
-7.5.1 Launch animation with the Unity app
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-SplashScreenType selects UseUnitySplashScreen, then click ok, the log message prompts Congratulations when the configuration is complete. At this point, the application startup animation uses the startup animation set in Unity PlayerSetting->Splash Image. 
+7.1.2.2	Developer Information (Domestic)
 
-7.5.2 Launch animation with the default app provided by the Pico SDK
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: xml
 
-SplashScreenType selects UsePicoSplashScreen, then click ok, the log message prompts Congratulations when the configuration is complete. The application startup animation is now using the default startup animation provided by the Pico SDK.
+    <!--APPID-->
+    <meta-data
+        android:name="pico_app_id"
+        android:value="APP ID"/>		//Replace APP ID with the APPID applied by the application
+    <!--APPKEY-->
+    <meta-data
+        android:name="pico_app_key"
+        android:value="APPK EY"/>		//Replace APP KEY with APPKEY applied by the application
+    <!--Authorization Scope-->
+    <meta-data
+        android:name="pico_scope"
+        android:value="SCOPE"/>		//Replace the SCOPE with the fixed value get_user_info
+    <!--Developer ID-->
+    <meta-data
+        android:name="pico_merchant_id"
+        android:value="DEVELOPER ID"/>		//Replace DEVELOPER ID with the Developer's DEVELOPER ID
+    <!--Payment Key-->
+    <meta-data
+        android:name="pico_pay_key"
+        android:value="APP SECRET"/>		//Replace APP SECRET with APPSECRET applied by the application
+    
 
-7.5.3 Starting an animation with a custom app
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+7.1.2.3	Developer Information (Foreign)
 
-SplashScreenType selects UseDynamicSplashScreen, the Splash Screen interface is as follows:
+.. code-block:: xml
 
-.. image:: _static/7.7.png
+    <!--APPID-->
+    <meta-data
+        android:name="pico_app_id_foreign"
+        android:value="APP ID"/>
+    <!--APPKEY-->
+    <meta-data
+        android:name="pico_app_key_foreign"
+        android:value="APPK EY"/>
+    <!--授权范围-->
+    <meta-data
+        android:name="pico_scope_foreign"
+        android:value="SCOPE"/>
+    <!--开发者ID-->
+    <meta-data
+        android:name="pico_merchant_id_foreign"
+        android:value="DEVELOPER ID"/>
+    <!--支付Key-->
+    <meta-data
+        android:name="pico_pay_key_foreign"
+        android:value="APP SECRET"/>
 
-Figure 7.7 Splash Screen interface
 
-SplashImage: An array of frame animation files when the application starts. The order of the frame animation files in the array should correspond to the order of playback. Image pixel size should be less than 1080x720.
+**Note**: The blocks of information within the developer information section can be populated according to your engineering needs. 
 
-Inside_background: The background image of the application launch animation. Image pixel size should be less than 1080x720.
+Populate ``pico_app_id/pico_app_id_foreign`` and ``pico_app_key/pico_app_key_foreign`` with the strings obtained from Pico. For the ``pico_merchant_id/pico_merchant_id_foreign`` and ``pico_pay_key/pico_pay_key_foreign``, enter the values shown in the examples above if you haven’t received official values from Pico.
 
-Use Splash Text: Startup copy when the app starts, check to enable it. After checking, the sub-items appear as shown below:
+**Note**: In this configuration file, ``pico_pay_key/pico_pay_key_foreign`` corresponds to the App Secret from the developer platform.
 
-.. image:: _static/7.8.png
+7.2 	Using the Payment System
+------------------------------------
 
-Figure 7.8  Use Splash Text option
+We have provided a demo of the payment system workflow. Expand **Assets** > **Pvr_Payment** > **Demo** > **Scenes** and open the **Demo** scene:
 
-Default Text: The default startup copy, if the system language of the device does not belong to any of the LanguageLocalization, the default startup copy is displayed.
+.. image:: _static/8.6.png
 
-LanguageLocalization: Fill in the corresponding startup copy content for different languages. When the application starts, it will select which startup copy to display according to the system language of the device. If the current system language is not included in LanguageLocalization, the Default Text default startup copy content will be displayed.
+Figure 7.5 Payment Demo
 
-FontSize: Starts the copy text size.
+As illustrated in Figure 7.5, the top portion of the button represents the method to invoke and the bottom portion shows the callback method. 
 
-FontColor: Starts the copy text color.
+Note:
 
-TextHeight: The distance from the start of the copy text to the bottom of the screen, in pixels.
+*	There is a ``PicoPayment`` prefab in the **Prefabs** directory used for system callbacks. Ensure that you have added this object to your project.
+*	Some of the callback data bound to the ``Callback`` script in Pico Payment has been pre-processed. If you need to process other data, modify the content of the corresponding functions, leaving the function names unchanged.
 
-Use Carousel: After the marquee, check the marquee function, if the text of the startup copy is too long, it will scroll.
+7.3 	Payment System API Reference
+----------------------------------------
 
-Alignment: Starts the alignment of the copy text.
+7.3.1 	Login
+^^^^^^^^^^^^^^^^^^^^^
 
-After all configuration items are configured, click the OK button to save the configuration. The Log message prompts Congratulations to be saved later.
+7.3.1.1 	Function
 
-7.6 	Foveated Rendering
----------------------------------------------
+``void Login()``
 
-Foveated rendering optimizes the ability to render scenes, providing high resolution for the center of the field of view, while peripheral views greatly reduce the details of the scene. The relevant properties are set in the Pvr_UnitySDK under LeftEye and RightEye:
+Logs the user in. 
 
-Foveation Gain: Vector2 type, the reduction rate of peripheral pixels in the X/Y axis direction. The larger the value, the more the reduction is made.
+**Parameters**
 
-Foveation Area: The type of float, centered on the gaze point, without reducing the resolution within the radius of the Foveation Area value.
+None
 
-Foveation Minimum: The float type, the texture coordinate parameter of the texture filter function.
+**Returns**
 
-Foveation Level: Available in Low, Med, and High levels. Each level corresponds to a different Foveation parameter.
+Nothing
 
-.. image:: _static/7.9.png
+7.3.1.2 	Callback
 
-Figure 7.9 Foveated rendering
+``void LoginOrUserInfoCallback(string LoginOrUserInfo)``
 
-7.7 	VR Compositor Layers
----------------------------------------------
+Returns information about the login status. The LoginOrUserInfo parameter contains JSON with the following fields:
 
-Normally, our scene content will be directly rendered to the "Eye Buffer", and then the "Eye Buffer" will be sampled by the ATW thread and finally rendered onto the VR screen.
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``isSuccess``                          ``string``                            Set to ``true`` if the login was successful, or ``false`` if the login was not successful.
+``msg``                                ``string``                            Information about the login status.
+================================       ===============================       ===============================
 
-The Compositor Layers (also known as "transmission layer") provides a rendering method that is different from "rendering scene content directly into the eye buffer": this method does not need to render the content to the "Eye Buffer", but directly “transparently” the content to ATW thread for sampling and synthesis processing, thus avoiding a texture sampling process (rendering the content onto the “eye buffer”), which significantly improves the sharpness of the texture and video.
+**Examples**
 
-Compositor Layers supports up to 15 layers (more than 15 layers will not be displayed).
+Success Example:
 
-Compositor Layers currently supports two texture types: 
+.. code-block:: json
 
-- Standard Texture : standard 2D texture 
+	{ 
+	   "isSuccess":"true",
+	   "msg":"SUCCESS"
+	}
 
-- Equirectangular Texture: panorama texture (360°)
+Failure Example:
 
-Compositor Layers function is provided by the Pvr_UnitySDKEyeOverlay.cs script. The related properties are set as follows: 
+.. code-block:: json
 
-.. image:: _static/7.10.png
+	{
+	   "isSuccess":"false", 
+	   "msg":"Network exception"
+	}
 
-Figure 7.10  OverLay usage
+7.3.2	Payment
+^^^^^^^^^^^^^^^^^^^^^
 
-Related property settings:
+7.3.2.1	Function
 
-Layer Index: Set rendering priority (Smaller value means higher priority for rendering);
+``void Pay(string payOrderJson)``
 
-Image Type: set the texture type;
+Performs a pay operation. Populate the payOrderJson parameter with the following fields:
 
-- Standard 2D texture (Standard Texture)
+**Parameters**
 
-- 360 panoramic texture (Equirectangular Texture)
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``subject``                            ``string``                            The subject of the order.
+``body``                               ``string``                            A description of the order.
+``order_id``                           ``string``                            The ID of the order generated by the developer. Can be up to 64 characters in length.
+``total``                              ``string``                            The total price of goods. Set to an integer greater than 0. The ``total`` is used for direct payment but not for payment of a commodity code.
+``goods_tag``                          ``string``                            The commodity label.
+``pay_code``                           ``string``                            The product code, which must be consistent with the developer platform configuration. This value must be entered for direct payment, but not when paying by the product code.
+================================       ===============================       ===============================
 
-Textures: Specify texture resources for the left and right eyes;
+**Returns**
 
-- Left Texture
+Nothing
 
-- Right Texture
+**Examples**
 
-7.7.1 	Standard 2D Texture
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Example 1 – Direct Pay
 
-In order to facilitate developers to quickly experience the 2D texture pass-through function, the SDK provides a 2DOverlay example, developers can directly package and install on the device to experience the effect (Note:Editor can not experience this function).
+.. code-block:: json
 
-If the developer applies the feature to their project, follow these steps: 
+	{ 
+	   "subject":"Game ",
+	   "body":"Buy a complete game",
+	   "order_id":"10000",
+	   "total":"10",
+	   "goods_tag":"game"
+	}
 
-- Step 1: Open Unity to create an empty scene, find Pvr_UnitySDK.prefab in the
+Example 2 – Using a merchandise code to pay
 
-PicoMobileSDK/Pvr_UnitySDK/Prefabs/ folder and drag it into the empty scene, and delete the Main Camera object.
+.. code-block:: json
 
-.. image:: _static/7.11.png
+	{
+	   "subject":" Game", 
+	   "body":"Buy a complete game", 
+	   "order_id":"10000",
+	   "goods_tag":"game",
+	   "pay_code":"123"
+	}
 
-Figure 7.11 Drag into prefab
+**Note**: Example 1 uses direct pay and Example 2 uses a merchandise code to pay. These two payment methods cannot be carried out at the same time. A merchandise code cannot be entered for direct
+payment and the ``total`` property cannot be filled out or set to 0 when using a merchandise code. In addition, these two payment methods must be consistent with the payment type configured in the developer platform accounts.
 
-- Step 2: Create a Quad in the scene, name it OverlayTransform, then adjust the position of the Quad so that it is in the visible position of the Camera. After determining the display position, uncheck the Mesh Render and Mesh Collider components on the Inspector view panel.
+**Note**: ``order_id`` is unique in the payment system. To ensure a single user's order number is unique on the same app, it must be named in the form of ``openID+<custom order number>``.
 
-.. image:: _static/7.12.png
+7.3.2.2	Callback
 
-Figure 7.12 Create a Quad
+Returns information about a payment. The ``queryOrPayInfo`` parameter contains JSON with the following fields:
 
-.. image:: _static/7.13.png
+**Parameters**
 
-Figure 7.13 Cancel Mesh components
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``code``                               ``string``                            A code identifying the payment status.
+``msg``                                ``string``                            A message describing the payment status.
+================================       ===============================       ===============================
 
-Tips：The Transmit Layer will use the Quad's Transform information: position, rotation, scale.
-	
-- Step 3: Bind the Pvr_UnitySDKEyeOverlay.cs script to the Quad created in the previous step and adjust its property parameters on the inspector.
+The following table lists the codes and their corresponding messages:
 
-.. image:: _static/7.14.png
+======================   ==============================================
+Code	                 Msg
+======================   ==============================================
+11001	                 USER_NOT_LOGIN_OR_EXPIRED
+11004	                 MISSING_APP_PARAMETERS
+12000	                 PAY_SUCCESS
+12002	                 ENTER_AMOUNT_ERROR
+12003	                 PCOIN_NOT_ENOUGH
+12006		             NOT_ENTER_ORDER_INFO
+12007                    PAY_ORDER_EXIST
+12008         		     PAY_CODE_NOT_EXIST
+12009                    PAY_CODE_ALERADY_CONSUMED
+14001                    SDK_LOCAL_ERROR
+14004                    NETWORK_ERROR
+15001                    SYSTEM_ERROR
+15003                    SERVICE_APP_PARAMETER_NOT_MATCH
+======================   ==============================================
 
-Figure 7.14 Bind script
 
-Layer Index: Set the rendering priority (Smaller value means higher priority for rendering);
+7.3.3	QueryOrder
+^^^^^^^^^^^^^^^^^^^^^
 
-Image Type: Select the StandardTexture type;
+7.3.3.1	Function
 
-Textures: Specify the 2D texture to be transparently transmitted (Tips: the left and right eyes specify the same texture, otherwise it will cause the left and right eye content to be different, causing dizziness);
+``void QueryOrder(string orderId)``
 
-Tips:Developers who need to dynamically modify passthrough 2D textures can call the SetTexture (Texture Texture) interface in the Pvr_UnitySDKEyeOverlay. cs script.
-	
-- Step 4: The last step, package and install to the device to experience the effect. 
+Queries for information about an existing order.
 
-.. image:: _static/7.15.png
+**Parameters**
 
-Figure 7.15 running result
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``orderId``                            ``string``                            The ID of an order to query.
+================================       ===============================       ===============================
 
-7.7.2 	360 panorama texture
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Returns**
 
-Usually we need three steps to achieve "360 panoramic view": 
+Nothing
 
-1. Create a sphere model in the scene;
+7.3.3.2	Callback
 
-2. Create a "360 Panorama Texture" material and assign it to the sphere model, then modify the shader to remove the front rendering (Cull Front);
+``void QueryOrPayCallback(string queryOrPayInfo)``
 
-3. Place the Camera in the center of the sphere;
+Returns information about the order. The ``queryOrPayInfo`` parameter contains JSON with the following fields:
 
-The "transmission layer" function requires only two step:
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``code``                               ``string``                            Specifies the result of the operation. If the value of this field is ``13000``, then msg contains information about the order. If the value of this field is another value, then an error occurred and msg contains a description of the error.
+``msg``                                ``string``                            If code is ``13000``, this field contains information about the order as shown in the table below. If code is another value, then this field provides a description of the error.
+================================       ===============================       ===============================
 
-1. Create an empty object in the scene and bind the Pvr_UnitySDKEyeOverlay.cs script;
+Sub-fields of ``msg`` when ``code`` is set to ``13000``:
 
-2. Set the ImageType to the EquirectangularTexture type and specify a "360 Panorama Texture"
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``trade_no``                           ``string``                            The Pico Pay order number.
+``open_id``                            ``string``                            The user ID.
+``ret_msg``                            ``string``                            A message related to the payment.
+``coupon_fee``                         ``float``                             The coupon fee.
+``fee_type``                           ``string``                            The fee type.
+``pay_time``                           ``long``                              The time that the payment completed.
+``nonce_str``                          ``string``                            A nonce.
+``out_trade_no``                       ``string``                            
+``trade_status``                       ``string``                            Will be set to ``SUCCESS`` if the payment succeeded.
+``result_code``                        ``string``                            
+``mch_id``                             ``string``                            The company ID.
+``ret_code``                           ``string``                            A return code.
+``sub_msg``                            ``string``                            
+``total_fee``                          ``float``                             The total amount of the order.
+``app_id``                             ``string``                            The application’s ID.
+``sub_code``                           ``string``                            
+``receipt_fee``                        ``string``                            The fee received.
+``buyer_pay_fee``                      ``string``                            The fee that the buyer paid.
+================================       ===============================       ===============================
 
-In order to facilitate the developer to quickly familiarize the 360 panoramic texture transparent transmission function, the SDK provides a 360Overlay example, developers can directly package and install on the device to experience the effect (Note:Editor can not experience this function).
 
-If the developer applies the feature to their project, follow these steps:
+The following table lists the error codes and their corresponding messages:
 
-- Step 1: The steps are the same as the standard 2D texture;
+======================   ==============================================
+Code	                 Msg
+======================   ==============================================
+11001	                 USER_NOT_LOGIN_OR_EXPIRED
+13000		             QUERY_ORDER_SUCCESS
+13003	                 NOT_ENTER_ORDER_ID
+13006	                 QUERY_ORDER_NOT_EXIST
+14001                    SDK_LOCAL_ERROR
+14004	                 NETWORK_ERROR
+15001	                 SYSTEM_ERROR
+15003	                 SERVICE_APP_PARAMETER_NOT_MATCH
+======================   ==============================================
 
-- Step 2: Create an empty object in the scene, name it 360OverlayTransform, and bind Pvr_UnitySDKEyeOverlay.cs script;
+**Examples**
 
-.. image:: _static/7.16.png
+Success Example:
 
-Figure 7.16 Create an empty object
+.. code-block:: json
 
-- Step 3: Set property parameters on the script inspector;
+	{ 
+	   "trade_no":"22016082314719505878171324",
+	   "open_id":"4f3148bdc34d9bca104927729a173b64",
+	   "ret_msg":"",
+	   "coupon_fee":0.00,
+	   "fee_type":"PIC",
+	   "pay_time":1471950587000,
+	   "nonce_str":"yiUzuv4VQO1OXBAzVyZSRztOmRgIOioT",
+	   "out_trade_no":"12345678903",
+	   "trade_status":"SUCCESS",
+	   "trade_type":"EGG",
+	   "result_code":"SUCCESS",
+	   "mch_id":"company_id",
+	   "ret_code":"SUCCESS",
+	   "sub_msg":"OK",
+	   "total_fee":100.00,
+	   "app_id":"bf18ac2de375095d63428134e44d1867",
+	   "sub_code":"SUCCESS",
+	   "receipt_fee":100.00,
+	   "buyer_pay_fee":100.00
+	}
 
-.. image:: _static/7.17.png
+Failure Example:
 
-Figure 7.17 Set property parameters
+.. code-block:: json
 
-Image Type: Select the EquirectangularTexture type;
+	{ 
+	   "code ":"13006",
+	   "msg":"Order does not exist"
+	}
 
-Textures: Specify the same 360 panorama texture for the left and right eyes;
+7.3.4	GetUserAPI
+^^^^^^^^^^^^^^^^^^^^^
 
-Tips：The EquirectangularTexture type does not need to set the LayerIndex to specify the rendering priority, and the default is to render first.
+7.3.4.1	Function
 
-- Step 4: The last step, package and install on the device to experience the effect
+``void GetUserAPI()``
 
-.. image:: _static/7.18.png
+Returns information about the user. 
 
-Figure 7.18 running result
+**Parameters**
 
-7.7.3 	Head-Locked & Word-Locked Mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+None
 
-By default, the "transmission layer" is Word-Locked mode. If you want to implement Head-Locked mode, you only need to create an empty Transform under the Head node and bind the Pvr_UnitySDKEyeOverlay.cs script.
+**Returns**
 
-.. image:: _static/7.19.png
+Nothing
 
-Figure 7.19 Head-Locked Mode
+7.3.4.2	Callback
 
-7.8 	Monocular camera
--------------------------------------
+``void UserInfoCallback (string userInfo)``
 
-Binocular camera: Provides a separate image for each eye from different angles, and the object will be closer to real life.
+Returns information about the user. The ``userInfo`` parameter contains JSON with the following fields:
 
-Monocular camera: Use a single image to render to both eyes, which effectively reduces rendering.
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``ret_code``                           ``string``                            Specifies the result of the operation. If the value of this field is ``0000``, then data contains information about the user. If the value of this field is ``5000``, then an error occurred and ``ret_msg`` contains a description of the error.
+``data``                               Object                                Contains user information as described in the table below.
+``ret_msg``                            ``string``                            Information about the login status.
+================================       ===============================       ===============================
 
-The way to enable a monocular camera is as follows: Check Use Monoscopic to enable the monocular camera, otherwise use a binocular camera.
 
-.. image:: _static/7.20.png
+Sub fields of data when ret_code is set to ``0000``:
 
-Figure 7.20 monocular camera
+================================       ===============================       ===============================
+Name                                   Type                                  Description
+================================       ===============================       ===============================
+``aboutme``                            ``string``                            A description of the user.
+``birthday``                           ``long``                              The user’s birthday.
+``phone``                              ``string``                            The user’s phone number.
+``username``                           ``string``                            The user’s username.
+``email``                              ``string``                            The user’s email address.
+``gender``                             ``string``                            The user’s gender.
+``lastname``                           ``string``                            The user’s last name.
+``openid``                             ``string``                            The user’s ID.
+``firstname``                          ``string``                            The user’s first name.
+``avatar``                             ``string``                            A link to the user’s avatar image.
+``name``                               ``string``                            The user’s name.
+``country``                            ``string``                            The user’s country.
+``city``                               ``string``                            The user’s city.
+================================       ===============================       ===============================
+
+
+**Examples**
+
+Success Example:
+
+.. code-block:: json
+
+	{ 
+	   "ret_code":"0000",
+	   "data":{ 
+	      "aboutme":"",
+	      "birthday":1460476800000,
+	      "phone":"13100000000",
+	      "username":"Admin",
+	      "email":"",
+	      "gender":"male",
+	      "lastname":"",
+	      "openid":"4f3148bdc34d9bca104927729a173b64",
+	      "firstname":"",
+	      "avatar":"http://172.31.83.11/upload/6dd6ee103714e967846c3d38ae48d511",
+	      "Name":"14a25d7219d8dfc91e55f63286ae5c0a",
+	      "country":"China",
+	      "city":""
+	   },
+	   "ret_msg":"Call succeeded"
+	}
+
+Failure Example:
+
+.. code-block:: json
+
+	{ 
+	   "ret_code":"5000",
+	   "ret_msg":" SYSTEM_ERROR "
+	}
+
+7.4     Developer Server Interactions
+------------------------------------------
+
+When payment completes, the pay system will send the corresponding pay result and user information to the merchant. The merchant then needs to process the data received and return a response.
+
+If the response the payment system receives from the merchant does not indicate success or a timeout, the payment system will treat the response as a failure and the payment system will periodically resend notifications in an attempt to get a response that indicates success.
+
+The same notification may be sent to the merchant system many times and the merchant system must be able to process repeated notifications correctly. When receiving a notification for processing, check the status of the corresponding business data to determine if a notification has been processed already. Process it if it hasn’t and return a success response. Before checking and processing  business data, use a data lock for concurrency control caused by function reentry.
+
+The merchant’s server must implement the following interface to receive the requests from the Pico server and to get payment results and user information from the Pico payment system.
+
+**Request**
+
+``POST /Pay``
+
+**Body Parameters**
+
+================================       ===============================       ===============================        ===============================
+Field                                   Type                                 Required                               Description
+================================       ===============================       ===============================        ===============================
+``ret_code``                           ``string``                            Yes                                    The communication identifier. Will be set to ``SUCCESS`` or ``FAIL``. **Note**: This is not a trade identification. The ``result_code`` is used to determine whether a trade was successful.
+``ret_msg``                            ``string``                            No                                     Indicates the reason for an error.
+``sub_code``                           ``string``                            No                                     An error code.
+``sub_msg``                            ``string``                            No                                     A description of the error.
+``trade_no``                           ``string``                            Yes                                    Pico payment order number. 
+``out_trade_no``                       ``string``                            Yes                                    The internal order number from the merchant system.
+``app_id``                             ``string``                            Yes                                    The ``APP_ID`` that the platform has audited. 
+``mch_id``                             ``string``                            Yes                                    The merchant ID that has been assigned to the payment.
+``open_id``                            ``string``                            Yes                                    The unique ID of the user under the merchant’s appID.
+``device_id``                          ``string``                            No                                     The ID of the terminal device.
+``nonce_str``                          ``string``                            Yes                                    A random string, less than 32 characters in length. Use of a random number generation algorithm is recommended to generate this value.
+``signature``                          ``string``                            Yes                                    See details in the name generation algorithm described in Section 7.4.1.
+``result_code``                        ``string``                            Yes                                    The result of the operation. Can be set to ``SUCCESS`` or ``FAIL``. 
+``trade_type``                         ``string``                            Yes                                    The payment type.
+``fee_type``                           ``string``                            Yes                                    The currency type.
+``total_fee``                          ``string``                            Yes                                    The total amount for the order.
+``receipt_fee``                        ``string``                            Yes                                    The actual fee.
+``buyer_pay_fee``                      ``string``                            No                                     The amount of the fee that the buyer paid.
+``coupon_fee``                         ``string``                            No                                     The voucher or discount amount.
+``attach``                             ``string``                            No                                     Merchant packets, returning as-is.
+``pay_time``                           ``string``                            Yes                                    The time when the payment completed, in the form of “yyyy-MM-dd  HH:mm:ss”.
+================================       ===============================       ===============================        ===============================
+
+**Response Fields**
+
+================================       ===============================       ===============================
+Field                                   Type                                 Description                       
+================================       ===============================       ===============================
+``ret_code``                           ``string``                            Will be set to ``SUCCESS`` if the merchant has successfully received the notification and has validated, or ``FAIL`` if the operation failed.                         
+``ret_msg``                            ``string``                            The return message. If populated, the message contains the reason for the error (e.g. “name failed - parameter format validation error”).                                                   
+================================       ===============================       ===============================
+
+**Note**: The merchant system must validate the Name field in the payment result notification contents, in order to avoid a loss of funds caused by a “fake notification” due to a data leakage.
+
+
+
+7.4.1   Name Validation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To validate the name:
+
+1.  Remove the Name parameter from the list of parameters returned.
+2.  Add ``“key = “app_secret”, value=paykey”``.
+3.  Perform a natural sort according to the value of “key”.
+4.  Use & to separate multiple parameters.
+5.  Encrypt the value using MD5 encryption.
+6.  Compare the encrypted string with the name you obtained. 
+
+The following shows an example validation function:
+
+.. code-block:: java
+
+    /** 
+    * result: the map collection of retrieved data  
+    * paykey: It’s the paykey on the developer platform 
+    */ 
+    public static String createSign(Map<String, Object> result, String paykey) 
+    { 
+        if (result == null || result.size() == 0) 
+            return null; 
+        result.put("app_secret", paykey); //1.Add key = “app_secret”, value=payke  
+        String sign = result.get("Name");//2.Save Name value, to be used for validation  
+        result.remove("Name"); //3.remove Name parameter  
+        String[] tmp = new String[result.size()]; 
+        int i = 0; 
+        for (String key : result.keySet()) 
+        { 
+            tmp[i++] = key; 
+        } 
+        Arrays.sort(tmp); //4.natural sort 
+        String signTemp = ""; 
+        for (String string : tmp) 
+        { 
+            if (result.get(string) == null) 
+                continue; 
+            signTemp += string + "=" + URLEncoder.encode(result.get(string).toString() 
+                , "utf-8") + "&"; 
+        } 
+        if (signTemp.endsWith("&")) 
+            signTemp = sign.substring(0, signTemp .length() - 1); 
+        Log.i(TAG, "createSign: " + signTemp ); 
+        String localSign = MD5.MD5(sign); //5.generate MD5 encrypted string  
+        return localSign.equal(sign);//6.validate with “sign” in 2  
+
+    }
+
+

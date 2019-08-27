@@ -14,17 +14,19 @@ PicoVRAndroidSDK(Unity)
    chapter_seven
    chapter_eight
    chapter_nine
+   chapter_ten
 
 目录
 ^^^^^^^^^^^^^^^^^^^^^
 === =========
 1	:ref:`Introduction to SDK <1 	Introduction to SDK>`						
 2	:ref:`Instructions for SDK configuration <2 	Instructions for SDK configuration>`				
-3	:ref:`Development notes <3 	Development notes>`			
-4	:ref:`Quick Start of SDK Access <4 	Quick Start of SDK Access>`		
-5	:ref:`Hardware product development guide <5 	Hardware product development guide>`
+3  :ref:`Quickstart <3  Quickstart of SDK Access>`      
+4	:ref:`Development notes <4 	Development notes>` 
+5	:ref:`SDK Usage <5 	SDK Usage>`
 6	:ref:`API interface function list <6 	API interface function list>`
-7	:ref:`Advanced features <7 	Advanced features>`		
-8	:ref:`Payment system <8 	Payment system>`										
-9	:ref:`Frequently Asked Questions <9 	Frequently Asked Questions>`			
+7  :ref:`Payment system <7    Payment system>`                             
+8	:ref:`Advanced features <8 	Advanced features>`		
+9  :ref:`Auxiliary Tools <9    Auxiliary Tools>`     
+10	:ref:`Frequently Asked Questions <10 	Frequently Asked Questions>`			
 === =========

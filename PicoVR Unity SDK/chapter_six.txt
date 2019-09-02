@@ -1,9 +1,9 @@
-﻿.. _6 	API interface function list:
+﻿.. _6 	API Interface Function List:
 
-6 	API interface function list
+6 	API Interface Function List
 ======================================
 
-6.1 	Get version information
+6.1 	Get Version Information
 -------------------------------------
 
 UPvr_GetUnitySDKVersion
@@ -26,7 +26,7 @@ None.
 The version number of the SDK.
 
 
-6.2 	Sensor tracking related
+6.2 	Sensor Tracking Related
 -------------------------------------
 
 

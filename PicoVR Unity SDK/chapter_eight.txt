@@ -1,6 +1,6 @@
-.. _8   Development Considerations:
+.. _8   Advanced Features:
 
-8   Development Considerations
+8   Advanced Features
 ==================================
 
 8.1     Entering Developer Mode
@@ -163,22 +163,7 @@ Figure 8.6 Splash Screen Interface.
 
 After selecting the type, click **OK** to set the configuration; a log message indicating **Congratulations** appears when the configuration is complete. 
 
-
-8.4.6	Foveated Rendering
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Foveated rendering optimizes the ability to render scenes, providing a high resolution for the center of the field of view, while the details of the scene for peripheral views are greatly reduced. The following properties for foveated rendering can be in the Pvr_UnitySDK under **LeftEye** and **RightEye**:
-
-* **Foveation Level**: Sets low, medium, or high levels of Foveation.
-* **Foveation Gain Value**: A Vector2 value that reduces the rate of peripheral pixels in the X/Y axes. Larger values provide greater reductions.
-* **Foveation Area Value**: A float value centered on the gaze point, that defines the radius of the foveation area in which the resolution is not reduced.
-* **Foveation Minimum Value**: A float value defining the texture coordinate parameter of the texture filter function.
-
- .. image:: _static/7.9.png
-
- Figure 8.8 Foveated Rendering Options
-
-8.4.7	VR Compositor Layers
+8.4.6	VR Compositor Layers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Normally, scene content will be directly rendered to the "eye buffer", and then the "eye buffer" will be sampled by the ATW, and finally rendered onto the VR screen.
@@ -208,7 +193,7 @@ Related property settings:
 
 * **Textures**: Specifies the texture resources for the left and right eyes: **Left Texture** and **Right Texture**.
 
-8.4.7.1	Standard 2D Texture
+8.4.6.1	Standard 2D Texture
 
 To allow developers to quickly get up and running with the 2D texture pass-through function, the SDK provides the **2DOverlay** example. You can directly package and install it on the device to see the results. Note that the editor cannot show this functionality.
 
@@ -257,7 +242,7 @@ Figure 8.13 Bind Script
 Figure 8.14 The Running Result
 
 
-8.4.8	360 Degree Panorama Texture
+8.4.7	360 Degree Panorama Texture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Follow the steps below steps to achieve a 360-degree panoramic view: 
@@ -300,7 +285,7 @@ Figure 8.16 Setting the property parameters
 Figure 8.17 The Running Result.
 
 
-8.4.9	Head-Locked and World-Locked Mode
+8.4.8	Head-Locked and World-Locked Mode
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 By default, the "transmission layer" is **Word-Locked** mode. If you want to implement **Head-Locked** mode, create an empty transform under the **Head** node and bind the **Pvr_UnitySDKEyeOverlay.cs** script:
@@ -309,7 +294,7 @@ By default, the "transmission layer" is **Word-Locked** mode. If you want to imp
 
 Figure 8.18 Setting Head-Locked mode
 
-8.4.10	Monocular camera
+8.4.9	Monocular camera
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A binocular camera provides a separate image for each eye from different angles, allowing an object to appear more realistic.
@@ -320,7 +305,7 @@ A monocular camera uses a single image to render to both eyes, which effectively
 
 Figure 8.19 Enabling a Monocular Camera
 
-8.4.11	Color Space Support
+8.4.10	Color Space Support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Gamma and linear modes are supported for the color space. If **Linear** is selected, then **Blit Type** must be set to **Never**, otherwise Unity will have the problem of a probability screen. If Gamma is selected , you can select either **Never** or **Always** in **Blit Type**:

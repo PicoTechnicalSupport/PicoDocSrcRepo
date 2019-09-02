@@ -1,6 +1,6 @@
-﻿.. _2 	Requirements:
+﻿.. _2 	Instructions for SDK Configuration:
 
-2 	Requirements
+2 	Instructions for SDK Configuration
 =============================================
 
 2.1 	VR Devices
@@ -17,7 +17,7 @@ The SDK works with the following VR devices from Pico:
 
 The SDK is compatible with the following versions of Unity:
 
-	* **Unity**: Unity 2017.4 to 2019.1
+	* **Unity**: Unity 2019.1
 
 2.3	Android Development Environments
 ---------------------------------------------------

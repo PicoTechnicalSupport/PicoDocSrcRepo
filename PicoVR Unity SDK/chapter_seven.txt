@@ -1,6 +1,6 @@
-﻿.. _7 	Payment system:
+﻿.. _7 	Payment System:
 
-7 	Payment system
+7 	Payment System
 ============================
 
 Pico Pay is a game currency payment system. It’s based on the Pico account system and is settled according to the current game currency unit (P coin) under Pico. You can use Pico Pay if your project needs an in-app-purchase system. The following subsections describe Pico Pay in more detail.

@@ -1,6 +1,6 @@
-.. _5 	SDK Usage:
+.. _5 	Hardware Product Development Guide:
 	
-5 	SDK Usage
+5 	Hardware Product Development Guide
 ============================================
 
 The following subsections describe how to use the SDK for the various Pico hardware products. 

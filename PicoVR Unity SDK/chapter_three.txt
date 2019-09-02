@@ -1,6 +1,6 @@
-﻿.. _3 	Quickstart:
+﻿.. _3 	Quick Start of SDK Access:
 
-3 	Quickstart
+3 	Quick Start of SDK Access
 ======================================
 
 Use the following steps to create a new project in Unity using the SDK:

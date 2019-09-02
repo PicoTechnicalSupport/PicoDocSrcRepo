@@ -1,9 +1,9 @@
-﻿.. _4 	Development notes:
+﻿.. _4 	Development Notes:
 
-4 	Development notes
+4 	Development Notes
 ===============================
 
-4.1 	Enable device USB Debugging
+4.1 	Enable Device USB Debugging
 -------------------------------------
 
 Enter the setting interface-> About, click PUI version entry 8 times continuously to open the developer mode, enter the 2D interface of developer mode-> developer options, then open the "USB debugging" function in the list of options, and set "select USB configuration" to MTP mode.
@@ -33,7 +33,7 @@ Enter the setting interface-> About, click PUI version entry 8 times continuousl
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
 
-4.3 	SDK recommended configuration
+4.3 	SDK Recommended Configuration
 ---------------------------------------
 
 - For Color Space, Gamma and Linear are supported.

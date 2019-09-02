@@ -106,13 +106,6 @@ Open the Android Manifest and locate the ``plat_logo`` tag. The default value fo
 
 If you want to use the Pico proprietary loading interface, change the value of ``android:value`` to ``1``.
 
-How do you turn off the auto-connection to 3DoF when running games on mobile phones?
--------------------------------------------------------------------------------------------
-
-On regular mobile phones, after running the Pvr_Controller Demo, the game will automatically search for controllers nearby, connect to the first Pico 3DoF controller it finds, and stop searching when connected. If it fails to connect, a popup a window will appear after 15 seconds to prompt the user to search again or stop the search.
-
-To turn off the auto-connect feature, set ``isAutoConnect`` to false in ``Pvr_ControllerLink.cs``.
-
 How do you set up the controller dragging function?
 ----------------------------------------------------------------------------
 

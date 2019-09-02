@@ -39,20 +39,3 @@ Figure 9.4 Option to set the frame rate
 
 
 Disable **Use Default FPS** and then enter the desired frame rate.
-
-9.4 Configuring the Render Text Size
---------------------------------------
-
-The SDK provides the option to configure the size of the **Eyebuffer**, which is opened by unchecking the **Use Default RenderTexture** option as follows:
-
-.. image:: _static/7.4a.png
-
-Figure 9.5 - Configuring the Render Texture Size
-
-**Tips**:
-Developers should only use **Use Default RenderTexture** for custom render texture sizes for special needs. Developers should take the following into consideration:
-
-* If the render texture setting is too small, performance will improve and latency will be reduced, but it will also result in a lower resolution.
-* If the render texture setting is too large, performance will be reduced and latency will be increased. It’s not recommended that the render texture setting exceed the texture size for the hardware.
-
-

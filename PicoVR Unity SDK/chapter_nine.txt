@@ -1,41 +1,145 @@
-﻿.. _9 	Auxiliary Tools:
+﻿.. _9 	Frequently Asked Questions:
 
-9 	Auxiliary Tools
+9 	Frequently Asked Questions
 ====================================
 
-9.1 ShowFPS
---------------------------------------
+How do you set the orientation via the Android manifest file?
+----------------------------------------------------------------------------
 
-To show the frame rate, navigate to the **Inspector** panel of the Pvr_UnitySDK and enable **Show FPS in Scene** under the **Pvr_Unity SDK Manager** component.
+ Set ``com.picovr.display.orientation`` based on the version of the Pico SDK that you’re using:
 
-.. image:: _static/7.1.png
+.. code-block:: xml
 
-Figure 9.1 Enabling the frame rate metric
+  Pico SDK 2.7.4:
+  <meta-data android:name=”com.picovr.type” android:value=”vr” /> 
+  <meta-data android:name=”com.picovr.display.orientation” android:value=”180” />
 
-9.2 Scene Switch Gradient Effect
---------------------------------------
+  PicoSDK 2.7.6+:
+  <meta-data android:name=”pvr.app.type” android:value=”vr” /> 
+  <meta-data android:name=”pvr.display.orientation” android:value=”180” />
 
-The SDK provides a scene switch gradient effect through the **Screen Fade** option:
+How should the player settings be configured?
+----------------------------------------------------------------------------
 
-.. image:: _static/7.2.png
+The **Default Orientation** needs to set the **Landscape Left**:
 
-Figure 9.2 Location of the Screen Fade option
+.. image:: _static/8.5b.png
 
-The duration and color of the scene switching gradient are controlled by the **Fade Time** (in seconds) and **Fade Color** options respectively:
+Figure 9.1 Setting the Default Orientation
 
-.. image:: _static/7.3.png
+The graphics APIs need to choose between **OpenGLES2** and **OpenGLES3**, so **OpenGLES2** needs to come before **OpenGLES3**.
 
-Figure 9.3 Screen Fade Time and Color of Scenes (time unit is S)
+By default, multi-threaded rendering is not enabled. When enabled, the frame rate improves, but there are restrictions to be aware of. See the `Unity official document <https://docs.unity3d.com/ScriptReference/SystemInfo-graphicsMultiThreaded.html>`_. for details.
 
+Both of these options are illustrated in Figure 10.2
 
-9.3 Setting the Framerate
---------------------------------------
+.. image:: _static/10.1.png
 
-The SDK provides an option to set the framerate:
+Figure 9.2 Setting the order of the graphics APIs and the rendering options
 
-.. image:: _static/7.4.png
+How do you configure the camera culling mask?
+----------------------------------------------------------------------------
 
-Figure 9.4 Option to set the frame rate
+You can configure the **Culling Mask** property in the **LeftEye** and **RightEye Camera** in the Pvr_UnitySDK.
 
+1. If you have integrated with the Cardboard SDK and have used the toggle culling mask option, you can modify the **Camera** property directly to complete the steps.
+2. If you need to modify the **toggle culling mask** in the code, refer to the modification method for regular cameras.
+3. When **RightEye** and **LeftEye** cameras need to look at different objects, you can control the layer display, with the **Culling Mask** of the **RightEye** and **LeftEye** cameras in PicoVR. In doing so, don’t enable the right-eye object’s layer in the **LeftEye** camera’s culling mask nor the **LeftEye** object’s layer in the culling mask of the **RightEye** camera.
 
-Disable **Use Default FPS** and then enter the desired frame rate.
+How should the anti-aliasing be set?
+----------------------------------------------------------------------------
+
+In the **Inspector** panel of the **Pvr_UnitySDK** prefab select the highest anti-aliasing setting that results in acceptable performance.
+
+.. image:: _static/10.2.png
+
+Figure 9.3 Selecting the Anti-aliasing setting
+
+**Note**: the anti-aliasing must be set to x_2 or higher.
+
+How do you implement exit functionality in Pico Neo?
+----------------------------------------------------------------------------
+
+Developers can implement this functionality by themselves or use the ``QuitGame.cs`` script in the SDK’s ``Assets\PicoVRSDK\Scripts`` directory. To use the script, drag it onto the GameObject of PicoVR. Users can then quit by pressing the **return** key when the game is running. 
+
+**Note**: Developers should release the resources dynamically loaded by the game or app.
+
+How do you apply the sensor to other objects in the scene?
+----------------------------------------------------------------------------
+
+1.  Disable the **Pvr_Unity SDK Head Track** script in the scene. 
+
+.. image:: _static/9.2.png
+
+Figure 9.4 Selecting the Pvr_Unity SDK Head Track Script.
+
+2.  Choose the objects you want to apply the sensor to, and add the **Pvr_UnitySDKHeadTrack** script.
+
+What are the framerate and scene requirements in order to achieve smooth effects with the Pico all-in-one?
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  **Framerate Requirements and Recommendations:**
+
+  The framerate for a Pico all-in-one scene cannot be below 30 FPS. A frame rate of 45 FPS and above is recommended.
+
+  **Scene Requirements and Recommendations:**
+
+    - Limit the number of triangle slices of the model to a maximum of 100,000 and the number of vertices of the model to a maximum of 100,000.
+    - Limit the number of regular Unity lights such as electric light sources to a maximum of 50 and the number of regular Unity particle systems to a maximum of 50.
+    - Try to use a more efficient Unity shader. 
+    - Reduce the number of model slice anchor points while ensuring correct display.
+    - Try to share materials and animations.
+    - Try to use compressed texture formats.
+    - Use as few lighting effects as possible.
+    - Use static batch processing as much as possible.
+    - Optimize scripts to reduce unnecessary consumption of memory, computing, and other resources.
+
+How do you replace the loading animation on application startup?
+----------------------------------------------------------------------------
+
+Open the Android Manifest and locate the ``plat_logo`` tag. The default value for ``android: value`` is ``0``, which means that the default loading interface is used:
+
+.. code-block:: xml
+
+  <!—Whether the platform animation is diplayed -->
+  <meta-data android:name="platform_logo" android:value="0">
+
+If you want to use the Pico proprietary loading interface, change the value of ``android:value`` to ``1``.
+
+How do you set up the controller dragging function?
+----------------------------------------------------------------------------
+
+Use the steps below to modify the **Pvr_Controller_UI** scene under the **PicoMobileSDK/Pvr_Controller/Scenes**:
+
+1. Hang on the Pvr_UIPointer script on the model you want to use as a control, such as **dot** under **Pvr_Controller0**:
+
+.. image:: _static/9.4.png
+
+2. Add the **Pvr_InputModule** script under **Event** and place the control point with **Pvr_UIPointer** in the **Element**:
+
+.. image:: _static/9.5.png
+
+3. Mount **Pvr_UICanvas** and **GraphicRaycaster** on the canvas belonging to the control:
+
+.. image:: _static/9.6.png
+
+4. Mount **Pvr_UIDraggableItem** and **Canvas Group** to the control:
+
+.. image:: _static/9.7.png
+
+How do you upgrade the PicoVR Unity SDK to the latest version?
+----------------------------------------------------------------------------
+
+For a first-time application based on the SDK, follow the steps described above. The **Default Orientation** needs to be set to **Landscape Left**.
+
+Follow the steps below to upgrade an existing application to version 2.7.6:
+
+1. Delete all of the files in the old PicoVR Unity SDK. 
+
+2. After importing the new SDK package, replace the old controller prefab with **PvrController0** or **PvrController1** in the new SDK.
+
+3. Migrate functions attached to the old controller game object into the new controller game object.
+
+4. **PvrController0/controller** is a Pico controller model, according to the current connection handle type automatically switch model.
+
+5. The white point and ray under **PvrController0** will be automatically displayed or hidden according to the connection state of the controller.

@@ -26,10 +26,3 @@ The SDK requires the following dependencies:
 
 	* **JDK**: jdk1.8.0 and above
 	* **Android SDK**: API Level 24 and above
-
-2.4	Android Runtime
----------------------------------------------------
-The following requirements must be satisfied if you develop Android mobile applications for Pico 1/1s or Pico U:
-
-	* **Android Version**: Android 7.0 and above
-	* **Required Sensors**: Gyroscope and accelerometer

@@ -3,7 +3,7 @@
 1	Introduction
 ===============================
 
-Kiosk Mode is a device customization option that gives more control over the HMD to the operator of the device. When an HMD is configured in Kiosk Mode a user can only interact with content configured by the operator of the HMD. To implement Kiosk Mode involves replacing the boot loader and requires some technical knowledge.
+Kiosk Mode is a device customization option that gives more control over the HMD to the operator of the device. When an HMD is configured in Kiosk Mode a user can only interact with content configured by the operator of the HMD. To implement Kiosk Mode involves replacing the launcher and requires some technical knowledge.
 
 
 

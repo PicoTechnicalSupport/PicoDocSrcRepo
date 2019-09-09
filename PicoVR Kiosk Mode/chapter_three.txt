@@ -3,8 +3,9 @@
 3	 AndroidManifest.xml Modification
 ============================================
 
-The Android Manifest is an XML file which contains important metadata about the Android app. This includes the package name, activity names, main activity (the entry point to the app), configurations, Android version support, hardware features support, and permissions.
+The Android Manifest is an XML file which contains important metadata about the Android app. The exact .XML file is placed under the Unity project path: /Assets/Plugins/Android/.This includes the package name, activity names, main activity (the entry point to the app), configurations, Android version support, hardware features support, and permissions.
 
+.. image:: _static/321.png
 
 - Step1: Modify package name
 

@@ -66,7 +66,7 @@ Figure 4.3 Setting of Default Orientation
 
 Figure 4.4 Check the setting of V Sync Count
 
-4.3 	Lightweight Render Pipeline Configuration
+4.4 	Lightweight Render Pipeline Configuration
 ---------------------------------------------------
 
 For example,In Unity 2019.1.0f2.

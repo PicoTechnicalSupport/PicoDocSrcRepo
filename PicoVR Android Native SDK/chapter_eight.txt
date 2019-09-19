@@ -1,0 +1,29 @@
+﻿ .. _8   Frequently Asked Questions:
+
+8	Frequently Asked Questions
+===============================================
+**1.Q:** What should I do if I find the picture upside down in the application?
+
+**A:**  Confirm the label configuration in the manifest file and try to modify the rotation angle
+
+Label:
+
+.. code-block:: java
+
+    <meta-data android:name="pvr.display.orientation" android:value="180" />
+    
+Or
+
+.. code-block:: java
+
+     <meta-data android:name="pvr.display.orientation" android:value="0" />
+
+  
+**2.Q:** The life cycle of the Surface object can be listened in VRActivity. Why does it need another RenderInterface?
+
+**A:** In VRActivity, it is executed in UIThread. After the Surface object is created, the initialization OpenGL is executed in RenderThread. To draw OpenGL, it must also be executed in this thread, therefore, OpenGL operation should be executed through the interface that implements RenderInterface.
+
+**3.Q:** Before calculating ArmModel, why it is needed to perform the operation of passing in the controller data again? Can't SDK actively obtain it?
+
+**A:** ArmModel calculation requires both HMD data and controller data. The core calculation is placed in the so file, and the head-mounted data can obtain actively. However, currently the controller service is an optional module and is not integrated together. Therefore, data needs to be additionally passed in.
+

@@ -1,0 +1,99 @@
+.. _5	Hardware Product Development Guide:
+	
+5	Hardware Product Development Guide
+=============================================
+
+This chapter will introduce the use method of SDK on Pico hardware products, and the developers should only choose to view the corresponding contents according to demands.
+
+5.1	Pico Goblin/G2/G2 4K
+--------------------------------------------------
+
+5.1.1	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Goblin controller only supports 3dof function. When using the key and touchpad of the single controller, you need to call the interfaces related to the controller. Please refer to Section 6.4 in Chapter 6 List of API Interface Function for specific interfaces. Here, the corresponding relationship between the parameters of the following interfaces and the physical controller keys is introduced.
+
+The Corresponding Relation between the Physical Key and the Parameters in API：
+
+================================       ===============================
+Goblin controller key                  Input binding
+================================       ===============================
+.. image:: _static/5.1.3.1.png         ButtonNum.app
+.. image:: _static/5.1.3.2.png         ButtonNum.click
+.. image:: _static/5.1.3.3.png         ButtonNum.home
+.. image:: _static/5.1.3.4.png         ButtonNum.VolumeUp
+.. image:: _static/5.1.3.5.png         ButtonNum.VolumeDown
+================================       ===============================
+
+Figure 5.1 Schematic Diagram of Goblin Keys
+
+The physical keys of the G2 and G2 4K controllers are the same as that of the Goblin controllers except for the following two different keys.
+
+.. image:: _static/5.6.png
+
+The schematic diagram of the coordinate system for the touchpad is as follows:
+
+.. image:: _static/5.2.png
+
+Figure 5.2 Schematic Diagram of Touchpad
+
+5.2	Pico Neo
+------------------------
+
+
+5.2.1	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When using the keys and touchpads of double controllers, you need to call the interface API. See Section 6.4 for details. This Document only introduces the corresponding relationship of physical keys for the Pico Neo controller:
+
+=======================================       ===============================
+Keys                                          Input binding
+=======================================       ===============================
+.. image:: _static/5.2.3.1.png                ButtonNum.app
+.. image:: _static/5.2.3.2.png                ButtonNum.click
+.. image:: _static/5.2.3.3.png                ButtonNum.home
+.. image:: _static/5.2.3.4.png                ButtonNum.volumeUp
+.. image:: _static/5.2.3.5.png                ButtonNum.volumeDown
+.. image:: _static/5.2.3.6.png                CVController.getTriggerNum( )
+=======================================       ===============================
+
+Figure 5.3 Schematic Diagram of Pico Neo Keys
+
+In addition, the touchpad is identical to the Goblin controller and will not be repeated here.
+
+
+5.3	Pico Neo2
+--------------------
+
+5.3.1	Input instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use the functions of Pico Neo2 controller. The API interface for Pico Neo2 is common with that of Pico Neo, see Section 6.4 for details. The following describes the physical keys of the Pico Neo2 controller:
+
+=============================================       ===============================
+Keys                                                Input binding
+=============================================       ===============================
+.. image:: _static/5.3.1.1.png                      ButtonNum.home
+.. image:: _static/5.3.1.2.png                      ButtonNum.app
+.. image:: _static/5.3.1.3.png                      ButtonNum.click
+.. image:: _static/5.3.1.4.png                      CVController.getTriggerNum( )
+.. image:: _static/5.3.1.5.png                      ButtonNum.buttonRG
+.. image:: _static/5.3.1.6.png                      ButtonNum.buttonLG
+.. image:: _static/5.3.1.7.png                      ButtonNum.buttonAX
+.. image:: _static/5.3.1.8.png                      ButtonNum.buttonBY
+=============================================       ===============================
+
+Figure 5.4 Schematic Diagram of Pico Neo2 Keys
+
+On the Pico Neo2 controller, the joy stick is used to simulate the touchpad coordinates, which are different from the Pico Neo controller. The coordinate system is as follows: 
+
+.. image:: _static/5.5.png
+
+Figure 5.5 Schematic Diagram of Pico Neo2 Touchpad
+
+
+
+
+
+
+

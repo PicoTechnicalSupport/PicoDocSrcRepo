@@ -1,0 +1,453 @@
+﻿.. _6	Summary of API  Function:
+
+6	Summary of API  Function
+=========================================
+
+6.1	Get version information
+----------------------------------
+
+getSDKVersion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: String getSDKVersion ()
+
+Functions: Get SDK version number.
+
+Parameter: none
+
+Return value: SDK version number
+
+Method of calling: PicovrSDK.getSDKVersion ()
+
+6.2	Sensor tracking related
+---------------------------------
+
+startSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int startSensor (int index)
+
+Functions: Start sensor tracking
+
+Parameter: 0
+
+Return value: 0: Call success; 1: Call failure
+
+Method of calling: PicovrSDK.startSensor (0)
+
+stopSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int stopSensor (int index)
+
+Functions: Stop sensor tracking
+
+Parameter: 0
+
+Return value: 0: Call success; 1: Call failure
+
+Method of calling: PicovrSDK.stopSensor(0)
+
+resetSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int resetSensor (int index)
+
+Functions: Reset sensor tracking, the direction is determined by the system, and the horizontal and vertical directions are reset by default
+
+Parameter: 0
+
+Return value: 0: Call success; 1: Call failure
+
+Method of calling: PicovrSDK.resetSensor (0)
+
+resetSensorWithOption
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int resetSensorWithOption (int index, int resetRot, int resetPos)
+
+Functions: Selectively reset sensor attitude and position
+
+Parameter: index: 0 resetRot: Orientation resetPos: Position 0: Not reset 1: Reset
+
+Return value: 0: Call success; 1: Call failure
+
+Method of calling: PicovrSDK.resetSensorWithOption(0,1,1)
+
+GetMainSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: float [] GetMainSensor ()
+
+Functions: Get the direction and position data of the main Sensor
+
+Parameter: none 
+
+Return value: float array, including {x,y,z,w,px,py,pz}
+
+Method of calling: PicovrSDK.GetMainSensor()
+
+6.3	Power, volume and brightness related
+-----------------------------------------------------------
+
+Note: Please apply for permission to modify system settings before realizing these functions. Refer to Android Universal Implementation Solution for details.
+
+Pvr_InitAudioDevice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void Pvr_InitAudioDevice (Context context)
+
+Functions: Initialize volume service
+
+Parameter: Context
+
+Return value: none
+
+Method of calling: SysActivity.Pvr_InitAudioDevice (context)
+	
+Pvr_GetMaxAudionumber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int Pvr_GetMaxAudionumber ()
+
+Functions: Get maximum volume
+
+Parameter: none
+
+Return value: Maximum volume
+
+Method of calling: SysActivity. Pvr_GetMaxAudionumber ()
+
+Pvr_GetAudionumber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int Pvr_GetAudionumber ()
+
+Functions: Get current volume
+
+Parameter: none
+
+Return value: Current volume value (range from 0 to 15)
+
+Method of calling: SysActivity.Pvr_GetAudionumber ()
+
+Pvr_UpAudio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void Pvr_UpAudio ()
+
+Functions: Volume Up
+
+Parameter: none
+
+Return value: none
+
+Method of calling: SysActivity.Pvr_UpAudio ()
+
+Pvr_DownAudio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void Pvr_DownAudio ()
+
+Functions: Volume Down
+
+Parameter: none
+
+Return value: none
+
+Method of calling: SysActivity.Pvr_DownAudio ()
+
+Pvr_ChangeAudio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void Pvr_ChangeAudio (int num)
+
+Functions: Set volume
+
+Parameter: Set the volume value (volume value range from 0 to 15)
+
+Return value: none
+
+Method of calling: SysActivity.Pvr_ChangeAudio (num)
+	
+Pvr_GetCommonBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: int Pvr_GetCommonBrightness (Context context)
+
+Functions: Get the current common device brightness value
+
+Parameter: Context
+
+Return value: Current brightness value (brightness values range from 0 to 255)
+
+Method of calling: SysActivity.Pvr_GetCommonBrightness (context)
+
+Pvr_SetCommonBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: boolean Pvr_SetCommonBrightness (int num, Context context)
+
+Functions: Set the current common device brightness value
+
+Parameter: Current brightness value (brightness values range from 0 to 255), Context
+
+Return value: true: true, false: false
+
+Method of calling: SysActivity.Pvr_SetCommonBrightness (num,context)
+
+
+	
+6.4	Controller related
+--------------------------------------------------		
+
+6.4.1	Pico Goblin/G2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The following classes are located in the HbService. jar package, responsible for the main functions of the controller, such as service connection, data parsing, etc. If the developer uses Goblin or G2 controller function, import the library in your project.
+
+Description for main class：
+
+1.	HbManager.java
+
+※public void InitServices()
+
+Initialize and bind HummingBirdControllerService
+
+※public void Pause() , public void Resume()
+
+When the program enters the background, unregister the broadcast receiver and unbind HummingBirdControllerService. Reconnect it when resumed.
+
+※public void setHbListener(HbListener listener)
+
+Set listener for HbController
+
+※public HbController getHbController()
+
+Get HbController object
+
+2.	HbController.java
+
+HbController class will be updated to the internal variables after getting the controller data from system-related service, which can be got from the functional interface. See Table 6.1 for details.
+
+※public void Start() , public void Stop()
+
+Control the registration and logout of listeners
+
+※public void update()
+
+Update the controller data (acceleration, angular velocity, quaternion, and key values), and notify the listener to execute the corresponding callback function
+
+※public void startUpdateThread(), public void stopUpdateThread()
+
+Control the start and end of internal update thread in HbController The thread calls update( ) every 15ms to read the controller data when the controller is connected. Developers can use the thread directly or call the update( ) interface as needed.
+
+================================================        =====================================================================================
+API	                                                    Description
+================================================        =====================================================================================
+public int getConnectState()	                        Get the controller connection status,    Return value 0: Disconnect      Return value 1: Connect
+                                                                                                        
+public boolean getButtonState(ButtonNum b)	            Get the controller specified key status,     (False: Up  True: Down)
+                                                     
+public int getBattaryLevel()	                        Get the controller power,     Return value range: 0~4
+                                                      
+public Orientation getOrientation()	                    Get the quaternion to which the controller is currently pointing {x,y,z,w}  See com.picovr.client.Orientation class for the return value of SDK interface
+                                                    
+public float[] getAccel()	                            Get the acceleration data of the controller {x,y,z} It’s a Float[3] array
+                                                       
+public float[] getAngular()	                            Get the angular velocity data of the controller {x,y,z} It’s a Float[3] array                                                  
+
+public long getLastUpdateTimeStamp()	                Get the timestamp of the last update data for the controller.  
+
+public boolean isTouching()	                            Query whether the controller TouchPad is in touch state (False: Not touch, true: Touching)
+                                                       
+public int[] getTouchPosition()	                        Get the touch coordinates of the controller TouchPad {x,y}
+
+public int getTrigerKeyEvent()	                        Get the analog data of Trigger key of the controller (valid for G2 controller)  Return value: 0~255 
+                                                       
+================================================        =====================================================================================
+
+Table 6.1 HbController Function Interface
+
+3.	HbListener.java
+
+※ public void onConnect();
+
+Controller connection
+
+※ public void onDisconnect();
+
+Controller disconnection
+
+※ public void onDataUpdate();
+
+Controller data updated
+
+※ public void onReCenter();
+
+Long press Home button to reset the controller direction
+
+※ public void onBindService();
+
+System HummingBirdControllerService bound successfully
+
+6.4.2	Pico Neo/Neo2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Please import cvControllerClient.jar in the project if the developers want to use Pico Neo/Neo2 controller services.
+
+The following are the main class descriptions in the jar package:
+
+1.	CVControllerManager.java
+
+※ public void bindService() , public void unbindService()
+
+Responsible for binding and unbinding system services, called when the application starts and pauses, such as onResume, onPause for Activity.
+
+※ public void setListener(CVControllerListener listener)
+
+Set up the listener to callback the notifications of the controller status.
+
+※ public CVController getMainController() , public CVController getSubController()
+
+Get the objects of the main controller and the sub-controller.
+
+2.	CVController.java
+
+
+==========================================              ======================================
+API	                                                    Description
+==========================================              ======================================
+public int getConnectState()	                        Get the controller connection status   Return value 0: Disconnect    Return value 1: Connect
+
+public int getSerialNum()	                            Get the serial number identification of the controller,
+
+public int get6DofAbility()	                            Get the ability of the controller 6Dof，  Return value 1: Support 3Dof only,  Return value 0 or 2: Support 6Dof
+
+public boolean getButtonState(ButtonNum b)	            Get the controller specified key status  (False: Up  True: Down)
+
+public int getBattaryLevel()	                        Get the controller power. Return value scope: Pico Neo, 0~10  Pico Neo2 ，0~100
+
+public float[] getOrientation()	                        Get the quaternion to which the controller is currently pointing {x,y,z,w},The interface returns to Float[4] array
+
+public float[] getPosition()	                        Get the position data of the controller {x,y,z}, The interface returns to Float[3] array
+
+public float[] getAcc()	                                Get the acceleration data of the controller {x,y,z}, It’s a Float[3] array
+
+public float[] getAgl()	                                Get the angular velocity data of the controller {x,y,z},It’s a Float[3] array
+
+public int getTriggerNum()	                            Get the trigger data of the Trigger key for the controller   Range 0~255
+
+public int[] getTouchPad ()	                            Get the touch coordinates of the controller TouchPad {x,y},The interface returns to int[2] array
+
+==========================================              ======================================
+
+Table 6.2 CVController Function Interface
+
+3.	CVControllerListener.java
+
+※ public void onBindFail();
+
+Binding system service abnormally disconnected
+
+※ public void onThreadStart();
+
+Binding system service successfully, start normal operation
+
+※ public void onConnectStateChanged(int serialNum,int state);
+
+Controller connection status changes, serialNum: controller serial no., state: connection
+
+※ public void onMainControllerChanged(int serialNum);
+
+Main controller changes, serialNum: main controller serial no. The object of the main and sub controllers can be undated through getMainController and getSubController after receiving the notification
+
+6.4.3	ArmModel simulation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SDK provides an algorithm that simulates the ArmModel for use with 3dof controller. It can simulate the motion path of human arm, calculate a 3d coordinate, and apply the coordinate to the rendering of the controller model to make up for the lack of 6dof data, so as to make the experience more real.
+
+getPvrHandness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Function name: int getPvrHandness(Context context)
+
+Functions: Get the leftgrip and rightgrip parameters in system settings
+
+Parameter: context 
+
+Return value: 0, rightgrip; 1, leftgrip.
+
+Method of calling: VrActivity.getPvrHandness(context)
+
+	
+setArmModelParameter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void setArmModelParameter(int hand, int gazeType, float elbowHeight, float elbowDepth, float pointerTiltAngle);
+
+Functions: Set ArmModel parameter
+
+Parameter：  hand           0: right hand, 1: left hand, default 0
+
+		gazeType       0: Never，1: During Motion, 2: Always, Default 1
+		
+		elbowHeight    default 0.0f
+		
+		elbowDepth     default 0.0f
+		
+		pointerTiltAngle default 15.0f
+		
+Return value: none
+
+Method of calling: PicovrSDK.setArmModelParameter(0,1,0,0,15)
+
+
+setControllerData
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void setControllerData (float[] orientation, float[] accel, float[] gyro, int[] keyData )
+
+Functions: transfer the controller data to ArmModel
+
+Parameter：
+
+orientation, quaternion
+
+accel, accelerometer data
+
+Gyro, Gyroscope data
+
+keyData, Key data 
+		
+Return value: none
+
+Method of calling: PicovrSDK.setControllerData ( orientation, accel, gyro, keyData )
+
+	
+calcArmModelParameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void calcArmModelParameters ()
+
+Functions: calculate ArmModel position according to controller data Note that calls should be made before getPointerPose ().
+
+Parameter: none 
+
+Return value: none
+
+Method of calling: PicovrSDK. calcArmModelParameters()
+
+
+getPointerPose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function name: void getPointerPose ( float[] rotation, float[] position)
+
+Functions: get the position and direction of the controller calculated by ArmModel
+
+Parameter：rotation , quaternion
+
+position ，three-dimensional coordinate
+
+Return value: none
+
+Method of calling: PicovrSDK.getPointerPose ( rotation, position）

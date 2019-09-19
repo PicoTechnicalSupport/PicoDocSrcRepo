@@ -1,0 +1,69 @@
+﻿.. _4	Quick Start of SDK Access:
+
+4	Quick Start of SDK Access
+==================================
+
+Step1：New Project
+------------------------
+
+Open Android Studio and create the following project:
+
+.. image:: _static/4.1.PNG
+
+Figure 4.1 Create New Project
+
+Step2：Import SDK
+-----------------------
+
+Add Jar package and so library file of SDK, and modify gradle script, as shown below:
+
+.. image:: _static/4.2.png
+
+Figure 4.2 Add Library File
+
+.. image:: _static/4.3.png
+
+Figure 4.3 Modify gradle Script
+
+Step3：Use SDK
+-----------------------
+
+Create Activity and inherit com.picovr.vractivity.VRActivity class, which can implement SurfaceHolder.Callback. Control the creation and destruction of SDK core thread through the callback of the Activity and SurfaceView lifecycle.
+
+.. image:: _static/4.4.png
+
+Figure 4.4 Create New Activity
+
+Implement SDK callback:
+
+.. image:: _static/4.5.png
+
+Figure 4.5 Implement SDK callback function
+
+Callback function description:
+
+1） void onFrameBegin(HmdState var1)
+
+The parameter is the HMD State, see com.picovr.vractivity.HmdState for details. Execute it at the beginning of each frame, it is recommended to perform the operation related to detecting the head position orientation and updating the screen content in this function.
+
+2） void onDrawEye(Eye var1)
+
+Parameter therein can be referred to com.picovr.vractivity.Eye class. Execute twice per frame to draw the left and right eye images respectively, to fullfill the OpenGL drawing operation in this function. In the Eye class, getType () returns 0 for the left eye and 1 for the right eye.
+
+3） OnFrameEnd () Execute once each frame screen is rendered.
+
+4） void initGL (int w, int h) 
+
+Wherein, w and h refer to the width and height of the screen respectively. After the creation of Surface object and the completion of SDK initializing OpenGL, the interface will be called back.
+
+5） void surfaceChangeCallBack(int w, int h) is executed after the change of the Surface object. w and h refer to the width and height of Render Texture respectively.
+
+6） void onRenderPause() Execute once after rendering pauses.
+
+7） void onRenderResume() Execute once after rendering restarts.
+
+8） void onRendererShutdown() Execute once after stopping render and destorying the Surface object.
+
+9） void renderEventCallBack(int event)
+
+Developers can use MsgQueue to pass custom events, and send messages to MsgQueue via the RenderEvents (int RenderEvent) method in the VRatiity class (renderEvent value should be greater than 0), which listens for events  through this interface to do the corresponding operation.

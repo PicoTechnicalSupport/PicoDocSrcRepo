@@ -1,0 +1,34 @@
+﻿.. _3	Development Notes:
+
+3	Development Notes
+===============================
+
+3.1	Enter the developer mode of device
+---------------------------------------------
+
+Enter the setting interface-> About, click PUI version entry 8 times continuously to open the developer mode to enter the 2D interface of developer mode-> developer options, then open the "USB debugging" function in the list of options, and set "select USB configuration" to MTP mode.
+
+3.2	Android Manifest file
+-------------------------------
+
+- Special meta-data needs to be added; otherwise, an exception will be displayed
+
+.. code-block:: xml
+
+    <meta-data android:name=" pvr.app.type " android:value="vr"/>
+    <meta-data android:name=" pvr.display.orientation " android:value="180"/>
+
+- All Acitivity that need to be displayed need to be inherited from
+
+.. code-block:: java
+    
+   com.picovr.vractivity.VRActivity 
+
+- Add the necessary permissions
+
+.. code-block:: xml
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />

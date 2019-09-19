@@ -1,0 +1,28 @@
+﻿.. _1	Introduction to SDK:
+
+1	Introduction to SDK
+===============================
+
+
+This document introduces the application of VR made and run on Pico all-in-one equipment by PicoVRAndroidSDK_Native (hereinafter referred to as SDK) under the Android Native environment. SDK can mainly provide many functions such as sensor fusion, Binocular stereo rendering, optical distortion correction, asynchronous time warping, single buffer rendering, 3DoF/6DoF multi-interaction support, power supply and thermal dissipation management, account and payment management.
+
+The SDK architecture is shown in the following figure：
+
+.. image:: _static/1.1.PNG
+
+Figure 1.1 SDK Architecture Diagram
+
+The SDK is provided in the format of Jar package and so library, and developers can download it to see the following files:
+
+.. image:: _static/1.2.PNG
+
+Figure 1.2 SDK Directory Structure
+
+**LibPvr_NativeSDK.so** can realize the main rendering function of SDK, which is the bottom implementation of the whole SDK.
+
+**Corelib.jar** package encapsulates the main Java classes of SDK and is the core Java class library.
+
+**HbService.jar** package is a class library for implementing the Pico Goblin/G2 controller function. Developers can choose to use it based on actual requirements.
+
+**cvControllerClient.jar** package is a class library for implementing the Pico Neo/Neo2 controller function, and its architecture design is the same as the HbService library. Developers can choose to use it based on actual requirements.
+

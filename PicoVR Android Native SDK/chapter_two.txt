@@ -1,0 +1,17 @@
+﻿.. _2	Instructions for SDK configuration:
+
+2	Instructions for SDK configuration
+==============================================
+
+2.1 Supporting devices
+-----------------------------
+
+Pico Goblin，Pico Neo，Pico G2，Pico G2 4K，Pico Neo2
+
+2.2 Development environment requirements
+--------------------------------------------------
+
+===================    ======================================
+JDK                    JDK 1.7.0_01 and above
+Android SDK            API Level 24 and above
+===================    ======================================

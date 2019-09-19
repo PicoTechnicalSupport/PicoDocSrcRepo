@@ -1,0 +1,645 @@
+﻿.. _7 Payment System:
+
+7 Payment System
+============================
+
+7.1	Development environment requirements
+----------------------------------------------------------
+
+This document is mainly designed for Android development environment, ADB drivers and corresponding SDK versions of the Eclipse + ADT or Android studio installed by Android development engineers. The environment configuration is not described here.
+
+7.1.1	Android development environment requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+============================        ============================================= 
+     Software name                                Version information
+============================        ============================================= 
+      JDK                                     jdk1.7.0_01 and above
+      Android SDK                             API Level 19 and above
+============================        ============================================= 
+
+
+7.1.2 Import JAR package of SDK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Put the jar package provided in the SDK package under the folder of Eclipse or AndroidStudio libs, as shown below. The name of jar package shall be subject to the practice:
+
+.. image:: _static/7.1.png
+
+In Eclipse or Android Studio, right-click to add to the library of the project.
+
+7.1.3	Get KEY
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are not a developer of Pico, please visit the Pico official website to access the Developer Center to register a developer account. After registration and application, you can obtain the APP ID, APP KEY, APP SECRET and merchant ID of the corresponding game or application. Please check in the Administration Center for details.
+
+**Please note that you need to confirm whether the APP you developed is an application type or a game type, so that the corresponding payment method is different.** Please check `7.3.4	Make a payment`_ for details.
+
+7.2	Introduction to SDK package
+-----------------------------------------
+
+7.2.1	Directory structure for the payment demo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can see the hierarchy directory in the project as shown in figure 7.2.1.
+
+.. image:: _static/7.2.1.png
+
+Figure 7.2.1 Directory Structure 
+
+The whole project is a Demo to implement SDK functions.
+
+The "libs" directory is the JAR compiled by the SDK, which is relied on by the Demo project.
+
+Source code of the Demo program should be stored under the "src" directory.
+
+Developers can import projects to run in AndroidStudio.
+
+7.3	Use of payment
+-----------------------------------------
+
+7.3.1	Corresponding parameters and name explanation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pico provides developers with authentication based on Oauth2.0 mode, enabling third-party applications or games to conduct authorization and login without requiring login, and providing client’s authorization mode. After authorization, the open interface provided by Pico can be used to get the basic information of users and facilitate the integration of third-party developers.
+
+=================     =================================================================     ===============================================================================
+Name of parameter     Application of parameter                                               Source of parameter
+=================     =================================================================     ===============================================================================
+APP_ID                AppId assigned to each third-party application for authentication	     Developer platform
+SCOPE	              Apply for authorizable content or scope                                Developer platform (tentative: get_user_info)
+APP_KEY	              appkey assigned to each third-party application                        Developer platform
+DEVELOPER_ID          Developer ID                                                           Developer platform
+App_SECRET	          Payment key	                                                         Developer platform
+=================     =================================================================     ===============================================================================
+
+  **Introduction to payment：**
+
+   1. Pico payment is a game currency payment system based on Pico account system. Before using the relevant interface, you need to login first, and then you can use the payment function.
+   
+   2. The settlement method shall be subject to the current game currency unit under Pico (P currency).
+   
+   3. Please recharge your account at the Pico user center.
+
+7.3.2	Use of SDK related configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   
+>Apply for APPKEY, APPID, SCOPE, DEVELOPERID, APP SECRET to the application
+
+Third-party developers shall go to the Pico Developer Platform to register applications or games, obtain APPKEY, APPID and SCOPE，DEVELOPERID, APP SECRET. Please check `7.1.3	Get KEY`_
+
+>AndroidManifest.xml configuration development parameters
+
+
+Writer the applied KEY, APP ID, SCOPE, DEVELOPER ID and APP SECRET parameters to the androidmanifest.xml file
+
+>The complete Android Manifest. XML configuration is as follows:
+
+.. code-block:: xml
+
+   <?xml version="1.0" encoding="utf-8"?>
+   <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="your package">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+		. . . . . . 
+		<!--APPID-->
+        <meta-data
+            android:name="pico_app_id"
+            android:value="APP ID"/>
+        <!--APPKEY-->
+        <meta-data
+            android:name="pico_app_key"
+            android:value="APPK EY"/>
+        <!--Scope of authority-->
+        <meta-data
+            android:name="pico_scope"
+            android:value="SCOPE"/>
+         <!—Developer ID-->
+        <meta-data
+            android:name="pico_merchant_id"
+            android:value="DEVELOPER ID"/>
+         <!--Payment Key-->
+        <meta-data
+            android:name="pico_pay_key"
+            android:value="APP SECRET"/>
+
+       </application>
+
+     </manifest>
+
+>Import JAR package
+
+
+Import method: import loginpaysdk.jar directly
+
+1.Copy jar package to the lib folder under the project directory
+
+2.Right click jar package to add it to the project
+
+There are mainly two cases: Eclipse and AndroidStudio. This document will not describe it.
+
+
+7.3.3	Login first
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Login requires the following steps：**
+
+>Method for using login
+
+.. code-block:: java
+
+   // 1. Create the core class for authorization
+   Login mLogin = new Login(activity);//The parameter here must be passed in the Activity's object, or it will cause the login to fail.
+   // 2. Use login for authentication
+   mLogin.login(new Callback());//Please see the following for MloginCallback parameter:Implement callback loginCallBack
+
+
+
+>Implement callback CallBack 
+
+
+Login results are called back through this interface. isSuccess returns to true, meaning login successfully, to false, meaning login failed, reason will return  relevant login information.
+ 
+.. code-block:: java
+
+    Callback callback = new Callback() {
+    @Override
+    public void loginCallback(boolean isSuccess, String reason) {
+        //1. isSuccess returns to true, meaning login successfully
+        //2. isSuccess returns to false, meaning login failed
+	   //3. The reason parameter will display the information about specific login successes and failures.
+       if (isSuccess) {//
+            Toast.makeText(AuthActivity.this, "login successfully", Toast.LENGTH_SHORT).show();
+         } else {
+            Toast.makeText(AuthActivity.this,
+                    reason,
+                    Toast.LENGTH_LONG).show();
+                }
+    }
+    }
+
+
+>Override onActivityResult
+
+.. code-block::java
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+		// Activity that initiates the client login must override onActivityResults, writing steps are as follows:
+        if (mLogin != null) {
+            mLogin.authorizeCallBack(requestCode, resultCode, data);
+        }
+        }
+
+
+A complete Pico authentication process has been completed hereto. 
+
+Login only once and pay it directly. The login is valid for about two weeks, after which the payment interface will have a return code `7.5	Return code table`_，user can login again。
+
+>Get information such as user avatar and nickname
+
+
+Use the core class Login:
+
+.. code-block:: java
+
+    mLogin.getUserInfo(new RequestListener() {
+    @Override
+    public void onComplete(String paramString) {
+         //json data is returned and parses it by itself, please check the following example of return results
+    }
+
+    @Override
+    public void onException(PicoException paramException) {
+         //exception information
+     }
+     });
+
+
+Example of return results: 
+
+openid will return, and other data will be returned depending on the integrity of the user's data.
+
+.. code-block:: java
+
+    {
+    "ret_code": "0000",
+    "data": {
+        "aboutme": "",
+        "birthday": 1460476800000,
+        "phone": "13585455789",//phone number
+        "username": "Polaris",   //user name
+        "email": "123456@163.com",//email
+        "gender": "male",
+        "lastname": "",
+        "openid": "4f3148bdc34d9bca104927729a173b64",//unique identifier (must be returned)
+        "firstname": "",
+        "avatar": "http://172.31.83.11/upload/6dd6ee103714e967846c3d38ae48d511",
+        "signature": "14a25d7219d8dfc91e55f63286ae5c0a",
+        "country": "China",
+        "city": ""
+      },
+      "ret_msg": "call successfully"
+      }
+
+
+>Logout
+
+
+Callback when the account logs out, and clear the login data:
+
+.. code-block:: java
+
+   mLogin.login(Context context,Callback callback);//Please see the following for callback parameter:Implement callback loginCallBack
+
+
+**Note:** due to the authorization mode of login, if the logout operation is not called, the payment operation can be carried out within a certain period of time when the account is logged out, so it is recommended to conduct the call.
+
+7.3.4	Make a payment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Before payment, please confirm that you have logged in, please check：`7.3.3	Login first`_ for details:
+
+  There are two payment methods:
+
+============       =======================
+APP                 Payment method:
+============       =======================
+Application         By P currency	
+Game	            By product code
+============       =======================
+
+**Note** payment by product code is a new payment method of developer platform, and is specially designed for games. Developers need to create different products under the games of the developer platform, and fill in its own product codes. Then, during the development of games, developers do not need to fill in the amount of commodities, but fill in the corresponding commodity codes to pay by calling corresponding payment interfaces.
+
+**When you create an application on the developer platform, it is confirmed that you use one of the two payment methods mentioned above. The two payment methods are mutually exclusive.**
+
+
+**1.Call payment interfaces:**
+
+Parameter description （please refer to`7.3.1	 Corresponding parameters and name explanation`_）：
+
+  - context       : context
+
+  - PayOrder      : include the object of PayOrder class of order information, please check PayOrder Description
+
+  - PayCallback   : payment callback interface
+
+.. code-block:: java
+
+  PicoPay.getInstance(context).pay(PayOrder,PayCallBack);
+
+Payment callback information shall be executed by above Callback. Please check  the PayCallBack callback for details.
+
+**PayOrder**  is a Model class containing order information. Because payment methods are divided into two categories, the required parameters are different. The following are creation methods and required parameters:
+
+1.	Payment by P currency (common payment method) ---add the amount of P currency required
+
+.. code-block:: XML
+
+   // Order information - Followings are required parameters
+   PayOrder order = new PayOrder();               //create order object
+   order.setBusinessOrder(order number);                //the order number generated by the merchant itself, within 32 characters, may contain letters and numbers.
+   order.setTotalFree(money);                     //amount of P currency spent
+   order.setSubject(“title of order");                  //title of order
+   order.setBody("commodity description");                     //product description
+   order.setNotifyUrl("http:www.picovr.com");   //Callback address—game server notification address（not required）see Developer server interaction   
+ 
+
+2.	Payment by product code-------------------add required product codes
+
+.. code-block:: XML
+
+     // Order information - Followings are required parameters
+      PayOrder order = new PayOrder();               
+      order.setBusinessOrder(order No.);                
+      order.setPayCode( commodity codes );                     //required product codes
+      order.setSubject(“title of order");               
+      order.setBody("product description");                  
+      order.setNotifyUrl("http:www.picovr.com");  
+
+PayCallBack payment callback   
+
+.. code-block:: java
+
+    class MyPaySdkCallBack implements PaySdkCallBack {
+
+    @Override
+    public void callback(String code, String msg) {
+		//payment callback interface, callback information is Code and Msg. For corresponding information, please check Return Code Comparison Table
+    }
+    @Override
+    public void exceptionCallBack(String msg) {
+         //exception information callback
+    }
+    }
+
+7.3.5	Query order information	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ Parameter description（(please refer to `7.3.1	 Corresponding parameters and name explanation`_）：
+
+   - context        : context
+
+   - orderNum       ： the order number generated by the developer itself, please refer to: 
+
+.. code-block:: java
+
+    PicoPay.getInstance(context).queryOrders(orderNum,new Callback());
+
+Payment callback information shall be executed by above Callback. The json information got when msg returns，please check `7.3.4	Make a payment`_.
+
+An example of the msg parameter returned, noted as key parameter	
+
+.. code-block:: java
+
+    {
+    "trade_no":"22016082314719505878171324",//Pico payment order No.
+    "open_id":"4f3148bdc34d9bca104927729a173b64",
+    "ret_msg":"",
+    "coupon_fee":0.00,
+    "fee_type":"PIC",
+    "pay_time":1471950587000,//payment completion time
+    "nonce_str":"yiUzuv4VQO1OXBAzVyZSRztOmRgIOioT",
+    "out_trade_no":"12345678903",//internal order number of merchant system, that is the order number passed in when payment is made
+    "trade_status":"SUCCESS", //SUCCESS—Successful payment
+                            //REFUND—Refund transferred
+                            //NOTPAY—Not paid
+                            //CLOSED—Closed
+                            //REVOKED—Revoked
+                            //USERPAYING--Paying
+                            //PAYERROR--Payment failed
+                            //FINISHED--Transaction finished, non-refundable
+    "trade_type":"EGG",
+    "result_code":"SUCCESS",
+    "mch_id":"company_id",
+    "ret_code":"SUCCESS",
+    "sub_msg":"OK",
+    "total_fee":100.00,//Total order amount
+    "app_id":"bf18ac2de375095d63428134e44d1867",
+    "sub_code":"SUCCESS",
+    "receipt_fee":100.00,//Paid-in amount
+    "signature":"be3fae4d68fec9c444fde821659bce69",
+    "buyer_pay_fee":100.00//The amount paid by the buyer
+    }
+
+
+7.4	Other settings
+----------------------------------------
+
+7.4.1	About debug
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Open Debug to view part of data information and returned Log. Open by: 
+
+.. code-block:: java
+
+   LogUtils.enableLog();//Invoke before authorized initialization
+
+7.5	Return code table
+----------------------------------------------------
+
+============================   ============================================================================================
+Code                           Message 
+============================   ============================================================================================
+00000	                       Network anomaly
+10000	             	       Login successfully
+10001	                       Not login
+10002	             	       Please fill in correct amount
+10003					       Login expired, please login again
+11000					       Verify successfully
+11001					       Failed verification
+11002					       User verification parameter error or request expired
+11003					       Not verified
+12000					       Payment successful
+12001					       Payment failed
+12003					       Insufficient P currency
+12004					       Balance available
+13000					       Order generated
+13001					       Failed to acquire data
+13002					       Failed to generate order
+14000					       Query order successfully
+14001					       Order does not exist /incorrect
+14002					       User cancels the payment
+15000				 	       Product information not filled in
+15001					       Prepaid ID not filled in
+15002					       Please fill in Pico payment order number or merchant order number
+NOAUTH					       Merchant has no interface permission
+SYSTEMERROR				       System error
+APP_ID_NOT_EXIST		       APP_ID does not exist
+MCHID_NOT_EXIST	MCHID	       MCHID does not exist
+APP_ID_MCHID_NOT_MATCH	       App_id and mch_id are mismatched
+LACK_PARAMS				       Missing parameters
+SIGNERROR				       Wrong signature
+NO_DATA					       No data is found / the user does not recharge
+ORDER_EXIST				       Order already exists
+PAY_CODE_NOT_EXIST		       Consumption code does not exist
+PAY_CODE_EXIST			       The user has consumed the product code
+============================   ============================================================================================
+
+7.6	About ProGuard
+--------------------------------------
+
+The following codes need to be added to the proguard-rules.pro (or proguard-rules.txt) of the app: 
+
+.. code-block:: java
+
+  -keep class com.pico.loginpaysdk.** { *; }
+
+7.7 Payment servers interactive
+--------------------------------------
+
+After the payment is completed, the payment system will send the relevant payment results and user information to the merchant, and the merchant needs to receive and process them and return a response.
+
+When the background notifies the interaction, if the receiving of the merchant's response by the payment system receives is not successful or overtime, the notification should be considered as failed, and the payment system will periodically resend the notification through certain policies to maximize the success rate of the notification, but it may not guarantee that the notification will be eventually successful.
+
+**Note: the same notification may be sent to the merchant system repeatedly. The merchant system must be able to process duplicate notifications correctly.**
+
+The recommended practice is to firstly check the status of the corresponding service data when it receives and processes the notification, and determine whether the notification has been processed. It should be re-processed if it has not been processed, and it will return to the result (success) directly if it has been processed. Before the status check and processing of business data, data locks should be used for concurrency control to avoid data confusion caused by function reentry.
+
+**Attention:** the merchant system must verify the signature for the contents of the payment result notification to prevent the data leakage from causing "false notification" and causing financial losses.  Please check `7.7.3	 Signature verification`_
+
+**Interface link is the submitted parameter notify_url in PayOrder through payment. If the link is unaccessible, the merchant will fail to receive notification. The notification url must be a directly accessible url and cannot carry parameters.**
+
+
+The merchant server needs to implement the following interface for receiving the request from the Pico server and get the payment result and user information of the Pico payment system
+
+===========================   =====================================================================================================================================
+Name                          Payment result callback interface
+===========================   =====================================================================================================================================
+Request type                  POST
+Request URL                   Pay, parameter notify_url passed by PayOrder	
+Request format                JSON
+Return format                 JSON
+Is login required             Yes
+Request parameter             For details, see `7.7.1	Notification parameter`_ for the notification parameters in payment result notification”
+Request parameter example
+Return parameter      
+===========================   =====================================================================================================================================
+
+
+Return parameter
+
+======================   ===================   =========================
+Name of parameter	      Type and range	     Description
+======================   ===================   =========================
+ret_code	              string                 Wrong code.
+ret_msg	                  string     	         Wrong message string.
+======================   ===================   =========================
+
+For details, please check`7.7.2	Return results`_
+
+Return parameter example
+	
+.. code-block:: java
+
+    { 
+    "ret_code":"SUCCESS", 
+    "ret_msg":"OK" 
+    }
+
+
+7.7.1	Notification parameter		
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+=================================    ===============   =================   ========   =========================================================================================================================================================================================
+Field name                           Variable name     Required            Type       Description
+=================================    ===============   =================   ========   =========================================================================================================================================================================================
+Return status code                   ret_code           Yes                String     SUCCESS/FAIL This field is the communication identifier, rather than transaction identifier. The result_code needs to be checked to determine whether the transaction is successful.
+Return information                   ret_msg            No                 String     For return information, in case of not empty, it may be caused due to error of signature failure and parameter format check error    
+Error code                           sub_code           No                 String     Error code
+Error code description               sub_msg            No                 String     Wrongly returned information error
+Pico payment order number            trade_no           Yes                String     Pico payment order number
+Merchant order number                out_trade_no       Yes                String     The order number within the merchant system, 
+Application ID                       app_id             Yes                String     Application APP_ID approved by the platform
+Merchant ID                          mch_id             Yes                String     Assigned merchant number for payment
+User identifier                      open_id            Yes                String     Unique identifier of the user under the merchant appid
+Device number                        device_id          No                 String     Terminal device number
+Random string                        nonce_str          Yes                String     Random string: no longer than 32 bits. Random Number Generation Algorithm is recommended
+Signature                            signature          Yes                String     Signature, for details, see Signature Generation Algorithm
+Business result                      result_code        Yes                String     SUCCESS/FAIL
+Transaction type                     trade_type         Yes                String     Payment type
+Currency type                        fee_type           Yes                String     Currency type
+Total amount                         total_fee          Yes                String     Total order amount
+Paid-in amount                       receipt_fee        Yes                String     Paid-in amount
+The amount paid by the buyer         buyer_pay_fee      No                 String     The amount paid by the buyer
+Voucher or discount                  coupon_fee         No                 String     Voucher or discount
+Merchant data package                attach             No                 String     Merchant data package, returned as it is
+Payment completion time              pay_time           Yes                String     Payment completion time, in the format: yyyy-MM-dd HH: mm:ss
+=================================    ===============   =================   ========   =========================================================================================================================================================================================
+
+7.7.2	Return results	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+=======================    ==================   ============   ===========   =============================================================================================================================================
+Field name	               Variable name	    Required	   Type	         Description
+=======================    ==================   ============   ===========   =============================================================================================================================================
+Return status code         ret_code             Yes            String        SUCCESS/FAIL SUCCESS indicates that the merchant received the notification successfully and verified it successfully.
+Return information         ret_msg              No             String        For return information, in case of not empty, it may be caused due to error of  signature failure and parameter format check error
+=======================    ==================   ============   ===========   =============================================================================================================================================
+
+Results
+
+Examples are as follows:
+
+.. code-block:: java
+
+    {"ret_code":" SUCCESS","ret_msg":"OK"}
+
+7.7.3	Signature verification	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The signature verification rule is as follows:
+
+ 1.	Delete the signature parameter in the returned parameter list, and add key=“app_secret”,value=App Secret, then sort it naturally according to the key value, separate the multiple parameters with &, and finally take MD5 encryption
+  
+
+ 2.	Compare the encrypted string with the signature got
+
+The signature function is as follows:
+
+.. code-block:: java
+
+   /**
+    * result: map set of data got
+    *  App Secret ：the App Secret on the developer platform
+    */
+     public static String createSign(Map<String, Object> result, String App Secret) {
+     if (result ==null || result.size()==0)
+        return null;
+     result.put("app_secret", App Secret);           //1. Add key = “app_secret”,value=appSecret
+     String sign = result.get("signature");      //2. Save the value of the signature for verification
+     result.remove("signature");                  //3.Remove signature parameter
+     String[] tmp = new String[result.size()];
+     int i = 0;
+     for (String key : result.keySet()) {
+        tmp[i++] = key;
+     }
+      Arrays.sort(tmp);                              //4.Natural ordering
+      String sign = "";
+      for (String string : tmp) {
+        if(m.get(string) == null)
+            continue;
+        sign += string + "=" + URLEncoder.encode(m.get(string).toString(),"utf-8") + "&";
+       }
+      if (sign.endsWith("&"))
+        sign = sign.substring(0, sign.length() - 1);
+        Log.i(TAG, "createSign: "+sign);
+       String localSign = MD5.MD5(sign);            //5.Generate MD5 encrypted string
+       return localSign.equal(sign);                //6.Verify it with the sign of 2
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

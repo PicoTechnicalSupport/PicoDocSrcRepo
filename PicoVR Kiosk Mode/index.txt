@@ -9,6 +9,8 @@ PicoVR Kiosk Mode
    chapter_two
    chapter_three
    chapter_four
+   chapter_five
+   chapter_six
 
 
 Contents
@@ -25,3 +27,7 @@ Contents
      - :ref:`AndroidManifest.xml Modification     <3 AndroidManifest.xml Modification>`
    * - 4
      - :ref:`Achieve Pico System Level Signature  <4 Achieve Pico System Level Signature>`
+   * - 5
+     - :ref:`Replacing Launcher with Third-party Application  <5 Replacing Launcher with Third-party Application>`
+   * - 6
+     - :ref:`Reset Launcher to PicoVRlauncher  <6 Reset Launcher to PicoVRlauncher>`

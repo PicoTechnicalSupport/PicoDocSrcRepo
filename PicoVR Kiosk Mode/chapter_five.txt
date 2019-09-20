@@ -1,0 +1,26 @@
+.. _5	Replacing Launcher with Third-party Application:
+
+5	Replacing Launcher with Third-party Application
+=========================================================
+
+Some developers may want to replacing default launcher with a third-party application which you can't modify the AndroidManifest.xml.
+
+Here are the steps to replacing launcher with a third-party application,
+
+- Step1: Create a TXT file named "config.txt"
+
+- Step2: Edit the config.txt file
+
+    Add the "Package name/Class name" as "com.pvr.shortcut/com.pvr.shortcut.MainActivity" in the config.txt file. If there is no "Class name" in the third-party application, then use the "Package name".
+	
+- Step3: Copy config.txt file to the device root directory
+
+- Step4: Install the third-party application
+
+- Step5: Disable home button
+
+	Please refer to this link: http://static.appstore.picovr.com/docs/SystemKey/chapter_four.html#manual-modification-scheme
+
+- Step6: Reboot the device
+
+Note: If you want to disable the Kiosk Mode, please delete the config.txt file ,enable home button and reboot device to return the pico default launcher.

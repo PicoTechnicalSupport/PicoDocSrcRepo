@@ -1,0 +1,13 @@
+.. _6	Reset Launcher to PicoVRlauncher:
+
+6	Reset Launcher to PicoVRlauncher
+=========================================================
+
+Here are the steps to reset launcher to PicoVRlauncher,
+
+- Step1: Access the 2D settings menu by pressing the Confirm button and the Volume Down button on the headset at the same time.
+
+- Step2: Select Apps & notifications->advanced->Default apps->Home app->choose PVRLauncher, then reboot the headset.
+
+.. image:: _static/6.1.png
+

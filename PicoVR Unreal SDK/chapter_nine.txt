@@ -1,0 +1,22 @@
+﻿.. _9 	Known Issues:
+
+9 	Known Issues
+====================================
+
+9.1 VR Preview
+------------------
+
+The SDK doesn’t support **VR Preview** in the editor.
+
+.. image:: _static/9.1.png    
+
+Figure 9.1 - VR Preview is not supported in the editor.
+
+9.2 Build Support
+------------------
+
+Before packaging, navigate to **Edit** > **Project Settings** > **Platform** > **Android** and disable **Enable Gradle instead of Ant**:
+
+.. image:: _static/9.2.png    
+
+Figure 9.2 - Disable Enable Gradle instead of Ant.

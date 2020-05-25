@@ -1,96 +1,110 @@
-﻿.. _4 	Quick Start of SDK Access:
+﻿.. _4 	Development Notes:
 
-4 	Quick Start of SDK Access
-======================================
+4 	Development Notes
+===============================
 
-Step1: New Project
-------------------------
+4.1 	Enable Device USB Debugging
+-------------------------------------
 
-Open Unity and Create New Project are as follows:
+Enter the setting interface-> About, click PUI version entry 8 times continuously to open the developer mode, enter the 2D interface of developer mode-> developer options, then open the "USB debugging" function in the list of options, and set "select USB configuration" to MTP mode.
 
-.. image:: _static/4.1.PNG
+4.2 	Android Manifest Document
+---------------------------------------
 
-Figure 4.1 New Project
+- Special meta-data needs to be added; otherwise, an exception will be displayed:：
 
-Create cube1, cube2 and cube3, and set their Transform information as follows:
+.. code-block:: xml
 
-.. image:: _static/4.2.png
+    <meta-data android:name=" pvr.app.type " android:value="vr"/>
+    <meta-data android:name=" pvr.display.orientation " android:value="180"/>
 
-Figure 4.2 cube1 Transform
+- All Acitivity that need to be displayed need to inherit from
 
-.. image:: _static/4.3.png
+.. code-block:: java
+    
+    com.unity3d.player.UnityPlayerNativeActivityPico    
 
-Figure 4.3 cube2 Transform
+- Add the necessary permissions
 
-.. image:: _static/4.4.png
+.. code-block:: xml
 
-Figure 4.4 cube3 Transform
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
 
-Step2： Import SDK
------------------------
+4.3 	SDK Recommended Configuration
+---------------------------------------
 
-Select the menu Assets>Import Package>Custom Package…
+- For Color Space, Gamma and Linear are supported.
 
-.. image:: _static/4.5.png
+Gamma and linear modes are supported for the color space. If Linear is selected, then Blit Type must be set to Never, otherwise Unity will have the problem of a probability screen. If Gamma is selected , you can select either Never or Always in Blit Type:
 
-Figure 4.5 Import of Custom Package
+.. image:: _static/3.1.PNG
 
-At this time, a dialog box will pop up, select “PicoVR_Unity_SDK- version number. Unity package” and click to open:
+Figure 4.1 Setting of Blit Type
 
-.. image:: _static/4.6.png
+Notes:
 
-Figure 4.6 Unity Package
+- Graphics APIs does not support Vulkan for the time being. For OpenGLES2 and OpenGLES3, the developers need to choose according to their needs.
 
-After opening, a dialog box will pop up again. Please import the corresponding parts as required:
+- When multi-thread rendering is active, the frame rate is improved, but there are restrictions on the use of multi-thread rendering. See the Unity official document for details: (https://docs.unity3d.com/ScriptReference/SystemInfo-graphicsMultiThreaded.html)
 
-.. image:: _static/4.7.png
+.. image:: _static/3.2.PNG
 
-Figure 4.7 Import options
+Figure 4.2 Setting of rendering
 
-After importing package, SDK will automatically set chapter 3.3 Default Orientation to be Landscape Left and V Sync Count to be Don’t Sync.
+- In Default Orientation under Unity Player Setting, select Landscape Left (Required)
 
-Step3: Use SDK
------------------------
+.. image:: _static/3.3.PNG
 
-Enter the Project tab, expand the Assets> PicoMobileSDK >Pvr_UnitySDK>Prefabs in turn, drag the Prefabs under Pvr_UnitySDK into the scenes, and set the Position and Rotation under the Transform component to (0,0,0):
+Figure 4.3 Setting of Default Orientation
 
-.. image:: _static/4.8.png
+- Check the setting of V Sync Count, and the specific steps are as follows: Enter Edit>Project Settings>Quality, select Simple under Levels, and ensure that V Sync Count under Other is Don't Sync (Required):
 
-Figure 4.8 Directory of Prefabs under Pvr_UnitySDK
+.. image:: _static/3.4.PNG
 
-After putting it in, the Hierarchy of the scenes should be as shown in the following Figure:
+Figure 4.4 Check the setting of V Sync Count
 
-.. image:: _static/4.9.png
+4.4 	Lightweight Render Pipeline Configuration
+---------------------------------------------------
 
-Figure 4.9 Hierarchy of Scenes
+For example,In Unity 2019.1.0f2.
 
-In order to prevent other Cameras in the scenes from interfering with the SDK's stereo rendering, the Main Camera in the above Figure needs to be deleted in the last step.
+Follow the steps below to configure Unity’s Lightweight Render Pipeline (LWRP):
 
-Step4: Simulation run
------------------------
+1. Open Window/Package Manager
 
-Click the Run button to see the following in the Game window:
+.. image:: _static/3.5.PNG
 
-.. image:: _static/4.10.png
+Figure 4.5 Package Manager menu item.
 
-Figure 4.10 Simulation run
+2. Select Show preview packages
 
-Press Alt, move the mouse, and the picture will rotate up and down or left and right; Press Alt+, and click the left mouse button to select VR mode or Mono mode (Unity Editor only).
+.. image:: _static/3.6.PNG
 
-Step5: Packaging
------------------------
+Figure 4.6 Show preview package menu item.
 
-Before packaging, you should also set the tracking types of head and hand according to the type of application: Enter the Inspector panel of Pvr_UnitySDK. If the head is 6dof, you need to set Head Pose to Six Dof. If the hand is 6dof, you need to set Hand Pose to Six Dof.
+3. Selecting Lightweight RP and click Install in the lower right corner:
 
-.. image:: _static/4.11.png
+.. image:: _static/3.7.PNG
 
-Figure 4.11 Adapting target platform
+Figure 4.7 Selecting Lightweight RP.
 
-When packaging, save the current scenes firstly, then enter File>Build Settings..., and click “Add Current” to add the current scene to the building list. Also, select Android at the Platform, then click “Switch Platform” and finally click “Build” to complete the packaging.
+4.	Create LightweightRenderPipelineAsset
 
-.. image:: _static/4.12.png
+.. image:: _static/3.8.PNG
 
-Figure 4.12 Packaging
+Figure 4.8 Creating the pipeline asset.
 
-Since then, a complete process of using SDK has ended. Specific SDK adaptation methods for various hardware products of Pico VR will be given in detail in the following chapters.
+5.	Use LightweightRenderPipelineAsset: drag the file created in Step 4 to Scriptable Render Pipeline Setting in Project Setting > Graphics:
+	
+.. image:: _static/3.9.PNG
+	
+Figure 4.9 Scriptable Render Pipeline Setting.
 
+6.	Replace materials in the project with LWRP materials
+
+.. image:: _static/3.10.PNG
+
+Figure 4.10 Update materials in the project.

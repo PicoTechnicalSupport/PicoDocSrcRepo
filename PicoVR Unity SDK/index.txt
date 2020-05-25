@@ -19,12 +19,12 @@ PicoVRAndroidSDK(Unity)
 ^^^^^^^^^^^^^^^^^^^^^
 === =========
 1	:ref:`Introduction to SDK <1 	Introduction to SDK>`						
-2	:ref:`Instructions for SDK configuration <2 	Instructions for SDK configuration>`				
-3	:ref:`Development notes <3 	Development notes>`			
-4	:ref:`Quick Start of SDK Access <4 	Quick Start of SDK Access>`		
-5	:ref:`Hardware product development guide <5 	Hardware product development guide>`
-6	:ref:`API interface function list <6 	API interface function list>`
-7	:ref:`Advanced features <7 	Advanced features>`		
-8	:ref:`Payment system <8 	Payment system>`										
+2	:ref:`Instructions for SDK Configuration <2 	Instructions for SDK configuration>`				
+3	:ref:`Quick Start of SDK Access <3  Quick Start of SDK Access>`      
+4	:ref:`Development Notes <4 	Development Notes>` 
+5	:ref:`Hardware Product Development Guide <5 	Hardware Product Development Guide>`
+6	:ref:`API Interface Function List <6 	API Interface Function List>`
+7	:ref:`Payment System <7    Payment system>`                             
+8	:ref:`Advanced Features <8 	Advanced Features>`		
 9	:ref:`Frequently Asked Questions <9 	Frequently Asked Questions>`			
 === =========

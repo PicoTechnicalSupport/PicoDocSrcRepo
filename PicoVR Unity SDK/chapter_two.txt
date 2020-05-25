@@ -1,21 +1,28 @@
-﻿.. _2 	Instructions for SDK configuration:
+﻿.. _2 	Instructions for SDK Configuration:
 
-2 	Instructions for SDK configuration
+2 	Instructions for SDK Configuration
 =============================================
 
-2.1 	Supporting device
+2.1 	VR Devices
 -----------------------------
 
-Pico Goblin，Pico Neo，Pico G2，Pico G2 4K
+The SDK works with the following VR devices from Pico:
 
-2.2 	Development environment requirements
+	* **VR All-in-one Headset**: Pico Goblin, Pico Neo, Pico Goblin2, Pico Goblin2 4K
+
+
+
+2.2 	Unity
 ---------------------------------------------------
 
-Support Unity2017.4 – Unity 2019.1.
+The SDK is compatible with the following versions of Unity:
 
-LTS 2017.4.x is recommended.
+	* **Unity**: Unity 2019.1
 
-===================    ======================================
-JDK                    jdk1.8.0 and above
-Android SDK            API Level 24 (Android 7.0) and above
-===================    ======================================
+2.3	Android Development Environments
+---------------------------------------------------
+
+The SDK requires the following dependencies:
+
+	* **JDK**: jdk1.8.0 and above
+	* **Android SDK**: API Level 24 and above
